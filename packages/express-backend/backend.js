@@ -35,7 +35,7 @@
    var state = generateRandomString(16);
    res.cookie(stateKey, state);
  
-   // your application requests authorization
+   // scope is what the user allows us to access. add more scopes if needed
    var scope = 'user-read-private user-read-email user-library-read user-top-read user-library-modify';
    res.redirect('https://accounts.spotify.com/authorize?' +
      querystring.stringify({
