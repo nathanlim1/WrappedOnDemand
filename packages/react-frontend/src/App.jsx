@@ -96,7 +96,7 @@ function App() {
               </ol>
             </div>
           )}
-          <button onClick={() => getMyTopTracks()}>Get Top Artists</button>
+          <button onClick={() => getMyTopTracks()}>Get Top Tracks</button>
           {topTracks.length > 0 && (
             <div>
               Your Top Tracks:
