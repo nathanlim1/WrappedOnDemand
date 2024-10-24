@@ -16,6 +16,8 @@
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "all": "^0.0.0"
+    "all": "^0.0.0",
+    "spotify-web-api-js": "^1.5.2",
+    "spotify-web-api-node": "^5.0.2"
   }
 }
