@@ -4,8 +4,12 @@ import './App.css'
 import React, {useState, useEffect} from 'react'
 import SpotifyWebApi from "spotify-web-api-js";
 
+// This is a package that simplifies Spotify API calls
+// I have no idea if it will be enough for our project but its a good start
 const spotifyApi = new SpotifyWebApi();
 
+// When the user logs in their credentials go to the url
+// This gets their credentials
 const getTokenFromUrl = () => {
   return window.location.hash.substring(1).split('&').reduce((initial, item) => {
     let parts = item.split('=');
@@ -24,16 +28,18 @@ function App() {
   useEffect(() => {
     console.log("This is what we got from the url: ", getTokenFromUrl());
     const spotifyToken = getTokenFromUrl().access_token;
+    // This removes the users credentials from the url, making it cleaner
     window.location.hash = "";
     console.log("this is our spotify token: ", spotifyToken);
 
     if (spotifyToken) {
       setSpotifyToken(spotifyToken);
 
-      // use spotify api
+      // Give the token to the api 
       spotifyApi.setAccessToken(spotifyToken);
       console.log("Current Access Token:", spotifyApi.getAccessToken());
 
+      // Just a test to see if we can access the user, this does nothing
       spotifyApi.getMe()
       .then((user) => {
         console.log(user);
@@ -73,6 +79,7 @@ function App() {
 
   return (
     <>
+      {/* What is shown depends on if the user is logged in or not */}
       {!loggedIn && <a href="http://localhost:8000/login">Login to Spotify</a>}
       {loggedIn && (
         <>
