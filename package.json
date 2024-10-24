@@ -14,5 +14,8 @@
   ],
   "devDependencies": {
     "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "all": "^0.0.0"
   }
 }
