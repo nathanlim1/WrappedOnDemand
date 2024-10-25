@@ -1,10 +1,6 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
-import SpotifyWebApi from "spotify-web-api-js";
-
-// This is a package that simplifies Spotify API calls
-// I have no idea if it will be enough for our project but its a good start
-const spotifyApi = new SpotifyWebApi();
+import { useSpotifyApi } from '../SpotifyContext'; 
 
 // When the user logs in their credentials go to the url
 // This gets their credentials
@@ -17,6 +13,7 @@ const getTokenFromUrl = () => {
 }
 
 function Home() {
+  const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
@@ -33,6 +30,7 @@ function Home() {
       setSpotifyToken(spotifyToken);
 
       // Give the token to the api 
+    //   setSpotifyAccessToken(spotifyToken);
       spotifyApi.setAccessToken(spotifyToken);
       console.log("Current Access Token:", spotifyApi.getAccessToken());
 
@@ -45,7 +43,7 @@ function Home() {
         console.log(err)
       });
     }
-  }, [])
+  }, [spotifyApi])
 
   // uses spotifyApi to get users top artists
   const getUsersTopArtists = () => {
