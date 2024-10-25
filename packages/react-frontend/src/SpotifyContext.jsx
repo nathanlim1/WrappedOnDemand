@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
+// This is the top level spotify api object
+// It will store user login for the entire page
+// Use this import on each page to use the spotifyApi object:
+// import { useSpotifyApi } from '../SpotifyContext'; 
+
+
 const spotifyApi = new SpotifyWebApi();
 
 const SpotifyApiContext = createContext(null);
@@ -45,34 +51,3 @@ export function SpotifyProvider({ children }) {
         </SpotifyApiContext.Provider>
     );
 }
-
-/*
-import React, { createContext, useContext } from 'react';
-import SpotifyWebApi from 'spotify-web-api-js';
-
-// This file makes it so there is one instance of the spotifyApi object
-// When the user logs in, the spotifyApi object remembers the user's info
-// Because it is remembered, this object can be used throughout the project
-// without needing to get the user's login on each page
-
-// This is a package that simplifies Spotify API calls
-// I have no idea if it will be enough for our project but its a good start
-const spotifyApi = new SpotifyWebApi();
-
-const SpotifyApiContext = createContext(spotifyApi);
-export const useSpotifyApi = () => useContext(SpotifyApiContext);
-
-// Function to set the access token globally
-export const setSpotifyAccessToken = (token) => {
-    spotifyApi.setAccessToken(token);
-};
-
-// SpotifyProvider component to wrap the app
-export function SpotifyProvider({ children }) {
-    return (
-        <SpotifyApiContext.Provider value={spotifyApi}>
-            {children}
-        </SpotifyApiContext.Provider>
-    );
-}
-*/
