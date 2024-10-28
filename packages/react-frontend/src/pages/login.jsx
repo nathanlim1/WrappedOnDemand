@@ -8,7 +8,7 @@ function Login() {
   return (
     <>
       <h2>Welcome to the Spotify Stat Tracker</h2>
-      <p>Log into your spotify account to begin</p>
+      <p>Log into your Spotify account to begin</p>
       
       <Link to="http://localhost:8000/login">
         <button>Login to Spotify</button>

@@ -1,0 +1,8 @@
+tabWidth: 4
+trailingComma: all
+semi: true
+singleQuote: false
+bracketSameLine: true
+htmlWhitespaceSensitivity: ignore
+proseWrap: always
+printWidth: 80
