@@ -1,8 +1,8 @@
 tabWidth: 4
-trailingComma: none
+trailingComma: all
 semi: true
 singleQuote: false
 bracketSameLine: true
 htmlWhitespaceSensitivity: ignore
 proseWrap: always
-printWidth: 64
+printWidth: 80
