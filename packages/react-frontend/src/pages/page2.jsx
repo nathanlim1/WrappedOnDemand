@@ -2,13 +2,13 @@ import '../App.css'
 import React, {useState, useEffect} from 'react'
 import { useSpotifyApi } from '../SpotifyContext'; 
 
-function Page2() {
-  const spotifyApi = useSpotifyApi();
-  const [topArtists, setTopArtists] = useState([]);
+function Page2({time_range}) {
+    const spotifyApi = useSpotifyApi();
+    const [topArtists, setTopArtists] = useState([]);
 
   // uses spotifyApi to get users top artists
   const getUsersTopArtists = () => {
-    spotifyApi.getMyTopArtists({time_range: "short_term"})
+    spotifyApi.getMyTopArtists({time_range: time_range})
         .then((response) => {
             console.log(response);
             const artistNames = response.items.map(artist => artist.name);

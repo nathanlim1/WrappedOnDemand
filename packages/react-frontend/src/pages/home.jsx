@@ -12,7 +12,7 @@ const getTokenFromUrl = () => {
   }, {});
 }
 
-function Home() {
+function Home({setLoggedIn, time_range}) {
   const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
   const [topArtists, setTopArtists] = useState([]);
@@ -30,8 +30,8 @@ function Home() {
       setSpotifyToken(spotifyToken);
 
       // Give the token to the api 
-    //   setSpotifyAccessToken(spotifyToken);
       spotifyApi.setAccessToken(spotifyToken);
+      setLoggedIn(true);
       console.log("Current Access Token:", spotifyApi.getAccessToken());
 
       // Just a test to see if we can access the user, this does nothing
@@ -47,7 +47,7 @@ function Home() {
 
   // uses spotifyApi to get users top artists
   const getUsersTopArtists = () => {
-    spotifyApi.getMyTopArtists({time_range: "short_term"})
+    spotifyApi.getMyTopArtists({time_range: time_range})
         .then((response) => {
             console.log(response);
             const artistNames = response.items.map(artist => artist.name);
@@ -60,7 +60,7 @@ function Home() {
   
   // uses spotifyApi to get users top tracks
   const getUsersTopTracks = () => {
-    spotifyApi.getMyTopTracks({time_range: "short_term"})
+    spotifyApi.getMyTopTracks({time_range: time_range})
         .then((response) => {
             console.log(response);
             const trackNames = response.items.map(track => track.name);
@@ -74,7 +74,6 @@ function Home() {
 
   return (
     <>
-        <h3>Successful Login!</h3>
         <button onClick={() => getUsersTopArtists()}>Get Top Artists</button>
         {topArtists.length > 0 && (
         <div>

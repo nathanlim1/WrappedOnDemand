@@ -6,7 +6,6 @@ import SpotifyWebApi from 'spotify-web-api-js';
 // Use this import on each page to use the spotifyApi object:
 // import { useSpotifyApi } from '../SpotifyContext'; 
 
-
 const spotifyApi = new SpotifyWebApi();
 
 const SpotifyApiContext = createContext(null);
@@ -51,3 +50,4 @@ export function SpotifyProvider({ children }) {
         </SpotifyApiContext.Provider>
     );
 }
+
