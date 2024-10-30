@@ -1,0 +1,41 @@
+.timerange-selector {
+    display: flex;
+    justify-content: center; /* Center the buttons within the full width */
+    gap: 1rem;
+    padding: 1rem;
+    background-color: rgb(72, 72, 72);
+    position: fixed; /* Fixes the selector at the top of the viewport */
+    top: 3.5rem; /* Adjust based on the navbar's height */
+    left: 0; /* Position at the left edge of the viewport */
+    right: 0; /* Position at the right edge of the viewport */
+    width: 100%; /* Extend the selector to full width */
+    z-index: 999; /* Ensures it stays above other content, below the navbar */
+  }
+  
+  .selector-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none; /* Removes the default blue glow on focus */
+  }
+  
+  /* Spotify green */
+  .selector-button.active {
+    background-color: #555;
+    border-color: #1DB954; /* Spotify green for active option */
+  }
+  
+  .selector-button:hover {
+    background-color: #444;
+  }
+  
+  /* Custom focus outline */
+  .selector-button:focus {
+    outline: none; /* Removes default focus outline */
+    box-shadow: 0 0 0 4px rgba(29, 185, 84, 0.5); /* Custom focus highlight */
+  }
