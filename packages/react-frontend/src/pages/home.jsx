@@ -47,7 +47,7 @@ function Home() {
 
   // uses spotifyApi to get users top artists
   const getUsersTopArtists = () => {
-    spotifyApi.getMyTopArtists()
+    spotifyApi.getMyTopArtists({time_range: "short_term"})
         .then((response) => {
             console.log(response);
             const artistNames = response.items.map(artist => artist.name);
@@ -60,7 +60,7 @@ function Home() {
   
   // uses spotifyApi to get users top tracks
   const getUsersTopTracks = () => {
-    spotifyApi.getMyTopTracks()
+    spotifyApi.getMyTopTracks({time_range: "short_term"})
         .then((response) => {
             console.log(response);
             const trackNames = response.items.map(track => track.name);

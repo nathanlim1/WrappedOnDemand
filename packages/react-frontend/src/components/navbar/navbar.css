@@ -1,0 +1,28 @@
+/* ChatGPT gave me this css. It can and probably should change once design is final */
+.navbar {
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center; /* Centers links horizontally */
+  position: fixed; /* Keeps navbar at the top */
+  top: 0; /* Aligns navbar at the top of the viewport */
+  left: 0;
+  z-index: 1000; /* Ensures navbar stays on top of other content */
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem; /* Space between each link */
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-links a:hover {
+  color: #ccc;
+}
