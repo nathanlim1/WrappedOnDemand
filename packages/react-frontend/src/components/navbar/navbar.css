@@ -1,15 +1,16 @@
 /* ChatGPT gave me this css. It can and probably should change once design is final */
 .navbar {
   width: 100%;
+  height: 28px; /* Explicitly set height */
   background-color: #333;
   color: #fff;
   padding: 1rem 2rem;
   display: flex;
-  justify-content: center; /* Centers links horizontally */
-  position: fixed; /* Keeps navbar at the top */
-  top: 0; /* Aligns navbar at the top of the viewport */
+  justify-content: center;
+  position: fixed;
+  top: 0;
   left: 0;
-  z-index: 1000; /* Ensures navbar stays on top of other content */
+  z-index: 1000;
 }
 
 .navbar-links {

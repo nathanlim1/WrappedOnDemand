@@ -74,6 +74,7 @@ function Home({setLoggedIn, time_range}) {
 
   return (
     <>
+        <h3>Home Page</h3>
         <button onClick={() => getUsersTopArtists()}>Get Top Artists</button>
         {topArtists.length > 0 && (
         <div>

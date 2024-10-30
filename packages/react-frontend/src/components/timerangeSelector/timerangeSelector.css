@@ -1,16 +1,19 @@
 .timerange-selector {
-    display: flex;
-    justify-content: center; /* Center the buttons within the full width */
-    gap: 1rem;
-    padding: 1rem;
-    background-color: rgb(72, 72, 72);
-    position: fixed; /* Fixes the selector at the top of the viewport */
-    top: 3.5rem; /* Adjust based on the navbar's height */
-    left: 0; /* Position at the left edge of the viewport */
-    right: 0; /* Position at the right edge of the viewport */
-    width: 100%; /* Extend the selector to full width */
-    z-index: 999; /* Ensures it stays above other content, below the navbar */
-  }
+  height: 56pxpx; /* Explicitly set height */
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: rgb(72, 72, 72);
+  position: fixed;
+  top: 56px; /* Match navbar height exactly */
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+
   
   .selector-button {
     padding: 0.5rem 1rem;
