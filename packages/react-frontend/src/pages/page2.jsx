@@ -1,4 +1,4 @@
-import '../App.css'
+import '../index.css'
 import React, {useState, useEffect} from 'react'
 import { useSpotifyApi } from '../SpotifyContext'; 
 
