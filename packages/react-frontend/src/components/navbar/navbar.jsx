@@ -8,8 +8,8 @@ const Navbar = ({loggedIn}) => {
       {loggedIn && (<nav className="navbar">
         <div className="navbar-links">
           <Link to="/home">Home</Link>
-          <Link to="/page2">Page2</Link>
-          <Link to="/page3">Page3</Link>
+          <Link to="/page2">Top Artists</Link>
+          <Link to="/page3">Top Tracks</Link>
         </div>
       </nav>
     )}  
