@@ -1,6 +1,7 @@
-import '../index.css'
-import React, {useState, useEffect} from 'react'
+import '../index.css';
+import React, { useState, useEffect } from 'react';
 import { useSpotifyApi } from '../SpotifyContext'; 
+import { useLocation } from 'react-router-dom';
 
 // When the user logs in their credentials go to the url
 // This gets their credentials
@@ -8,24 +9,29 @@ const getTokenFromUrl = () => {
   return window.location.hash.substring(1).split('&').reduce((initial, item) => {
     let parts = item.split('=');
     initial[parts[0]] = decodeURIComponent(parts[1]);
-    return initial
+    return initial;
   }, {});
-}
+};
 
-function Home({setLoggedIn, time_range}) {
+function Home({ setLoggedIn, time_range }) {
   const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
-  const [topArtists, setTopArtists] = useState([]);
-  const [topTracks, setTopTracks] = useState([]);
+  const [topArtists1Month, setTopArtists1Month] = useState([]);
+  const [topArtists6Month, setTopArtists6Month] = useState([]);
+  const [topArtistsLifetime, setTopArtistsLifetime] = useState([]);
+  const [topTracks1Month, setTopTracks1Month] = useState([]);
+  const [topTracks6Month, setTopTracks6Month] = useState([]);
+  const [topTracksLifetime, setTopTracksLifetime] = useState([]);
+  const [topArtistsCur, setTopArtistsCur] = useState([]);
+  const [topTracksCur, setTopTracksCur] = useState([]);
 
   // when this page is first loaded, we get the user parameters from the URL 
   useEffect(() => {
-    console.log("This is what we got from the url: ", getTokenFromUrl());
     const spotifyToken = getTokenFromUrl().access_token;
-    // This removes the users credentials from the url, making it cleaner
+    // This removes the users credentials from the URL, making it cleaner
     window.location.hash = "";
-    console.log("this is our spotify token: ", spotifyToken);
 
+    // Checks if login went okay
     if (spotifyToken) {
       setSpotifyToken(spotifyToken);
 
@@ -33,72 +39,103 @@ function Home({setLoggedIn, time_range}) {
       spotifyApi.setAccessToken(spotifyToken);
       setLoggedIn(true);
       console.log("Current Access Token:", spotifyApi.getAccessToken());
+    }
+  }, [spotifyApi]);
 
-      // Just a test to see if we can access the user, this does nothing
-      spotifyApi.getMe()
-      .then((user) => {
-        console.log(user);
+  // Preload all the data
+  useEffect(() => {
+    getUsersTopArtists("short_term");
+    getUsersTopArtists("medium_term");
+    getUsersTopArtists("long_term");
+
+    getUsersTopTracks("short_term");
+    getUsersTopTracks("medium_term");
+    getUsersTopTracks("long_term");
+  }, [useLocation()]);
+
+  // When `time_range` changes, update the `topArtistsCur` and `topTracksCur` accordingly
+  useEffect(() => {
+    if (time_range === "short_term") {
+      setTopArtistsCur(topArtists1Month);
+      setTopTracksCur(topTracks1Month);
+    } else if (time_range === "medium_term") {
+      setTopArtistsCur(topArtists6Month);
+      setTopTracksCur(topTracks6Month);
+    } else if (time_range === "long_term") {
+      setTopArtistsCur(topArtistsLifetime);
+      setTopTracksCur(topTracksLifetime);
+    }
+  }, [time_range, topArtists1Month, topArtists6Month, topArtistsLifetime, topTracks1Month, topTracks6Month, topTracksLifetime, useLocation()]);
+
+  // Fetches the user's top artists based on time range
+  const getUsersTopArtists = (time_range) => {
+    spotifyApi.getMyTopArtists({ time_range: time_range, limit: 50})
+      .then((response) => {
+        console.log(response);
+        const artistNames = response.items.map((artist) => artist.name);
+        // Update the state with fetched artist names based on the time range
+        if (time_range === 'short_term') {
+          setTopArtists1Month(artistNames);
+        } else if (time_range === 'medium_term') {
+          setTopArtists6Month(artistNames);
+        } else if (time_range === 'long_term') {
+          setTopArtistsLifetime(artistNames);
+        }
       })
       .catch((err) => {
-        console.log(err)
+        console.error('Error fetching top artists:', err);
       });
-    }
-  }, [spotifyApi])
-
-  // uses spotifyApi to get users top artists
-  const getUsersTopArtists = () => {
-    spotifyApi.getMyTopArtists({time_range: time_range})
-        .then((response) => {
-            console.log(response);
-            const artistNames = response.items.map(artist => artist.name);
-            setTopArtists(artistNames);
-        })
-        .catch((err) => {
-            console.error('Error fetching top artists:', err);
-        });
-  };  
-  
-  // uses spotifyApi to get users top tracks
-  const getUsersTopTracks = () => {
-    spotifyApi.getMyTopTracks({time_range: time_range})
-        .then((response) => {
-            console.log(response);
-            const trackNames = response.items.map(track => track.name);
-            setTopTracks(trackNames);
-        })
-        .catch((err) => {
-            console.error('Error fetching top artists:', err);
-        });
   };
 
+  // Fetches the user's top tracks based on time range
+  const getUsersTopTracks = (time_range) => {
+    spotifyApi.getMyTopTracks({ time_range: time_range, limit: 50})
+      .then((response) => {
+        console.log(response);
+        const trackNames = response.items.map((track) => track.name);
+        // Update the state with fetched track names based on the time range
+        if (time_range === 'short_term') {
+          setTopTracks1Month(trackNames);
+        } else if (time_range === 'medium_term') {
+          setTopTracks6Month(trackNames);
+        } else if (time_range === 'long_term') {
+          setTopTracksLifetime(trackNames);
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching top tracks:', err);
+      });
+  };
 
   return (
     <>
-        <h3>Home Page</h3>
-        <button onClick={() => getUsersTopArtists()}>Get Top Artists</button>
-        {topArtists.length > 0 && (
+      <h3 className="text-3xl font-bold">Home Page</h3>
+      
+      {/* Display the current top artists */}
+      {topArtistsCur.length > 0 && (
         <div>
-            Your Top Artists:
-            <ol>
-            {topArtists.map((artist, index) => (
-                <li key={index}>{artist}</li>
+          <p className="font-bold">Your Top Artists:</p>
+          <ol>
+            {topArtistsCur.map((artist, index) => (
+              <li>{index + 1}. {artist}</li>
             ))}
-            </ol>
+          </ol>
         </div>
-        )}
-        <button onClick={() => getUsersTopTracks()}>Get Top Tracks</button>
-        {topTracks.length > 0 && (
+      )}
+
+      {/* Display the current top tracks */}
+      {topTracksCur.length > 0 && (
         <div>
-            Your Top Tracks:
-            <ol>
-            {topTracks.map((track, index) => (
-                <li key={index}>{track}</li>
+          <p className="font-bold">Your Top Tracks:</p>          
+          <ol>
+            {topTracksCur.map((track, index) => (
+              <li>{index + 1}. {track}</li>
             ))}
-            </ol>
+          </ol>
         </div>
-        )}
+      )}
     </>
-  )
+  );
 }
 
 export default Home;
