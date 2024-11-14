@@ -1,6 +1,6 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
-import { useSpotifyApi } from '../SpotifyContext'; 
+import { useSpotifyApi } from '../SpotifyContext'; // needs ot be in eveyr page 
 
 // When the user logs in their credentials go to the url
 // This gets their credentials
@@ -13,7 +13,7 @@ const getTokenFromUrl = () => {
 }
 
 function Home({setLoggedIn, time_range}) {
-  const spotifyApi = useSpotifyApi();
+  const spotifyApi = useSpotifyApi(); //needs to be in every page
   const [spotifyToken, setSpotifyToken] = useState("");
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
