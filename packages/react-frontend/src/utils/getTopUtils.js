@@ -65,4 +65,17 @@ function getTopNTracks(spotifyApi, maxTracks, timerange) {
     return fetchBatchOfTracks();
 }
 
-export {getTopNArtists, getTopNTracks};
+// Drawing from a list of tracks, calculate the top n albums
+async function getTopNAlbums(spotifyApi, maxAlbums, tracks) {
+    const trackIds = tracks.map((track) => track.album.id)
+    const idOccurrences = trackIds.reduce((acc, id) => {
+        acc[id] = (acc[id] || 0) + 1;
+        return acc;
+    }, {});
+    let sortedIds = Object.keys(idOccurrences).sort((a, b) => idOccurrences[b] - idOccurrences[a]);
+    sortedIds = sortedIds.slice(0, maxAlbums);
+    const sortedAlbums = await Promise.all(sortedIds.map((id) => spotifyApi.getAlbum(id)));
+    return sortedAlbums;
+}
+
+export {getTopNArtists, getTopNTracks, getTopNAlbums};
