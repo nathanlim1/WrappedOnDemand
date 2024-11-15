@@ -1,4 +1,12 @@
 
+/*
+This file has three functions that give the top artists, tracks, and albums
+They each return a promise of a list of json objects
+The json objects are just the ones spotify gives
+Use these functions to get the lists with all the data, then call the fields you need
+for whatever you are working on
+*/
+
 // Returns the top n artists, or as many as possible if the max is less than n
 function getTopNArtists(spotifyApi, maxArtists, timerange) {
     let allArtists = [];
@@ -61,7 +69,7 @@ function getTopNTracks(spotifyApi, maxTracks, timerange) {
                 return []; 
             });
     };
-
+    
     return fetchBatchOfTracks();
 }
 
