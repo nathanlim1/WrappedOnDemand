@@ -108,33 +108,57 @@ function Home({ setLoggedIn, time_range }) {
   };
 
   return (
-    <>
-      <h3 className="text-3xl font-bold">Home Page</h3>
-      
-      {/* Display the current top artists */}
-      {topArtistsCur.length > 0 && (
-        <div>
-          <p className="font-bold">Your Top Artists:</p>
-          <ol>
-            {topArtistsCur.map((artist, index) => (
-              <li>{index + 1}. {artist}</li>
-            ))}
-          </ol>
+    <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white">
+      {/* Intro Section */}
+      <section className="flex justify-center items-center py-8 px-8">
+        <div className="flex items-center space-x-8">
+          <div>
+            <h2 className="text-4xl font-bold mb-2">Your Music Insights</h2>
+            <p className="text-gray-400">Explore your top artists, tracks, and more.</p>
+          </div>
+          <div className="w-64 h-64 bg-gray-700 rounded-lg"></div>
         </div>
-      )}
-
-      {/* Display the current top tracks */}
-      {topTracksCur.length > 0 && (
-        <div>
-          <p className="font-bold">Your Top Tracks:</p>          
-          <ol>
-            {topTracksCur.map((track, index) => (
-              <li>{index + 1}. {track}</li>
-            ))}
-          </ol>
+      </section>
+  
+      {/* User Info Section */}
+      <section className="flex justify-center bg-zinc-800 py-6 px-8">
+        <div className="w-16 h-16 bg-gray-600 rounded-full mr-4"></div> {/* pfp placeholder */}
+        <div className="text-left mt-2">
+          <h3 className="text-lg font-semibold">usernameplaceholder123</h3>
+          <p className="text-gray-300">Your stats are based on historical data from Spotify.</p>
         </div>
-      )}
-    </>
+      </section>
+  
+      {/* Top Artists and Tracks Section */}
+      <section className="py-10 px-8">
+        <h2 className="text-3xl font-bold text-center mb-8">Top Artists and Tracks</h2>
+        <div className="flex justify-around">
+          {/* Top Artists List */}
+          <div className="bg-zinc-800 p-4 rounded-lg shadow-md w-1/2 mx-4">
+            <h3 className="text-xl font-semibold mb-4">Top Artists</h3>
+            <ol className="space-y-2 text-gray-300">
+              <li>1. Artist 1</li>
+              <li>2. Artist 2</li>
+              <li>3. Artist 3</li>
+              <li>4. Artist 4</li>
+              <li>5. Artist 5</li>
+            </ol>
+          </div>
+  
+          {/* Top Tracks List */}
+          <div className="bg-zinc-800 p-4 rounded-lg shadow-md w-1/2 mx-24">
+            <h3 className="text-xl font-semibold mb-4 text-center">Top Tracks</h3>
+            <ol className="space-y-2 text-gray-300">
+              <li>1. Track 1</li>
+              <li>2. Track 2</li>
+              <li>3. Track 3</li>
+              <li>4. Track 4</li>
+              <li>5. Track 5</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 

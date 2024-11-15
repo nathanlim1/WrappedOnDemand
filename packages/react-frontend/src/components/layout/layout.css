@@ -5,5 +5,5 @@
   }
   
   .page-container.with-navbar {
-    padding-top: 128px; /* navbar (56px) + timerange (72px) */
+    padding-top: 64px; /* navbar (56px) */
   }

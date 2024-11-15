@@ -13,7 +13,7 @@ function Login() {
           <img 
             src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Black.png" 
             alt="Spotify Logo" 
-            className="w-10 h-10 mr-3" // Adjust width and height as needed
+            className="w-10 h-10 mr-3"
           />
           <h1 className="text-5xl font-bold">Spotify Stat Tracker</h1>
         </div>
@@ -22,7 +22,7 @@ function Login() {
 
         <Link to="http://localhost:8000/login">
           <button
-            className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl focus:outline-none hover:text-[#00FF7F]"
+            className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F]"
             style={{ border: 'none' }}
           >
             Link My Spotify
