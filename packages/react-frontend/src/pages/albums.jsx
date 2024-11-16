@@ -15,9 +15,8 @@ function Page4({ time_range }) {
       try {
         const topArtists = await getTopNArtists(spotifyApi, 5, time_range);
         setArtists(topArtists);
-        console.log("top artists", topArtists)
+        
         const topTracks = await getTopNTracks(spotifyApi, 5, time_range);
-        console.log(topTracks);
         setTracks(topTracks);
         
         const topAlbums = await getTopNAlbums(spotifyApi, 5, await getTopNTracks(spotifyApi, 200, time_range));
