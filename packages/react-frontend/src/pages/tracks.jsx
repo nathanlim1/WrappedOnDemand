@@ -2,7 +2,7 @@ import '../index.css'
 import React, {useState, useEffect} from 'react'
 import { useSpotifyApi } from '../SpotifyContext'; 
 
-function Page3({time_range}) {
+function TrackPage({time_range}) {
     const spotifyApi = useSpotifyApi();
     const [topArtists, setTopArtists] = useState([]);
 
@@ -38,4 +38,4 @@ function Page3({time_range}) {
   )
 }
 
-export default Page3;
+export default TrackPage;

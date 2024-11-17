@@ -4,7 +4,7 @@ import { useSpotifyApi } from '../SpotifyContext';
 import { getTopNArtists } from '../utils/getTopUtils';
 import ArtistPreview from '../components/artistPreview/artistPreview';
 
-function Page2({time_range}) {
+function ArtistPage({time_range}) {
     const spotifyApi = useSpotifyApi();
     const [artists1month, setArtists1Month] = useState([]);
     const [artists6month, setArtists6Month] = useState([]);
@@ -66,4 +66,4 @@ function Page2({time_range}) {
   )
 }
 
-export default Page2;
+export default ArtistPage;

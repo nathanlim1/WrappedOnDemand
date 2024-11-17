@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSpotifyApi } from '../SpotifyContext';
 import { getTopNArtists, getTopNTracks, getTopNAlbums } from '../utils/getTopUtils';
 
-function Page4({ time_range }) {
+function AlbumPage({ time_range }) {
   const spotifyApi = useSpotifyApi();
 
   const [artists, setArtists] = useState([]);
@@ -66,4 +66,4 @@ function Page4({ time_range }) {
   );
 }
 
-export default Page4;
+export default AlbumPage;
