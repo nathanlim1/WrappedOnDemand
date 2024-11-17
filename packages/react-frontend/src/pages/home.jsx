@@ -2,7 +2,6 @@ import "../index.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSpotifyApi } from "../SpotifyContext";
-import { useLocation } from "react-router-dom";
 import LoadingSpinner from "../components/loadingSpinner";
 import {
   getTopNArtists,
@@ -26,7 +25,10 @@ const getTokenFromUrl = () => {
 function Home({ setLoggedIn, time_range }) {
   const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
+  const [username, setUsername] = useState("username");
+  const [profilePicture, setProfilePicture] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
   // Artists
   const [topArtists1Month, setTopArtists1Month] = useState([]);
   const [topArtists6Month, setTopArtists6Month] = useState([]);
@@ -62,11 +64,17 @@ function Home({ setLoggedIn, time_range }) {
       setLoggedIn(true);
       console.log("Current Access Token:", spotifyApi.getAccessToken());
     }
-  }, [spotifyApi]);
+  }, [spotifyApi, setLoggedIn]);
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       fetchAllTopData();
+
+      // Get the user's name and profile picture
+      spotifyApi.getMe().then((data) => {
+        setUsername(data.display_name);
+        setProfilePicture(data.images?.[0]?.url || "");
+      });
     }
   }, [spotifyApi]);
 
@@ -158,13 +166,23 @@ function Home({ setLoggedIn, time_range }) {
 
       {/* User Info Section */}
       <section className="flex justify-center bg-zinc-800 py-6 px-8">
-        <div className="w-16 h-16 bg-gray-600 rounded-full mr-4"></div>{" "}
-        {/* pfp placeholder */}
-        <div className="text-left mt-2">
-          <h3 className="text-lg font-semibold">usernameplaceholder123</h3>
-          <p className="text-gray-300">
-            Your stats are based on historical data from Spotify.
-          </p>
+        <div className="flex bg-gradient-to-br from-zinc-700 rounded-lg shadow-2xl p-4">
+          {profilePicture ? (
+            <img
+              src={profilePicture}
+              alt="User Profile Picture"
+              className="w-16 h-16 text-lg rounded-full mr-4"
+            />
+          ) : (
+            // placeholder if pfp could not be retrieved
+            <div className="w-16 h-16 bg-gray-600 rounded-full mr-4"></div>
+          )}
+          <div className="text-left mt-2">
+            <h3 className="text-lg font-semibold">{username}</h3>
+            <p className="text-gray-300 text-sm">
+              Your stats are based on historical data from Spotify.
+            </p>
+          </div>
         </div>
       </section>
 
