@@ -175,9 +175,11 @@ function Home({ setLoggedIn, time_range }) {
         </h2>
         <div className="flex justify-around">
           {/* Top Artists List */}
-          <div className="bg-zinc-800 p-4 rounded-lg shadow-md w-1/2 mx-10">
-            <h3 className="text-xl font-semibold mb-4">Top 5 Artists</h3>
-            <ol className="space-y-2 text-gray-300 mb-4">
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4">
+            <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
+              <h3 className="text-xl font-semibold">Top 5 Artists</h3>
+            </div>
+            <ol className="space-y-2 text-gray-300 mb-4 px-2">
               {topArtistsCur.slice(0, 5).map((artist, index) => (
                 <li key={artist.id}>
                   {index + 1}. {artist.name}
@@ -186,16 +188,18 @@ function Home({ setLoggedIn, time_range }) {
             </ol>
             <Link
               to="/artists"
-              className="bg-zinc-900 text-white py-2 px-4 rounded hover:bg-[#1db954] hover:text-white transition duration-200"
+              className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
             >
               View Details
             </Link>
           </div>
 
           {/* Top Tracks List */}
-          <div className="bg-zinc-800 p-4 rounded-lg shadow-md w-1/2 mx-10">
-            <h3 className="text-xl font-semibold mb-4">Top 5 Tracks</h3>
-            <ol className="space-y-2 text-gray-300 mb-4">
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4">
+            <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
+              <h3 className="text-xl font-semibold">Top 5 Tracks</h3>
+            </div>
+            <ol className="space-y-2 text-gray-300 mb-4 px-2">
               {topTracksCur.slice(0, 5).map((track, index) => (
                 <li key={track.id}>
                   {index + 1}. {track.name}
@@ -204,16 +208,18 @@ function Home({ setLoggedIn, time_range }) {
             </ol>
             <Link
               to="/tracks"
-              className="bg-zinc-900 text-white py-2 px-4 rounded hover:bg-[#1db954] hover:text-white transition duration-200"
+              className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
             >
               View Details
             </Link>
           </div>
 
           {/* Top Albums List */}
-          <div className="bg-zinc-800 p-4 rounded-lg shadow-md w-1/2 mx-10">
-            <h3 className="text-xl font-semibold mb-4">Top 5 Albums</h3>
-            <ol className="space-y-2 text-gray-300 mb-4">
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4">
+            <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
+              <h3 className="text-xl font-semibold">Top 5 Albums</h3>
+            </div>
+            <ol className="space-y-2 text-gray-300 mb-4 px-2">
               {topAlbumsCur.slice(0, 5).map((album, index) => (
                 <li key={album.id}>
                   {index + 1}. {album.name}
@@ -222,7 +228,7 @@ function Home({ setLoggedIn, time_range }) {
             </ol>
             <Link
               to="/albums"
-              className="bg-zinc-900 text-white py-2 px-4 rounded hover:bg-[#1db954] hover:text-white transition duration-200"
+              className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
             >
               View Details
             </Link>
