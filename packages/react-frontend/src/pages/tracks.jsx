@@ -1,8 +1,9 @@
 import '../index.css'
 import React, {useState, useEffect} from 'react'
 import { useSpotifyApi } from '../SpotifyContext'; 
+import LoadingSpinner from '../components/loadingSpinner';
 
-function Page3({time_range}) {
+function TrackPage({time_range}) {
     const spotifyApi = useSpotifyApi();
     const [topArtists, setTopArtists] = useState([]);
 
@@ -20,22 +21,8 @@ function Page3({time_range}) {
   };  
 
   return (
-    <>
-        <h3>Page 3</h3>
-        <p>This is just here for testing the navbar</p>
-        <button onClick={() => getUsersTopArtists()}>Get Top Artists</button>
-        {topArtists.length > 0 && (
-        <div>
-            Your Top Artists:
-            <ol>
-            {topArtists.map((artist, index) => (
-                <li key={index}>{artist}</li>
-            ))}
-            </ol>
-        </div>
-        )}
-    </>
+    <LoadingSpinner/>
   )
 }
 
-export default Page3;
+export default TrackPage;

@@ -9,9 +9,9 @@ const Navbar = ({ loggedIn }) => {
         <nav className="navbar">
           <div className="navbar-links">
             <Link to="/home">Home</Link>
-            <Link to="/page2">Page2</Link>
-            <Link to="/page3">Page3</Link>
-            <Link to="/page4">Page4</Link>
+            <Link to="/artists">Artists</Link>
+            <Link to="/tracks">Tracks</Link>
+            <Link to="/albums">Albums</Link>
           </div>
         </nav>
       )}
