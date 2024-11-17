@@ -19,7 +19,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home setLoggedIn={setLoggedIn} time_range={timeRange}/>} />
           <Route path="/artists" element={<ArtistPage time_range={timeRange}/>}/>
-          <Route path="/tracks" element={<c time_range={timeRange}/>}/>
+          <Route path="/tracks" element={<TrackPage time_range={timeRange}/>}/>
           <Route path="/albums" element={<AlbumPage time_range={timeRange}/>}/>
         </Routes>
       </Layout>
