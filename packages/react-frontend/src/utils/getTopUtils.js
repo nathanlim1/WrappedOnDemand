@@ -88,28 +88,58 @@ function getTopNTracks(spotifyApi, maxTracks, timerange) {
   return fetchWithRetry(fetchBatchOfTracks);
 }
 
-// Drawing from a list of tracks, calculate the top n albums
-async function getTopNAlbums(spotifyApi, maxAlbums, tracks) {
+// Returns the top n albums, drawing from a list of tracks
+function getTopNAlbums(spotifyApi, maxAlbums, tracks) {
   const trackIds = tracks.map((track) => track.album.id);
+
+  // get the scores (how much the user listened) for each album
   const idScores = trackIds.reduce((acc, id, index) => {
     const score = trackIds.length - index;
-    if (acc[id]) {
-      acc[id] += score;
-    } else {
-      acc[id] = score;
-    }
+    acc[id] = (acc[id] || 0) + score;
     return acc;
   }, {});
 
+  // sort and only take the top n albums
   let sortedIds = Object.keys(idScores).sort(
     (a, b) => idScores[b] - idScores[a]
   );
-  sortedIds = sortedIds.slice(0, maxAlbums);
-  const sortedAlbums = await Promise.all(
-    sortedIds.map((id) => spotifyApi.getAlbum(id))
-  );
 
-  return sortedAlbums;
+  sortedIds = sortedIds.slice(0, maxAlbums);
+
+  // batch album IDs into groups of up to 20, the max allowed for getAlbums API call
+  const batches = [];
+  const batchSize = 20;
+
+  for (let i = 0; i < sortedIds.length; i += batchSize) {
+    batches.push(sortedIds.slice(i, i + batchSize));
+  }
+
+  const albumPromises = batches.map((batchIds) => {
+    return fetchWithRetry(() => spotifyApi.getAlbums(batchIds));
+  });
+
+  return Promise.all(albumPromises)
+    .then((responses) => {
+      // put all responses into a single array
+      const albums = responses.reduce((acc, response) => {
+        return acc.concat(response.albums);
+      }, []);
+
+      // map album IDs to album objects
+      const albumMap = {};
+      albums.forEach((album) => {
+        albumMap[album.id] = album;
+      });
+
+      // reconstruct the sorted album list
+      const sortedAlbums = sortedIds.map((id) => albumMap[id]);
+
+      return sortedAlbums;
+    })
+    .catch((error) => {
+      console.error("Error fetching albums:", error);
+      return [];
+    });
 }
 
 export { getTopNArtists, getTopNTracks, getTopNAlbums };

@@ -2,6 +2,7 @@ import "../index.css";
 import React, { useState, useEffect } from "react";
 import { useSpotifyApi } from "../SpotifyContext";
 import { useLocation } from "react-router-dom";
+import LoadingSpinner from "../components/loadingSpinner";
 import {
   getTopNArtists,
   getTopNTracks,
@@ -24,6 +25,7 @@ const getTokenFromUrl = () => {
 function Home({ setLoggedIn, time_range }) {
   const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   // Artists
   const [topArtists1Month, setTopArtists1Month] = useState([]);
   const [topArtists6Month, setTopArtists6Month] = useState([]);
@@ -108,6 +110,7 @@ function Home({ setLoggedIn, time_range }) {
 
       // Initialize the current selections
       updateCurrentData();
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching top data:", error);
     }
@@ -132,6 +135,10 @@ function Home({ setLoggedIn, time_range }) {
       setTopAlbumsCur(topAlbumsLifetime);
     }
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white">
