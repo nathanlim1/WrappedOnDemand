@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSpotifyApi } from "../SpotifyContext";
 import LoadingSpinner from "../components/loadingSpinner";
+import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import {
   getTopNArtists,
   getTopNTracks,
@@ -44,10 +45,40 @@ function Home({ setLoggedIn, time_range }) {
   const [topAlbums6Month, setTopAlbums6Month] = useState([]);
   const [topAlbumsLifetime, setTopAlbumsLifetime] = useState([]);
 
+  // Genre Data
+  const [genreData1Month, setGenreData1Month] = useState([]);
+  const [genreData6Month, setGenreData6Month] = useState([]);
+  const [genreDataLifetime, setGenreDataLifetime] = useState([]);
+  const [genreDataCur, setGenreDataCur] = useState([]);
+
   // Current selections based on time_range
   const [topArtistsCur, setTopArtistsCur] = useState([]);
   const [topTracksCur, setTopTracksCur] = useState([]);
   const [topAlbumsCur, setTopAlbumsCur] = useState([]);
+
+  const genreLabels = genreDataCur.map((genre) => genre[0]);
+  const genreCounts = genreDataCur.map((genre) => genre[1]);
+
+  const data = {
+    labels: genreLabels,
+    datasets: [
+      {
+        label: "Genre Frequency",
+        data: genreCounts,
+        backgroundColor: "rgba(29, 185, 84, 0.6)", // Spotify green color with opacity
+        borderColor: "rgba(29, 185, 84, 1)", // Spotify green color
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
 
   // when this page is first loaded, we get the user parameters from the URL
   useEffect(() => {
@@ -91,6 +122,9 @@ function Home({ setLoggedIn, time_range }) {
       setTopTracks1Month(tracks1Month);
       setTopAlbums1Month(albums1Month);
 
+      const genres1Month = getNGenreFrequencies(10, artists1Month);
+      setGenreData1Month(genres1Month);
+
       // Fetch all medium term data
       const [artists6Month, tracks6Month] = await Promise.all([
         getTopNArtists(spotifyApi, 50, "medium_term"),
@@ -101,6 +135,9 @@ function Home({ setLoggedIn, time_range }) {
       setTopArtists6Month(artists6Month);
       setTopTracks6Month(tracks6Month);
       setTopAlbums6Month(albums6Month);
+
+      const genres6Month = getNGenreFrequencies(10, artists6Month);
+      setGenreData6Month(genres6Month);
 
       // Fetch all long term data
       const [artistsLifetime, tracksLifetime] = await Promise.all([
@@ -117,8 +154,12 @@ function Home({ setLoggedIn, time_range }) {
       setTopTracksLifetime(tracksLifetime);
       setTopAlbumsLifetime(albumsLifetime);
 
+      const genresLifetime = getNGenreFrequencies(10, artistsLifetime);
+      setGenreDataLifetime(genresLifetime);
+
       // Initialize the current selections
       updateCurrentData();
+
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching top data:", error);
@@ -127,21 +168,32 @@ function Home({ setLoggedIn, time_range }) {
 
   useEffect(() => {
     updateCurrentData();
-  }, [time_range, topArtists1Month, topArtists6Month, topArtistsLifetime]);
+  }, [
+    time_range,
+    topArtists1Month,
+    topArtists6Month,
+    topArtistsLifetime,
+    genreData1Month,
+    genreData6Month,
+    genreDataLifetime,
+  ]);
 
   const updateCurrentData = () => {
     if (time_range === "short_term") {
       setTopArtistsCur(topArtists1Month);
       setTopTracksCur(topTracks1Month);
       setTopAlbumsCur(topAlbums1Month);
+      setGenreDataCur(genreData1Month);
     } else if (time_range === "medium_term") {
       setTopArtistsCur(topArtists6Month);
       setTopTracksCur(topTracks6Month);
       setTopAlbumsCur(topAlbums6Month);
+      setGenreDataCur(genreData6Month);
     } else if (time_range === "long_term") {
       setTopArtistsCur(topArtistsLifetime);
       setTopTracksCur(topTracksLifetime);
       setTopAlbumsCur(topAlbumsLifetime);
+      setGenreDataCur(genreDataLifetime);
     }
   };
 
@@ -257,9 +309,12 @@ function Home({ setLoggedIn, time_range }) {
       {/* Genre Section */}
       <section className="flex justify-center bg-zinc-800 py-6 px-8">
         <hr></hr>
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Genre Listening Trends
-        </h2>
+        <div className="w-full max-w-3xl">
+          <h2 className="text-3xl font-bold text-center mb-4">
+            Genre Listening Trends
+          </h2>
+          <GenreBarGraph genreData={genreDataCur} />
+        </div>
       </section>
     </div>
   );
