@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import { useSpotifyApi } from '../SpotifyContext'; 
 import { getTopNArtists } from '../utils/getTopUtils';
 import ArtistPreview from '../components/artistPreview/artistPreview';
+import LoadingSpinner from '../components/loadingSpinner';
 
 function ArtistPage({time_range}) {
     const spotifyApi = useSpotifyApi();
@@ -10,6 +11,7 @@ function ArtistPage({time_range}) {
     const [artists6month, setArtists6Month] = useState([]);
     const [artistsLifetime, setArtistsLifetime] = useState([]);
     const [topArtists, setTopArtists] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     // When the page loads, get the top 25 artists for each time range
     useEffect(() => {
@@ -37,8 +39,13 @@ function ArtistPage({time_range}) {
         } else if (time_range === "long_term") {
             setTopArtists(artistsLifetime);
         }
+        setIsLoading(false);
     }, [spotifyApi, time_range, artists1month, artists6month, artistsLifetime]);
 
+    if (isLoading) {
+        return (<LoadingSpinner/>)
+    }
+    
   return (
     <div className='flex flex-col items-center min-h-screen text-white bg-gradient-to-br from-zinc-800 to-zinc-950'>
         {/* Title */}
