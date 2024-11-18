@@ -14,6 +14,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.navbar-logo {
+  height: 30px;
+  width: auto; /* to maintain aspect ratio */
+  margin-right: 0px;
+}
+
 .navbar-links {
   display: flex;
   gap: 2rem;
@@ -28,5 +34,5 @@
 }
 
 .navbar-links a:hover {
-  color: #1DB954; /* Spotify green */
+  color: #1db954; /* Spotify green */
 }

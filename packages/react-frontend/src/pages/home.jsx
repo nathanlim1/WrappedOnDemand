@@ -181,7 +181,7 @@ function Home({ setLoggedIn, time_range }) {
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white">
       {/* Intro Section */}
-      <section className="flex justify-center items-center py-8 px-8">
+      <section className="flex justify-center items-center px-8">
         <div className="flex items-center space-x-8">
           <div className="ml-28">
             <h2 className="text-4xl font-bold mb-2">Your Music Insights</h2>
