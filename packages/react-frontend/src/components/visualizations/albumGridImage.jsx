@@ -83,8 +83,8 @@ const AlbumGridImage = ({ n, time_range }) => {
     }
     const context = canvas.getContext("2d");
 
-    const imageSize = 100;
-    const canvasSize = gridSize * imageSize;
+    const canvasSize = 500; // fixed canvas size no matter what config of n*n images
+    const imageSize = canvasSize / gridSize;
 
     canvas.width = canvasSize;
     canvas.height = canvasSize;
