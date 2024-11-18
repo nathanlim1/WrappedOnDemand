@@ -5,6 +5,7 @@ import { useSpotifyApi } from "../SpotifyContext";
 import LoadingSpinner from "../components/loadingSpinner";
 import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import { getNGenreFrequencies } from "../utils/getGenreFrequencies";
+import AlbumGridImage from "../components/visualizations/albumGridImage";
 import {
   getTopNArtists,
   getTopNTracks,
@@ -30,7 +31,6 @@ function Home({ setLoggedIn, time_range }) {
   const [username, setUsername] = useState("username");
   const [profilePicture, setProfilePicture] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
   // Artists
   const [topArtists1Month, setTopArtists1Month] = useState([]);
   const [topArtists6Month, setTopArtists6Month] = useState([]);
@@ -56,30 +56,6 @@ function Home({ setLoggedIn, time_range }) {
   const [topArtistsCur, setTopArtistsCur] = useState([]);
   const [topTracksCur, setTopTracksCur] = useState([]);
   const [topAlbumsCur, setTopAlbumsCur] = useState([]);
-
-  const genreLabels = genreDataCur.map((genre) => genre[0]);
-  const genreCounts = genreDataCur.map((genre) => genre[1]);
-
-  const data = {
-    labels: genreLabels,
-    datasets: [
-      {
-        label: "Genre Frequency",
-        data: genreCounts,
-        backgroundColor: "rgba(29, 185, 84, 0.6)", // Spotify green color with opacity
-        borderColor: "rgba(29, 185, 84, 1)", // Spotify green color
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
 
   // when this page is first loaded, we get the user parameters from the URL
   useEffect(() => {
@@ -207,19 +183,22 @@ function Home({ setLoggedIn, time_range }) {
       {/* Intro Section */}
       <section className="flex justify-center items-center py-8 px-8">
         <div className="flex items-center space-x-8">
-          <div>
+          <div className="ml-28">
             <h2 className="text-4xl font-bold mb-2">Your Music Insights</h2>
             <p className="text-gray-400">
               Explore your top artists, tracks, and more.
             </p>
           </div>
-          <div className="w-64 h-64 bg-gray-700 rounded-lg"></div>
+          <div className="scale-75">
+            <AlbumGridImage n={5} time_range={time_range} />
+          </div>
         </div>
       </section>
 
       {/* User Info Section */}
       <section className="flex justify-center bg-zinc-800 py-6 px-8">
-        <div className="flex bg-gradient-to-br from-zinc-700 rounded-lg shadow-2xl p-4">
+        <div className="flex bg-gradient-to-br from-zinc-700 rounded-lg shadow-xl p-4 scale-105">
+          {" "}
           {profilePicture ? (
             <img
               src={profilePicture}
@@ -241,12 +220,13 @@ function Home({ setLoggedIn, time_range }) {
 
       {/* Top Artists and Tracks Section */}
       <section className="py-10 px-8">
-        <h2 className="text-3xl font-bold text-center mb-8">
+        <h2 className="text-3xl font-bold text-center mb-4">
           Top Artists and Tracks
         </h2>
+        <hr className="mx-auto w-full max-w-3xl border-t border-gray-600 mb-8" />
         <div className="flex justify-around">
           {/* Top Artists List */}
-          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4">
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
               <h3 className="text-xl font-semibold">Top 5 Artists</h3>
             </div>
@@ -266,7 +246,7 @@ function Home({ setLoggedIn, time_range }) {
           </div>
 
           {/* Top Tracks List */}
-          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4">
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
               <h3 className="text-xl font-semibold">Top 5 Tracks</h3>
             </div>
@@ -286,7 +266,7 @@ function Home({ setLoggedIn, time_range }) {
           </div>
 
           {/* Top Albums List */}
-          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4">
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
               <h3 className="text-xl font-semibold">Top 5 Albums</h3>
             </div>
@@ -309,11 +289,11 @@ function Home({ setLoggedIn, time_range }) {
 
       {/* Genre Section */}
       <section className="flex justify-center bg-zinc-800 py-6 px-8">
-        <hr></hr>
         <div className="w-full max-w-3xl">
           <h2 className="text-3xl font-bold text-center mb-4">
             Genre Listening Trends
           </h2>
+          <hr className="w-full mx-auto max-w-lg border-t border-gray-600 mb-8" />
           <GenreBarGraph genreData={genreDataCur} />
         </div>
       </section>
