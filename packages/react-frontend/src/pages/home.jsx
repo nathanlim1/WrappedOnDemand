@@ -228,7 +228,7 @@ function Home({ setLoggedIn, time_range }) {
           {/* Top Artists List */}
           <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
-              <h3 className="text-xl font-semibold">Top 5 Artists</h3>
+              <h3 className="text-xl font-semibold">Top Artists</h3>
             </div>
             <ol className="space-y-2 text-gray-300 mb-4 px-2">
               {topArtistsCur.slice(0, 5).map((artist, index) => (
@@ -248,7 +248,7 @@ function Home({ setLoggedIn, time_range }) {
           {/* Top Tracks List */}
           <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
-              <h3 className="text-xl font-semibold">Top 5 Tracks</h3>
+              <h3 className="text-xl font-semibold">Top Tracks</h3>
             </div>
             <ol className="space-y-2 text-gray-300 mb-4 px-2">
               {topTracksCur.slice(0, 5).map((track, index) => (
@@ -268,7 +268,7 @@ function Home({ setLoggedIn, time_range }) {
           {/* Top Albums List */}
           <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
-              <h3 className="text-xl font-semibold">Top 5 Albums</h3>
+              <h3 className="text-xl font-semibold">Top Albums</h3>
             </div>
             <ol className="space-y-2 text-gray-300 mb-4 px-2">
               {topAlbumsCur.slice(0, 5).map((album, index) => (
