@@ -17,7 +17,7 @@ const AlbumGridImage = ({ n, time_range }) => {
         });
         const tracks = topTracksData.items;
 
-        // gt unique album image URLs
+        // get unique album image URLs
         const uniqueAlbums = new Map();
 
         tracks.forEach((track) => {

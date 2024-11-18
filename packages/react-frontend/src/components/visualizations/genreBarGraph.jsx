@@ -20,6 +20,8 @@ ChartJS.register(
   Legend
 );
 
+ChartJS.defaults.color = "#FFFFFF";
+
 const GenreBarGraph = ({ genreData }) => {
   // Prepare data for the chart
   const genreLabels = genreData.map((genre) => genre[0]);
