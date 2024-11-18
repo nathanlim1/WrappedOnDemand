@@ -33,8 +33,21 @@ const AlbumGridImage = ({ n, time_range }) => {
         // convert the Map values to an array of image URLs
         const albumImages = Array.from(uniqueAlbums.values());
 
-        // limit to n^2 images
-        const limitedAlbumImages = albumImages.slice(0, n * n);
+        // calculate the maximum grid size based on the number of unique images
+        const totalImages = albumImages.length;
+        const maxGridSize = Math.min(n, Math.floor(Math.sqrt(totalImages)));
+
+        if (maxGridSize === 0) {
+          console.warn("Not enough unique album covers to create a grid.");
+          setIsLoading(false);
+          return;
+        }
+
+        // limit to maxGridSize^2 images
+        const limitedAlbumImages = albumImages.slice(
+          0,
+          maxGridSize * maxGridSize
+        );
 
         // load images
         const loadedImages = await Promise.all(
@@ -42,7 +55,7 @@ const AlbumGridImage = ({ n, time_range }) => {
         );
 
         // put images on canvas
-        drawImagesOnCanvas(loadedImages);
+        drawImagesOnCanvas(loadedImages, maxGridSize);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching top albums:", error);
@@ -62,7 +75,7 @@ const AlbumGridImage = ({ n, time_range }) => {
     });
   };
 
-  const drawImagesOnCanvas = (images) => {
+  const drawImagesOnCanvas = (images, gridSize) => {
     const canvas = canvasRef.current;
     if (!canvas) {
       console.error("Canvas not found");
@@ -70,7 +83,6 @@ const AlbumGridImage = ({ n, time_range }) => {
     }
     const context = canvas.getContext("2d");
 
-    const gridSize = n;
     const imageSize = 100;
     const canvasSize = gridSize * imageSize;
 
