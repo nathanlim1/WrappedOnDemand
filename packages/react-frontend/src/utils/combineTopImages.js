@@ -3,18 +3,12 @@ import { createCanvas, loadImage } from 'canvas';
 /**
  * Fetch and combine the top 4 artists or tracks from Spotify into a 2x2 image grid.
  * @param {Object} spotifyApi - The Spotify Web API instance.
- * @param {string} type - 'artists' or 'tracks'.
- * @param {string} timeRange - 'short_term', 'medium_term', or 'long_term'.
+ * @param {Object} options - Options for type and time range.
+ * @param {string} options.type - 'artists' or 'tracks' (default: 'artists').
+ * @param {string} options.timeRange - 'short_term', 'medium_term', or 'long_term' (default: 'medium_term').
  * @returns {Promise<Buffer>} - A promise that resolves to a PNG image buffer.
  */
-async function combineTopImages(spotifyApi, type = 'artists', timeRange = 'medium_term') {
-
-    console.log('Spotify API:', spotifyApi);
-    console.log('Type:', type);
-    console.log('Time Range:', timeRange);
-
-
-
+async function combineTopImages(spotifyApi, { type = 'artists', timeRange = 'medium_term' } = {}) {
     if (!spotifyApi) {
         throw new Error('Spotify API instance is required.');
     }
@@ -34,7 +28,6 @@ async function combineTopImages(spotifyApi, type = 'artists', timeRange = 'mediu
         }
     };
 
-    // Fetch data from Spotify API
     const response = await fetchTopItems();
     const imageUrls = response.items.map((item) => item.images?.[0]?.url).filter(Boolean);
 
@@ -48,7 +41,6 @@ async function combineTopImages(spotifyApi, type = 'artists', timeRange = 'mediu
     const canvas = createCanvas(canvasSize, canvasSize);
     const ctx = canvas.getContext('2d');
 
-    // Load and draw images
     const loadedImages = await Promise.all(
         imageUrls.map((url) => loadImage(url).catch((err) => {
             console.error(`Failed to load image from URL: ${url}`, err);
@@ -57,8 +49,8 @@ async function combineTopImages(spotifyApi, type = 'artists', timeRange = 'mediu
     );
 
     loadedImages.forEach((img, index) => {
-        const x = (index % 2) * imageSize; // 0 or 200
-        const y = Math.floor(index / 2) * imageSize; // 0 or 200
+        const x = (index % 2) * imageSize;
+        const y = Math.floor(index / 2) * imageSize;
         ctx.drawImage(img, x, y, imageSize, imageSize);
     });
 
