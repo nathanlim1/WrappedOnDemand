@@ -12,13 +12,23 @@ import {
   getTopNTracks,
   getTopNAlbums,
 } from "./utils/getTopUtils.js";
+import LoadingSpinner from "./components/loadingSpinner.jsx";
 
 const App = () => {
-  const MAX_NUMBER_TO_BE_LOADED = 250;
+  /*
+  Here are the load times of some different options for this value
+  50: 5 seconds
+  250: 11 seconds
+  500: 17 seconds
+  750: 21 seconds (first number to get 100+ albums for each time frame)
+  1000: 26 seconds 
+  */
+  const MAX_NUMBER_TO_BE_LOADED = 750;
 
   const spotifyApi = useSpotifyApi();
   const [timeRange, setTimeRange] = useState("short_term")
   const [loggedIn, setLoggedIn] = useState(false);
+  const [contentIsLoaded, setContentIsLoaded] = useState(false);
 
   const [allArtists1M, setAllArtists1M] = useState([]);
   const [allArtists6M, setAllArtists6M] = useState([]);
@@ -46,19 +56,32 @@ const App = () => {
         setAllTracks1M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term"));
         setAllTracks6M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "medium_term"));
         setAllTracksLT(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term"));
-
-        // Fetch all albums
-        console.log("Loading all Albums");
-        setAllAlbums1M(await getTopNAlbums(spotifyApi, 10, allTracks1M));
-        console.log("Loaded Albums for 1 month");
-        setAllAlbums6M(await getTopNAlbums(spotifyApi, 10, allTracks6M));
-        setAllAlbumsLT(await getTopNAlbums(spotifyApi, 10, allTracksLT));
       }
     }
 
     fetchAllData();
   }, [loggedIn]);
+
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      if (loggedIn && allTracks1M.length > 0 && allTracks6M.length > 0 && allTracksLT.length > 0) {
+        // Fetch all albums after the 
+        console.log("Loading all Albums");
+        setAllAlbums1M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks1M));
+        setAllAlbums6M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks6M));
+        setAllAlbumsLT(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracksLT));
+        setContentIsLoaded(true);
+      }
+    }
+
+    fetchAlbums();
+  }, [loggedIn, allTracks1M, allTracks6M, allTracksLT]);
   
+
+  if (loggedIn && !contentIsLoaded) {
+    return (<LoadingSpinner/>)
+  }
+
   return (
     <Router>
       <Layout loggedIn={loggedIn} timeRange={timeRange} setTimeRange={setTimeRange}>
