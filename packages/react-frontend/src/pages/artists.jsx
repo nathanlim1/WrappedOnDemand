@@ -1,47 +1,24 @@
 import "../index.css";
 import React, { useState, useEffect } from "react";
-import { useSpotifyApi } from "../SpotifyContext";
-import { getTopNArtists } from "../utils/getTopUtils";
 import ArtistPreview from "../components/artistPreview/artistPreview";
 import LoadingSpinner from "../components/loadingSpinner";
 
-function ArtistPage({ time_range }) {
-  const spotifyApi = useSpotifyApi();
-  const [artists1month, setArtists1Month] = useState([]);
-  const [artists6month, setArtists6Month] = useState([]);
-  const [artistsLifetime, setArtistsLifetime] = useState([]);
-  const [topArtists, setTopArtists] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // When the page loads, get the top 25 artists for each time range
-  useEffect(() => {
-    const fetchArtists = async () => {
-      try {
-        setArtists1Month(await getTopNArtists(spotifyApi, 25, "short_term"));
-        setArtists6Month(await getTopNArtists(spotifyApi, 25, "medium_term"));
-        setArtistsLifetime(await getTopNArtists(spotifyApi, 25, "long_term"));
-      } catch (err) {
-        console.error("Error fetching artists:", err);
-      }
-    };
-
-    fetchArtists();
-    console.log(topArtists[0]);
-  }, [spotifyApi]);
+function ArtistPage({ time_range, allArtists }) {
+  const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
+  const [maxNumDisplayed, setMaxNumDisplayed] = useState(25);
 
   // When timerange changes, update the currently displayed list
   useEffect(() => {
     if (time_range === "short_term") {
-      setTopArtists(artists1month);
+      setCurrentlyDisplayed(allArtists["1M"]);
     } else if (time_range === "medium_term") {
-      setTopArtists(artists6month);
+      setCurrentlyDisplayed(allArtists["6M"]);
     } else if (time_range === "long_term") {
-      setTopArtists(artistsLifetime);
+      setCurrentlyDisplayed(allArtists["LT"]);
     }
-    setIsLoading(false);
-  }, [spotifyApi, time_range, artists1month, artists6month, artistsLifetime]);
+  }, [time_range, allArtists]);
 
-  if (isLoading) {
+  if (currentlyDisplayed.length === 0) {
     return <LoadingSpinner />;
   }
 
@@ -53,7 +30,7 @@ function ArtistPage({ time_range }) {
       </p>
       {/* List of Artist Previews */}
       <div className="space-y-4 mb-4">
-        {topArtists.map((a, i) => (
+        {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
           <ArtistPreview artist={a} index={i + 1} />
         ))}
       </div>
