@@ -1,6 +1,5 @@
 import '../index.css'
 import React, {useState, useEffect} from 'react'
-import LoadingSpinner from '../components/loadingSpinner';
 
 function TrackPage({time_range, allTracks}) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
@@ -17,15 +16,11 @@ function TrackPage({time_range, allTracks}) {
     }
   }, [time_range, allTracks]);
 
-  if (currentlyDisplayed.length === 0) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <div>
       Top Tracks
 
-      {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
+      {currentlyDisplayed.map((t, i) => (
           <div>{i + 1}. {t.name}</div>
         ))}
     </div>

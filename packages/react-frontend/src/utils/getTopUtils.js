@@ -11,6 +11,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // retry mechanism for fetching (when rate limited)
 const fetchWithRetry = async (fetchFunction, retries = 3) => {
+  console.log("retrying ...");
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       return await fetchFunction();
@@ -90,11 +91,13 @@ function getTopNTracks(spotifyApi, maxTracks, timerange) {
 
 // Returns the top n albums, drawing from a list of tracks
 function getTopNAlbums(spotifyApi, maxAlbums, tracks) {
+  // Get the album ids from the given songs
   const trackIds = tracks.map((track) => track.album.id);
 
   // get the scores (how much the user listened) for each album
   const idScores = trackIds.reduce((acc, id, index) => {
-    const score = trackIds.length - index;
+    // Albums at the beginning of the list have higher score
+    const score = Math.pow(trackIds.length - index, 5);
     acc[id] = (acc[id] || 0) + score;
     return acc;
   }, {});
@@ -133,8 +136,11 @@ function getTopNAlbums(spotifyApi, maxAlbums, tracks) {
 
       // reconstruct the sorted album list
       const sortedAlbums = sortedIds.map((id) => albumMap[id]);
+      
+      // filter albums that are too short (singles basically)
+      const filteredAlbums = sortedAlbums.filter((album) => album.total_tracks > 2);
 
-      return sortedAlbums;
+      return filteredAlbums;
     })
     .catch((error) => {
       console.error("Error fetching albums:", error);
