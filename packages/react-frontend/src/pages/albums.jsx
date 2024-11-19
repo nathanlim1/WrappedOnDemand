@@ -1,7 +1,5 @@
 import '../index.css';
 import React, { useState, useEffect } from 'react';
-import LoadingSpinner from "../components/loadingSpinner";
-
 
 function AlbumPage({ time_range, allAlbums }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
@@ -17,14 +15,11 @@ function AlbumPage({ time_range, allAlbums }) {
     }
   }, [time_range, allAlbums]);
 
-  if (currentlyDisplayed.length === 0) {
-    return <LoadingSpinner />;
-  }
   return (
     <div>
       Top Albums
 
-      {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
+      {currentlyDisplayed.map((a, i) => (
         <div>{i + 1}. {a.name}</div>
       ))}
       </div>

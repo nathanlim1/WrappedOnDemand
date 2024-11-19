@@ -1,7 +1,6 @@
 import "../index.css";
 import React, { useState, useEffect } from "react";
 import ArtistPreview from "../components/artistPreview/artistPreview";
-import LoadingSpinner from "../components/loadingSpinner";
 
 function ArtistPage({ time_range, allArtists }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
@@ -17,10 +16,6 @@ function ArtistPage({ time_range, allArtists }) {
       setCurrentlyDisplayed(allArtists["LT"]);
     }
   }, [time_range, allArtists]);
-
-  if (currentlyDisplayed.length === 0) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <div className="flex flex-col items-center min-h-screen text-white bg-gradient-to-br from-zinc-800 to-zinc-950">
