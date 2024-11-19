@@ -1,27 +1,34 @@
 import '../index.css'
 import React, {useState, useEffect} from 'react'
-import { useSpotifyApi } from '../SpotifyContext'; 
 import LoadingSpinner from '../components/loadingSpinner';
 
-function TrackPage({time_range}) {
-    const spotifyApi = useSpotifyApi();
-    const [topArtists, setTopArtists] = useState([]);
+function TrackPage({time_range, allTracks}) {
+  const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
+  const [maxNumDisplayed, setMaxNumDisplayed] = useState(25);
 
-  // uses spotifyApi to get users top artists
-  const getUsersTopArtists = () => {
-    spotifyApi.getMyTopArtists({time_range: time_range})
-        .then((response) => {
-            console.log(response);
-            const artistNames = response.items.map(artist => artist.name);
-            setTopArtists(artistNames);
-        })
-        .catch((err) => {
-            console.error('Error fetching top artists:', err);
-        });
-  };  
+  // When timerange changes, update the currently displayed list
+  useEffect(() => {
+    if (time_range === "short_term") {
+      setCurrentlyDisplayed(allTracks["1M"]);
+    } else if (time_range === "medium_term") {
+      setCurrentlyDisplayed(allTracks["6M"]);
+    } else if (time_range === "long_term") {
+      setCurrentlyDisplayed(allTracks["LT"]);
+    }
+  }, [time_range, allTracks]);
+
+  if (currentlyDisplayed.length === 0) {
+    return <LoadingSpinner />;
+  }
 
   return (
-    <LoadingSpinner/>
+    <div>
+      Top Tracks
+
+      {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
+          <div>{i + 1}. {t.name}</div>
+        ))}
+    </div>
   )
 }
 
