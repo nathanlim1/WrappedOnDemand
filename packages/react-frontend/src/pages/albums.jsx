@@ -1,5 +1,6 @@
 import '../index.css';
 import React, { useState, useEffect } from 'react';
+import AlbumPreview from '../components/albumPreview';
 
 function AlbumPage({ time_range, allAlbums }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
@@ -13,15 +14,22 @@ function AlbumPage({ time_range, allAlbums }) {
     } else if (time_range === "long_term") {
       setCurrentlyDisplayed(allAlbums["LT"]);
     }
+    console.log(currentlyDisplayed[0]);
   }, [time_range, allAlbums]);
 
   return (
     <div className='flex flex-col items-center min-h-screen text-white bg-gradient-to-br from-zinc-800 to-zinc-950'>
-      Top Albums
+      {/* Title */}
+      <p className="text-center font-bold mb-4 mt-4 text-4xl">
+        Your Top Albums
+      </p>
 
-      {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
-        <div>{i + 1}. {a.name}</div>
-      ))}
+      <div className="space-y-4 mb-4">
+        {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
+          <AlbumPreview index={i + 1} album={a}/>
+        ))}
+      </div>
+      
 
       {/* Buttons to see more/all */}
       <div className="flex space-x-4 mb-20">
