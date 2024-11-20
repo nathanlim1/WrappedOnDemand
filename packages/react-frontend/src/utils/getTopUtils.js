@@ -11,7 +11,6 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // retry mechanism for fetching (when rate limited)
 const fetchWithRetry = async (fetchFunction, retries = 3) => {
-  console.log("retrying ...");
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       return await fetchFunction();
