@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "all": "^0.0.0",
+    "chart.js": "^4.4.6",
+    "react-chartjs-2": "^5.2.0",
     "react-router-dom": "^6.27.0",
     "spotify-web-api-js": "^1.5.2",
     "spotify-web-api-node": "^5.0.2"

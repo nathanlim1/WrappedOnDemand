@@ -1,9 +1,10 @@
 .page-container {
-    padding-top: 0px;
-    width: 100%;
-    min-height: 100vh;
-  }
-  
-  .page-container.with-navbar {
-    padding-top: 64px; /* navbar (56px) */
-  }
+  padding-top: 0px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.page-container.with-navbar {
+  padding-top: 64px; /* navbar (64px) */
+  padding-bottom: 96px; /* allow space for the time range selector */
+}
