@@ -14,7 +14,7 @@ const PopularityBar = ({ artists }) => {
       <div className="w-3/4">
         <div className="flex justify-between mb-2">
           <span className="text-2xl font-bold">Popularity Score</span>
-          <span className="text-2xl font-bold">{percentage}%</span>
+          <span className="text-2xl font-bold">{(percentage / 10).toFixed(1)}/10</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
           <div
