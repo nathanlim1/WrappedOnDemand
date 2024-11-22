@@ -18,7 +18,9 @@ function TrackPage({time_range, allTracks}) {
 
   return (
     <div className='flex flex-col items-center min-h-screen text-white bg-gradient-to-br from-zinc-800 to-zinc-950'>
-      Top Tracks
+      <p className="text-center font-bold mb-4 mt-4 text-4xl">
+        Your Top Tracks
+      </p>
 
       {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
           <div>{i + 1}. {t.name}</div>
