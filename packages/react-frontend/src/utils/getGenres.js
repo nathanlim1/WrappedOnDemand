@@ -1,5 +1,7 @@
+import allGenres from "../../../../genres.json"
 
-export function getNGenreFrequencies(maxGenres, artists) {
+// Gets the top N genres for the user, based on the artists given
+export function getUsersTopNGenreCounts(maxGenres, artists) {
     const artistGenres = artists.map((a) => a.genres);
     const genres = artistGenres.flat();
     const genreFrequencies = genres.reduce((acc, item) => {
@@ -15,3 +17,25 @@ export function getNGenreFrequencies(maxGenres, artists) {
     });
     return genresAlphabeticalOrder;
 };
+
+// Gets the counts for the all general genres (see genres.json), based on the artists given
+export function getUsersGeneralGenreCounts(artists) {
+    const genres = ["pop", "electronic", "hip-hop", "r&b", "latin", "rock", "metal",
+        "country", "folk", "classical", "jazz", "blues", "easy-listening", "new-age", "world"]
+
+    function numArtistsInThisGenre(artists, genre) {
+
+        function isArtistInThisGenre(artist, genre) {
+            const artistGenres = artist.genres
+            const subgenres = allGenres[genre]
+
+            // If any of the artist's genres are included in the target genre, then the artist has that genre
+            return artistGenres.some(artistGenre => subgenres.includes(artistGenre))
+        }
+
+        return artists.filter(artist => isArtistInThisGenre(artist, genre)).length();
+
+    }
+
+    return genres.map((genre) => [genre, numArtistsInThisGenre(artists, genre)]);
+}
