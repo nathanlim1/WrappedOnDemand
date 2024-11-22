@@ -25,7 +25,6 @@ const App = () => {
   1000: 26 seconds 
   */
   const MAX_NUMBER_TO_BE_LOADED = 750;
-  const NUM_ARTISTS_FOR_GENRE_CALCULATION = 10000;
 
   const spotifyApi = useSpotifyApi();
   const [timeRange, setTimeRange] = useState("short_term")
@@ -52,13 +51,11 @@ const App = () => {
     const fetchAllData = async () => {
       if (loggedIn) {
         // Fetch all artists
-        console.log("Loading all Artists");
         setAllArtists1M(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term"));
         setAllArtists6M(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "medium_term"));
         setAllArtistsLT(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term"));
         
         // Fetch all tracks
-        console.log("Loading all Tracks");
         setAllTracks1M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term"));
         setAllTracks6M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "medium_term"));
         setAllTracksLT(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term"));
@@ -72,11 +69,9 @@ const App = () => {
     const fetchAlbums = async () => {
       if (loggedIn && allTracks1M.length > 0 && allTracks6M.length > 0 && allTracksLT.length > 0) {
         // Fetch all albums after the tracks have loaded
-        console.log("Loading all Albums");
         setAllAlbums1M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks1M));
         setAllAlbums6M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks6M));
         setAllAlbumsLT(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracksLT));
-        console.log("Genre counts LT:", genreCountsLT);
         setContentIsLoaded(true);
       }
     }
@@ -86,27 +81,16 @@ const App = () => {
 
   // When the artists have loaded, calculate the genre counts
   useEffect(() => {
-    if (allArtists1M.length > 0) {
-      setGenreCounts1M(getUsersGeneralGenrePercentage(allArtists1M));
-      console.log("Genre counts 1M:", genreCounts1M);
-    }
+    if (allArtists1M.length > 0) setGenreCounts1M(getUsersGeneralGenrePercentage(allArtists1M));
   }, [allArtists1M]);
   
   useEffect(() => {
-    if (allArtists6M.length > 0) {
-      setGenreCounts6M(getUsersGeneralGenrePercentage(allArtists6M));
-      console.log("Genre counts 6M:", genreCounts6M);
-    }
+    if (allArtists6M.length > 0) setGenreCounts6M(getUsersGeneralGenrePercentage(allArtists6M));
   }, [allArtists6M]);
   
   useEffect(() => {
-    if (allArtistsLT.length > 0) {
-      setGenreCountsLT(getUsersGeneralGenrePercentage(allArtistsLT));
-      console.log("Genre counts LT:", genreCountsLT);
-    }
+    if (allArtistsLT.length > 0) setGenreCountsLT(getUsersGeneralGenrePercentage(allArtistsLT));
   }, [allArtistsLT]);
-  
-  
 
   if (loggedIn && !contentIsLoaded) {
     return (<LoadingSpinner/>)
