@@ -33,7 +33,7 @@ export function getUsersGeneralGenreCounts(artists) {
             return artistGenres.some(artistGenre => subgenres.includes(artistGenre))
         }
 
-        return artists.filter(artist => isArtistInThisGenre(artist, genre)).length();
+        return artists.filter(artist => isArtistInThisGenre(artist, genre)).length;
 
     }
 
