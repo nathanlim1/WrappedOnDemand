@@ -13,7 +13,7 @@ import {
   getTopNAlbums,
 } from "./utils/getTopUtils.js";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
-import { getUsersGeneralGenreCounts } from "./utils/getGenres.js";
+import { getUsersGeneralGenrePercentage } from "./utils/getGenres.js";
 
 const App = () => {
   /*
@@ -87,21 +87,21 @@ const App = () => {
   // When the artists have loaded, calculate the genre counts
   useEffect(() => {
     if (allArtists1M.length > 0) {
-      setGenreCounts1M(getUsersGeneralGenreCounts(allArtists1M));
+      setGenreCounts1M(getUsersGeneralGenrePercentage(allArtists1M));
       console.log("Genre counts 1M:", genreCounts1M);
     }
   }, [allArtists1M]);
   
   useEffect(() => {
     if (allArtists6M.length > 0) {
-      setGenreCounts6M(getUsersGeneralGenreCounts(allArtists6M));
+      setGenreCounts6M(getUsersGeneralGenrePercentage(allArtists6M));
       console.log("Genre counts 6M:", genreCounts6M);
     }
   }, [allArtists6M]);
   
   useEffect(() => {
     if (allArtistsLT.length > 0) {
-      setGenreCountsLT(getUsersGeneralGenreCounts(allArtistsLT));
+      setGenreCountsLT(getUsersGeneralGenrePercentage(allArtistsLT));
       console.log("Genre counts LT:", genreCountsLT);
     }
   }, [allArtistsLT]);
