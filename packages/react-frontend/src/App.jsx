@@ -13,6 +13,7 @@ import {
   getTopNAlbums,
 } from "./utils/getTopUtils.js";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
+import { getUsersGeneralGenreCounts } from "./utils/getGenres.js";
 
 const App = () => {
   /*
@@ -24,6 +25,7 @@ const App = () => {
   1000: 26 seconds 
   */
   const MAX_NUMBER_TO_BE_LOADED = 750;
+  const NUM_ARTISTS_FOR_GENRE_CALCULATION = 10000;
 
   const spotifyApi = useSpotifyApi();
   const [timeRange, setTimeRange] = useState("short_term")
@@ -41,6 +43,10 @@ const App = () => {
   const [allAlbums1M, setAllAlbums1M] = useState([]);
   const [allAlbums6M, setAllAlbums6M] = useState([]);
   const [allAlbumsLT, setAllAlbumsLT] = useState([]);
+
+  const [genreCounts1M, setGenreCounts1M] = useState([]);
+  const [genreCounts6M, setGenreCounts6M] = useState([]);
+  const [genreCountsLT, setGenreCountsLT] = useState([]);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -65,17 +71,41 @@ const App = () => {
   useEffect(() => {
     const fetchAlbums = async () => {
       if (loggedIn && allTracks1M.length > 0 && allTracks6M.length > 0 && allTracksLT.length > 0) {
-        // Fetch all albums after the 
+        // Fetch all albums after the tracks have loaded
         console.log("Loading all Albums");
         setAllAlbums1M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks1M));
         setAllAlbums6M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks6M));
         setAllAlbumsLT(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracksLT));
+        console.log("Genre counts LT:", genreCountsLT);
         setContentIsLoaded(true);
       }
     }
 
     fetchAlbums();
-  }, [loggedIn, allTracks1M, allTracks6M, allTracksLT]);
+  }, [allTracks1M, allTracks6M, allTracksLT]);
+
+  // When the artists have loaded, calculate the genre counts
+  useEffect(() => {
+    if (allArtists1M.length > 0) {
+      setGenreCounts1M(getUsersGeneralGenreCounts(allArtists1M));
+      console.log("Genre counts 1M:", genreCounts1M);
+    }
+  }, [allArtists1M]);
+  
+  useEffect(() => {
+    if (allArtists6M.length > 0) {
+      setGenreCounts6M(getUsersGeneralGenreCounts(allArtists6M));
+      console.log("Genre counts 6M:", genreCounts6M);
+    }
+  }, [allArtists6M]);
+  
+  useEffect(() => {
+    if (allArtistsLT.length > 0) {
+      setGenreCountsLT(getUsersGeneralGenreCounts(allArtistsLT));
+      console.log("Genre counts LT:", genreCountsLT);
+    }
+  }, [allArtistsLT]);
+  
   
 
   if (loggedIn && !contentIsLoaded) {
@@ -88,7 +118,13 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home setLoggedIn={setLoggedIn} time_range={timeRange}/>} />
+          <Route path="/home" element={
+            <Home 
+              setLoggedIn={setLoggedIn} 
+              time_range={timeRange}
+              genreCounts={{"1M": genreCounts1M, "6M": genreCounts6M, "LT": genreCountsLT}}
+            />}
+          />
           <Route path="/artists" element={
             <ArtistPage 
               time_range={timeRange} 
