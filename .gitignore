@@ -1,2 +1,12 @@
 /node_modules
 /.vscode
+/packages/react-frontend/src/utils/image1.png
+/packages/react-frontend/src/utils/image2.png
+/packages/react-frontend/src/utils/image3.png
+/packages/react-frontend/src/utils/image4.png
+/packages/react-frontend/src/utils/testCanvas.js
+/packages/react-frontend/src/utils/testCombineTopImages.js
+/packages/react-frontend/src/utils/track1.png
+/packages/react-frontend/src/utils/track2.png
+/packages/react-frontend/src/utils/track3.png
+/packages/react-frontend/src/utils/track4.png
