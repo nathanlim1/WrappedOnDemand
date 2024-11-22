@@ -25,7 +25,7 @@ const getTokenFromUrl = () => {
     }, {});
 };
 
-function Home({ setLoggedIn, time_range }) {
+function Home({ setLoggedIn, time_range, genreCounts }) {
   const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
   const [username, setUsername] = useState("username");
@@ -160,17 +160,17 @@ function Home({ setLoggedIn, time_range }) {
       setTopArtistsCur(topArtists1Month);
       setTopTracksCur(topTracks1Month);
       setTopAlbumsCur(topAlbums1Month);
-      setGenreDataCur(genreData1Month);
+      setGenreDataCur(genreCounts["1M"]);
     } else if (time_range === "medium_term") {
       setTopArtistsCur(topArtists6Month);
       setTopTracksCur(topTracks6Month);
       setTopAlbumsCur(topAlbums6Month);
-      setGenreDataCur(genreData6Month);
+      setGenreDataCur(genreCounts["6M"]);
     } else if (time_range === "long_term") {
       setTopArtistsCur(topArtistsLifetime);
       setTopTracksCur(topTracksLifetime);
       setTopAlbumsCur(topAlbumsLifetime);
-      setGenreDataCur(genreDataLifetime);
+      setGenreDataCur(genreCounts["LT"]);
     }
   };
 
