@@ -7,8 +7,8 @@
  var cookieParser = require('cookie-parser');
  
  // These are the developer parameters that tells spotify we are making an app that uses their data
- var client_id = 'cd17e0dae5f3411d935e977fee6d8ff3'; // your clientId
- var client_secret = '8e96b33f2bbe47f29be195df96e961c8'; // Your secret
+ var client_id = '2410e54d22c54e7abbbebc32f26f822a'; // your clientId
+ var client_secret = '89a6ac43d6b54763ba7b4b58e6a6c8c8'; // Your secret
  var redirect_uri = 'http://localhost:8000/callback'; // Your redirect uri
  
 
