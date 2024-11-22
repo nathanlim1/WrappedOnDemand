@@ -24,6 +24,7 @@ ChartJS.defaults.color = "#FFFFFF";
 
 const GenreBarGraph = ({ genreData, yMax }) => {
   // Prepare data for the chart
+  console.log(genreData);
   const genreLabels = genreData.map((genre) => genre[0]);
   const genreCounts = genreData.map((genre) => genre[1]);
 
