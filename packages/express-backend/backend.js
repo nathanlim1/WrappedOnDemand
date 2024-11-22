@@ -6,14 +6,12 @@ var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 
-// These are the developer parameters that tells spotify we are making an app that uses their data
+// developer parameters
 var client_id = "2410e54d22c54e7abbbebc32f26f822a"; // your clientId
 var client_secret = "89a6ac43d6b54763ba7b4b58e6a6c8c8"; // Your secret
-var redirect_uri = "http://localhost:8000/callback"; // Your redirect uri
+var redirect_uri = "http://localhost:8000/callback"; // redirect url
 
-// Basically all of the code in this file is from spotify itself
-// Its from a example/tutorial
-
+// Generate a random string for state
 const generateRandomString = (length) => {
   return crypto.randomBytes(60).toString("hex").slice(0, length);
 };
@@ -27,11 +25,12 @@ app
   .use(cors())
   .use(cookieParser());
 
+// Login route
 app.get("/login", function (req, res) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
-  // scope is what the user allows us to access. add more scopes if needed
+  // Define the scope
   var scope =
     "user-read-private user-read-email user-library-read user-top-read user-library-modify";
   res.redirect(
@@ -46,10 +45,8 @@ app.get("/login", function (req, res) {
   );
 });
 
+// Callback route
 app.get("/callback", function (req, res) {
-  // your application requests refresh and access tokens
-  // after checking the state parameter
-
   var code = req.query.code || null;
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -74,7 +71,7 @@ app.get("/callback", function (req, res) {
         "content-type": "application/x-www-form-urlencoded",
         Authorization:
           "Basic " +
-          new Buffer.from(client_id + ":" + client_secret).toString("base64"),
+          Buffer.from(client_id + ":" + client_secret).toString("base64"),
       },
       json: true,
     };
@@ -90,12 +87,12 @@ app.get("/callback", function (req, res) {
           json: true,
         };
 
-        // use the access token to access the Spotify Web API
+        // Use the access token to access the Spotify Web API
         request.get(options, function (error, response, body) {
           console.log(body);
         });
 
-        // we can also pass the token to the browser to make requests from there
+        // Pass the token to the browser
         res.redirect(
           "http://localhost:5173/home/#" +
             querystring.stringify({
@@ -115,6 +112,7 @@ app.get("/callback", function (req, res) {
   }
 });
 
+// Refresh token route
 app.get("/refresh_token", function (req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
@@ -123,7 +121,7 @@ app.get("/refresh_token", function (req, res) {
       "content-type": "application/x-www-form-urlencoded",
       Authorization:
         "Basic " +
-        new Buffer.from(client_id + ":" + client_secret).toString("base64"),
+        Buffer.from(client_id + ":" + client_secret).toString("base64"),
     },
     form: {
       grant_type: "refresh_token",
@@ -144,6 +142,6 @@ app.get("/refresh_token", function (req, res) {
   });
 });
 
-// Arbitrary port
+// Start server
 console.log("Listening on 8000");
 app.listen(8000);
