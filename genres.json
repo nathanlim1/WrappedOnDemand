@@ -1,5 +1,5 @@
 {
-    "pop": [
+    "Pop": [
         "pop",
         "dance pop",
         "pov: indie",
@@ -92,7 +92,7 @@
         "thai pop",
         "canadian pop"
       ],
-    "electronic": [
+    "Electronic": [
         "electronic",
         "dance",
         "pop dance",
@@ -185,7 +185,7 @@
         "liquid funk",
         "ethnotronica"
       ],
-    "hip-hop": [
+    "Hip-Hop": [
         "hip hop",
         "rap",
         "pop rap",
@@ -278,7 +278,7 @@
         "rap cristiano",
         "jazz rap"
       ],
-      "r&b": [
+      "R&B": [
         "r&b",
         "soul",
         "disco",
@@ -371,7 +371,7 @@
         "traditional soul",
         "modern funk"
       ],
-      "latin": [
+      "Latin": [
         "latin",
         "urbano latino",
         "trap latino",
@@ -464,7 +464,7 @@
         "pop venezolano",
         "jazz cover"
       ],
-      "rock":[
+      "Rock":[
         "rock",
         "classic rock",
         "soft rock",
@@ -557,7 +557,7 @@
         "hyper-rock",
         "dreamo"
       ],
-      "metal":[
+      "Metal":[
         "metal",
         "alternative metal",
         "post-grunge",
@@ -650,7 +650,7 @@
         "proto-metal",
         "california hardcore"
       ],
-      "country": [
+      "Country": [
         "country",
         "contemporary country",
         "country road",
@@ -743,7 +743,7 @@
         "midwest americana",
         "ukulele"
       ],
-      "folk": [
+      "Folk": [
         "folk",
         "singer-songwriter",
         "neo mellow",
@@ -836,7 +836,7 @@
         "eau claire indie",
         "saskatchewan indie"
       ],
-      "classical": [
+      "Classical": [
         "classical",
         "orchestral soundtrack",
         "neo-classical",
@@ -929,7 +929,7 @@
         "avant-garde",
         "norwegian classical"
       ],
-      "jazz": [
+      "Jazz": [
         "jazz",
         "vocal jazz",
         "bossa nova",
@@ -1022,7 +1022,7 @@
         "bal-musette",
         "jazz worship"
       ],
-      "blues": [
+      "Blues": [
         "blues",
         "doo-wop",
         "electric blues",
@@ -1100,7 +1100,7 @@
         "japanese blues",
         "northern irish punk"
       ],
-      "easy-listening": [
+      "Easy-Listening": [
         "easy listening",
         "adult standards",
         "chanson",
@@ -1193,7 +1193,7 @@
         "modern big band",
         "comedienne"
       ],
-      "new-age": [
+      "New-Age": [
         "new age",
         "rain",
         "color noise",
@@ -1286,7 +1286,7 @@
         "sound effects",
         "ethereal wave"
       ],
-      "world": [
+      "World": [
         "folkmusik",
         "filmi",
         "modern bollywood",

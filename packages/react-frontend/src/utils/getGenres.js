@@ -20,8 +20,8 @@ export function getUsersTopNGenreCounts(maxGenres, artists) {
 
 // Gets the % for the all general genres (see genres.json), based on the artists given
 export function getUsersGeneralGenrePercentage(artists) {
-    const genres = ["pop", "electronic", "hip-hop", "r&b", "latin", "rock", "metal",
-        "country", "folk", "classical", "jazz", "blues", "easy-listening", "new-age", "world"]
+    const genres = ["Pop", "Electronic", "Hip-Hop", "R&B", "Latin", "Rock", "Metal",
+        "Country", "Folk", "Classical", "Jazz", "Blues", "Easy-Listening", "New-Age", "World"]
 
     function numArtistsInThisGenre(artists, genre) {
 
