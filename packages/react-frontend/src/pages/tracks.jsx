@@ -23,9 +23,11 @@ function TrackPage({time_range, allTracks}) {
         Your Top Tracks
       </p>
 
-      {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
+      <div className="space-y-4 mb-4">
+        {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
           <TrackPreview track={t} index={i + 1} />
         ))}
+      </div>
 
         {/* Buttons to see more/all */}
       <div className="flex space-x-4 mb-20">

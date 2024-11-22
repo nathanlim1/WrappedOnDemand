@@ -8,45 +8,47 @@ function TrackPreview({track, index}) {
     return (
         <div className="w-192 h-128 bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
             {/* Header */}
-            <div className="w-full h-16 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
-                <h2 className="text-3xl font-semibold">{index}. {track.name}</h2>
+            <div className="w-full h-16 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg px-4">
+                <h2 className="text-3xl font-semibold text-center">{index}. {track.name}</h2>
             </div>
 
-            {/* Body with left and right */}
-            <div className="flex-1 flex space-x-4"> {/* Adjusted the space between sections */}
-                {/* Left Section */}
-                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
+            {/* Body for track cover and play button */}
+            <div className="flex-1 flex items-center justify-center"> {/* Center content */}
+
+                {/* Track Cover on the Left */}
+                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Center content */}
+
                     <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4">
-                        {/* Artist Photo */}
+                        {/* Track Image */}
                         <img 
                             src={track.album.images[0].url} 
                             alt={`${track.name} photo`} 
                             className="w-full h-full object-cover rounded-lg" 
                         />
                     </div> 
-                    {/* Popularity */}
+                    {/* By: ARTIST */}
                     <div className="text-center text-2xl">
                         <p>By: {track.artists[0].name} </p>
                     </div>
                 </div>
 
-                {/* Right Section */}
-                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
-                    {/* Genres */}
-                    <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
-                        {/* Tracklist Title */}
-                        <p className="text-center font-semibold text-2xl mb-4">Other Tracks in Album</p>
-
-                        {/* Scrollable Genres List */}
-                        <ol className="flex-1 overflow-y-auto text-xl list-inside">
-                            {track.album.tracks.items.map((albumTrack, index) => (
-                                    <li key={index} className="list-decimal ml-4">{albumTrack.name}</li>
-                            ))}
-                        </ol>
-                    </div>
-
-                    <div className="text-center text-2xl">
-                        <p>Popularity: {(album.popularity / 10).toFixed(1)}/10</p>
+                {/* Play Button and Play Header */}
+                <div className="flex flex-col items-center">
+                    <button
+                        onClick={() => console.log(`Playing ${track.name}`)}
+                        className="w-[300px] h-[300px] bg-[#1db954] rounded-full flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-64 w-64 text-black"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M9 5c0.5-0.5 1-0.5 1.5 0l9 7c0.5 0.5 0.5 1 0 1.5l-9 7c-0.5 0.5-1 0.5-1.5 0v-16z" />
+                        </svg>
+                    </button>
+                    <div className="text-center text-2xl mt-4">
+                        <p>Play Track</p>
                     </div>
                 </div>
             </div>

@@ -23,7 +23,7 @@ const App = () => {
   750: 21 seconds (first number to get 100+ albums for each time frame)
   1000: 26 seconds 
   */
-  const MAX_NUMBER_TO_BE_LOADED = 750;
+  const MAX_NUMBER_TO_BE_LOADED = 50;
 
   const spotifyApi = useSpotifyApi();
   const [timeRange, setTimeRange] = useState("short_term")
