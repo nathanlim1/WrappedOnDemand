@@ -1,7 +1,6 @@
 import React from 'react';
 
-function TrackPreview({index, track}) {
-
+function TrackPreview({track, index}) {
     function capitalizeWords(str) {
         return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
       }
@@ -13,8 +12,6 @@ function TrackPreview({index, track}) {
                 <h2 className="text-3xl font-semibold">{index}. {track.name}</h2>
             </div>
 
-{/* TODO MAKE SURE TO  CHANGE ALL THE ARTISTS TO TRACKS*/}
-
             {/* Body with left and right */}
             <div className="flex-1 flex space-x-4"> {/* Adjusted the space between sections */}
                 {/* Left Section */}
@@ -22,14 +19,14 @@ function TrackPreview({index, track}) {
                     <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4">
                         {/* Artist Photo */}
                         <img 
-                            src={track.images[0].url} 
+                            src={track.album.images[0].url} 
                             alt={`${track.name} photo`} 
                             className="w-full h-full object-cover rounded-lg" 
                         />
                     </div> 
                     {/* Popularity */}
                     <div className="text-center text-2xl">
-                        <p>Popularity: {(artist.popularity / 10).toFixed(1)}/10</p>
+                        <p>By: {track.artists[0].name} </p>
                     </div>
                 </div>
 
@@ -37,24 +34,25 @@ function TrackPreview({index, track}) {
                 <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
                     {/* Genres */}
                     <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
-                        {/* Genres Title */}
-                        <p className="text-center font-semibold text-2xl mb-4">Genres</p>
+                        {/* Tracklist Title */}
+                        <p className="text-center font-semibold text-2xl mb-4">Other Tracks in Album</p>
 
                         {/* Scrollable Genres List */}
-                        <ul className="flex-1 overflow-y-auto text-xl">
-                            {artist.genres.map((g, index) => (
-                                <li key={index} className="list-disc ml-4">{capitalizeWords(g)}</li>
+                        <ol className="flex-1 overflow-y-auto text-xl list-inside">
+                            {track.album.tracks.items.map((albumTrack, index) => (
+                                    <li key={index} className="list-decimal ml-4">{albumTrack.name}</li>
                             ))}
-                        </ul>
+                        </ol>
                     </div>
 
                     <div className="text-center text-2xl">
-                        <p>Followers: {(artist.followers.total).toLocaleString()}</p>
+                        <p>Popularity: {(album.popularity / 10).toFixed(1)}/10</p>
                     </div>
                 </div>
             </div>
         </div>
     )
-}
 
-export default TrackPreview
+};
+
+export default TrackPreview;
