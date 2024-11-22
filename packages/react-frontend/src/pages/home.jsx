@@ -5,6 +5,7 @@ import GenreBarGraph from "../components/visualizations/GenreBarGraph";
 import { useSpotifyApi } from "/src/SpotifyContext";
 import ImageGrid from "../components/visualizations/ImageGrid";
 import { getAlbumImages, getArtistImages } from "../utils/getImages";
+import PopularityBar from "../components/popularityBar";
 
 // When the user logs in their credentials go to the url
 // This gets their credentials
@@ -44,21 +45,12 @@ function Home({
   const genreChartYMax = Math.min(
     Math.ceil(
       (Math.max(
-        ...(
-          genreCounts?.[
-            time_range === "short_term"
-              ? "1M"
-              : time_range === "medium_term"
-                ? "6M"
-                : "LT"
-          ] || []
-        ).map((gc) => gc[1])
-      ) +
-        1) /
-        10
+        ...Object.values(genreCounts).flat().map(gc => gc[1])
+      ) + 1) / 10
     ) * 10,
     100
   );
+
 
   // when this page is first loaded, we get the user parameters from the URL
   useEffect(() => {
@@ -224,8 +216,11 @@ function Home({
         </div>
       </section>
 
+      {/* Popularity Bar */}
+      <PopularityBar artists={topArtistsCur}/>
+
       {/* Genre Section */}
-      <section className="flex justify-center bg-zinc-800 py-6 px-8">
+      <section className="flex justify-center py-6 px-8">
         <div className="w-full max-w-3xl">
           <h2 className="text-3xl font-bold text-center mb-4">
             Genre Listening Trends
