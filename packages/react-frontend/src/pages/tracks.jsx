@@ -1,5 +1,6 @@
 import '../index.css'
 import React, {useState, useEffect} from 'react'
+import TrackPreview from "../components/TrackPreview";
 
 function TrackPage({time_range, allTracks}) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
@@ -23,7 +24,7 @@ function TrackPage({time_range, allTracks}) {
       </p>
 
       {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
-          <div>{i + 1}. {t.name}</div>
+          <TrackPreview track={t} index={i + 1} />
         ))}
 
         {/* Buttons to see more/all */}
