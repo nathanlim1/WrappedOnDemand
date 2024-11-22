@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSpotifyApi } from "../SpotifyContext";
 import LoadingSpinner from "../components/loadingSpinner";
 import GenreBarGraph from "../components/visualizations/genreBarGraph";
-import { getNGenreFrequencies } from "../utils/getGenreFrequencies";
+import { getNGenreFrequencies } from "../utils/getGenres.js";
 import AlbumGridImage from "../components/visualizations/albumGridImage";
 import {
   getTopNArtists,
