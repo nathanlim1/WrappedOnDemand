@@ -34,8 +34,9 @@ export function getUsersGeneralGenrePercentage(artists) {
         }
 
         return artists.filter(artist => isArtistInThisGenre(artist, genre)).length;
-
     }
 
-    return genres.map((genre) => [genre, numArtistsInThisGenre(artists, genre)]);
+    const artistCounts = genres.map((genre) => [genre, numArtistsInThisGenre(artists, genre)]);
+    const total = artistCounts.map(artistCount => artistCount[1]).reduce((acc, val) => acc + val, 0);
+    return artistCounts.map(artistCount => [artistCount[0], ((artistCount[1] / total) * 100).toFixed(1)]);
 }
