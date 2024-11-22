@@ -44,6 +44,8 @@ const GenreBarGraph = ({ genreData }) => {
     scales: {
       y: {
         beginAtZero: true,
+        min: 0,
+        max: 100,
       },
     },
   };
