@@ -31,7 +31,7 @@ const GenreBarGraph = ({ genreData, yMax }) => {
     labels: genreLabels,
     datasets: [
       {
-        label: "Genre Frequency of Artists Listened To",
+        label: "% of Genres You Listen To",
         data: genreCounts,
         backgroundColor: "rgba(29, 185, 84, 0.6)", // Spotify green color with opacity
         borderColor: "rgba(29, 185, 84, 1)", // Spotify green color
