@@ -6,5 +6,4 @@
 
 .page-container.with-navbar {
   padding-top: 64px; /* navbar (64px) */
-  padding-bottom: 96px; /* allow space for the time range selector */
 }

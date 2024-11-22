@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './pages/login.jsx';
-import Home from './pages/home.jsx'; 
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Login from "./pages/login.jsx";
+import Home from "./pages/home.jsx";
 import ArtistPage from "./pages/artists.jsx";
 import TrackPage from "./pages/tracks.jsx";
 import AlbumPage from "./pages/albums.jsx";
@@ -13,6 +18,7 @@ import {
   getTopNAlbums,
 } from "./utils/getTopUtils.js";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
+import { getUsersGeneralGenrePercentage } from "./utils/getGenres.js";
 
 const App = () => {
   /*
@@ -26,7 +32,7 @@ const App = () => {
   const MAX_NUMBER_TO_BE_LOADED = 50;
 
   const spotifyApi = useSpotifyApi();
-  const [timeRange, setTimeRange] = useState("short_term")
+  const [timeRange, setTimeRange] = useState("short_term");
   const [loggedIn, setLoggedIn] = useState(false);
   const [contentIsLoaded, setContentIsLoaded] = useState(false);
 
@@ -42,70 +48,188 @@ const App = () => {
   const [allAlbums6M, setAllAlbums6M] = useState([]);
   const [allAlbumsLT, setAllAlbumsLT] = useState([]);
 
+  const [genreCounts1M, setGenreCounts1M] = useState([]);
+  const [genreCounts6M, setGenreCounts6M] = useState([]);
+  const [genreCountsLT, setGenreCountsLT] = useState([]);
+
+  const [username, setUsername] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+
   useEffect(() => {
     const fetchAllData = async () => {
       if (loggedIn) {
+        // get username and profile picture
+        const me = await spotifyApi.getMe();
+        setUsername(me.display_name);
+        if (me.images && me.images.length > 0) {
+          setProfilePicture(me.images[0].url);
+        } else {
+          setProfilePicture(null);
+        }
+
         // Fetch all artists
-        console.log("Loading all Artists");
-        setAllArtists1M(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term"));
-        setAllArtists6M(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "medium_term"));
-        setAllArtistsLT(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term"));
-        
+        setAllArtists1M(
+          await getTopNArtists(
+            spotifyApi,
+            MAX_NUMBER_TO_BE_LOADED,
+            "short_term"
+          )
+        );
+        setAllArtists6M(
+          await getTopNArtists(
+            spotifyApi,
+            MAX_NUMBER_TO_BE_LOADED,
+            "medium_term"
+          )
+        );
+        setAllArtistsLT(
+          await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term")
+        );
+
         // Fetch all tracks
-        console.log("Loading all Tracks");
-        setAllTracks1M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term"));
-        setAllTracks6M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "medium_term"));
-        setAllTracksLT(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term"));
+        setAllTracks1M(
+          await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term")
+        );
+        setAllTracks6M(
+          await getTopNTracks(
+            spotifyApi,
+            MAX_NUMBER_TO_BE_LOADED,
+            "medium_term"
+          )
+        );
+        setAllTracksLT(
+          await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term")
+        );
       }
-    }
+    };
 
     fetchAllData();
   }, [loggedIn]);
 
   useEffect(() => {
     const fetchAlbums = async () => {
-      if (loggedIn && allTracks1M.length > 0 && allTracks6M.length > 0 && allTracksLT.length > 0) {
-        // Fetch all albums after the 
-        console.log("Loading all Albums");
-        setAllAlbums1M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks1M));
-        setAllAlbums6M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks6M));
-        setAllAlbumsLT(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracksLT));
+      if (
+        loggedIn &&
+        allTracks1M.length > 0 &&
+        allTracks6M.length > 0 &&
+        allTracksLT.length > 0
+      ) {
+        // Fetch all albums after the tracks have loaded
+        setAllAlbums1M(
+          await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks1M)
+        );
+        setAllAlbums6M(
+          await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks6M)
+        );
+        setAllAlbumsLT(
+          await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracksLT)
+        );
         setContentIsLoaded(true);
       }
-    }
+    };
 
     fetchAlbums();
-  }, [loggedIn, allTracks1M, allTracks6M, allTracksLT]);
-  
+  }, [allTracks1M, allTracks6M, allTracksLT]);
+
+  // When the artists have loaded, calculate the genre counts
+  useEffect(() => {
+    if (allArtists1M.length > 0)
+      setGenreCounts1M(getUsersGeneralGenrePercentage(allArtists1M));
+  }, [allArtists1M]);
+
+  useEffect(() => {
+    if (allArtists6M.length > 0)
+      setGenreCounts6M(getUsersGeneralGenrePercentage(allArtists6M));
+  }, [allArtists6M]);
+
+  useEffect(() => {
+    if (allArtistsLT.length > 0)
+      setGenreCountsLT(getUsersGeneralGenrePercentage(allArtistsLT));
+  }, [allArtistsLT]);
 
   if (loggedIn && !contentIsLoaded) {
-    return (<LoadingSpinner/>)
+    return <LoadingSpinner />;
   }
 
   return (
     <Router>
-      <Layout loggedIn={loggedIn} timeRange={timeRange} setTimeRange={setTimeRange}>
+      <Layout
+        loggedIn={loggedIn}
+        timeRange={timeRange}
+        setTimeRange={setTimeRange}
+      >
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home setLoggedIn={setLoggedIn} time_range={timeRange}/>} />
-          <Route path="/artists" element={
-            <ArtistPage 
-              time_range={timeRange} 
-              allArtists={{"1M": allArtists1M, "6M": allArtists6M, "LT": allArtistsLT}}
-            />}
-          />
-          <Route path="/tracks" element={
-              <TrackPage 
+          <Route
+            path="/home"
+            element={
+              <Home
+                setLoggedIn={setLoggedIn}
                 time_range={timeRange}
-                allTracks={{"1M": allTracks1M, "6M": allTracks6M, "LT": allTracksLT}}
-              />}
-            />
-          <Route path="/albums" element={
-            <AlbumPage 
-              time_range={timeRange}
-              allAlbums={{"1M": allAlbums1M, "6M": allAlbums6M, "LT": allAlbumsLT}}
-            />}
+                genreCounts={{
+                  "1M": genreCounts1M,
+                  "6M": genreCounts6M,
+                  LT: genreCountsLT,
+                }}
+                allArtists={{
+                  "1M": allArtists1M,
+                  "6M": allArtists6M,
+                  LT: allArtistsLT,
+                }}
+                allTracks={{
+                  "1M": allTracks1M,
+                  "6M": allTracks6M,
+                  LT: allTracksLT,
+                }}
+                allAlbums={{
+                  "1M": allAlbums1M,
+                  "6M": allAlbums6M,
+                  LT: allAlbumsLT,
+                }}
+                username={username}
+                profilePicture={profilePicture}
+              />
+            }
+          />
+          <Route
+            path="/artists"
+            element={
+              <ArtistPage
+                time_range={timeRange}
+                allArtists={{
+                  "1M": allArtists1M,
+                  "6M": allArtists6M,
+                  LT: allArtistsLT,
+                }}
+              />
+            }
+          />
+          <Route
+            path="/tracks"
+            element={
+              <TrackPage
+                time_range={timeRange}
+                allTracks={{
+                  "1M": allTracks1M,
+                  "6M": allTracks6M,
+                  LT: allTracksLT,
+                }}
+              />
+            }
+          />
+          <Route
+            path="/albums"
+            element={
+              <AlbumPage
+                time_range={timeRange}
+                allAlbums={{
+                  "1M": allAlbums1M,
+                  "6M": allAlbums6M,
+                  LT: allAlbumsLT,
+                }}
+              />
+            }
           />
         </Routes>
       </Layout>
@@ -114,4 +238,3 @@ const App = () => {
 };
 
 export default App;
-
