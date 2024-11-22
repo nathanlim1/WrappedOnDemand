@@ -26,7 +26,7 @@ const getTokenFromUrl = () => {
 };
 
 function Home({ setLoggedIn, time_range, genreCounts }) {
-  const genreChartYMax = Math.min(Math.ceil((Math.max(...Object.values(genreCounts).flat().map(gc => gc[1])) + 3) / 10) * 10, 100);
+  const genreChartYMax = Math.min(Math.ceil((Math.max(...Object.values(genreCounts).flat().map(gc => gc[1])) + 1) / 10) * 10, 100);
   const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
   const [username, setUsername] = useState("username");
