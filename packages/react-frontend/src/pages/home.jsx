@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSpotifyApi } from "../SpotifyContext";
 import LoadingSpinner from "../components/loadingSpinner";
 import GenreBarGraph from "../components/visualizations/genreBarGraph";
-import { getNGenreFrequencies } from "../utils/getGenres.js";
+import { getUsersTopNGenreCounts } from "../utils/getGenres.js";
 import AlbumGridImage from "../components/visualizations/albumGridImage";
 import {
   getTopNArtists,
@@ -99,7 +99,7 @@ function Home({ setLoggedIn, time_range }) {
       setTopTracks1Month(tracks1Month);
       setTopAlbums1Month(albums1Month);
 
-      const genres1Month = getNGenreFrequencies(10, artists1Month);
+      const genres1Month = getUsersTopNGenreCounts(10, artists1Month);
       setGenreData1Month(genres1Month);
 
       // Fetch all medium term data
@@ -113,7 +113,7 @@ function Home({ setLoggedIn, time_range }) {
       setTopTracks6Month(tracks6Month);
       setTopAlbums6Month(albums6Month);
 
-      const genres6Month = getNGenreFrequencies(10, artists6Month);
+      const genres6Month = getUsersTopNGenreCounts(10, artists6Month);
       setGenreData6Month(genres6Month);
 
       // Fetch all long term data
@@ -131,7 +131,7 @@ function Home({ setLoggedIn, time_range }) {
       setTopTracksLifetime(tracksLifetime);
       setTopAlbumsLifetime(albumsLifetime);
 
-      const genresLifetime = getNGenreFrequencies(10, artistsLifetime);
+      const genresLifetime = getUsersTopNGenreCounts(10, artistsLifetime);
       setGenreDataLifetime(genresLifetime);
 
       // Initialize the current selections
