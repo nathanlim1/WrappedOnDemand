@@ -26,6 +26,7 @@ const getTokenFromUrl = () => {
 };
 
 function Home({ setLoggedIn, time_range, genreCounts }) {
+  const genreChartYMax = Math.min(Math.ceil((Math.max(...Object.values(genreCounts).flat().map(gc => gc[1])) + 3) / 10) * 10, 100);
   const spotifyApi = useSpotifyApi();
   const [spotifyToken, setSpotifyToken] = useState("");
   const [username, setUsername] = useState("username");
@@ -294,7 +295,7 @@ function Home({ setLoggedIn, time_range, genreCounts }) {
             Genre Listening Trends
           </h2>
           <hr className="w-full mx-auto max-w-lg border-t border-gray-600 mb-8" />
-          <GenreBarGraph genreData={genreDataCur} />
+          <GenreBarGraph genreData={genreDataCur} yMax={genreChartYMax}/>
         </div>
       </section>
     </div>

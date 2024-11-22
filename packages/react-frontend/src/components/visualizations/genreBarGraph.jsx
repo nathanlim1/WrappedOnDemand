@@ -22,7 +22,7 @@ ChartJS.register(
 
 ChartJS.defaults.color = "#FFFFFF";
 
-const GenreBarGraph = ({ genreData }) => {
+const GenreBarGraph = ({ genreData, yMax }) => {
   // Prepare data for the chart
   const genreLabels = genreData.map((genre) => genre[0]);
   const genreCounts = genreData.map((genre) => genre[1]);
@@ -45,7 +45,7 @@ const GenreBarGraph = ({ genreData }) => {
       y: {
         beginAtZero: true,
         min: 0,
-        max: 100,
+        max: yMax,
       },
     },
   };
