@@ -22,7 +22,7 @@ ChartJS.register(
 
 ChartJS.defaults.color = "#FFFFFF";
 
-const GenreBarGraph = ({ genreData }) => {
+const GenreBarGraph = ({ genreData, yMax }) => {
   // Prepare data for the chart
   const genreLabels = genreData.map((genre) => genre[0]);
   const genreCounts = genreData.map((genre) => genre[1]);
@@ -31,7 +31,7 @@ const GenreBarGraph = ({ genreData }) => {
     labels: genreLabels,
     datasets: [
       {
-        label: "Genre Frequency of Artists Listened To",
+        label: "Genres Listened to By %",
         data: genreCounts,
         backgroundColor: "rgba(29, 185, 84, 0.6)", // Spotify green color with opacity
         borderColor: "rgba(29, 185, 84, 1)", // Spotify green color
@@ -44,6 +44,8 @@ const GenreBarGraph = ({ genreData }) => {
     scales: {
       y: {
         beginAtZero: true,
+        min: 0,
+        max: yMax,
       },
     },
   };
