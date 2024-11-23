@@ -26,7 +26,9 @@ const PopularityBar = ({ artists }) => {
           ></div>
         </div>
         <div className="flex justify-between mt-2">
-          <span className="text-sm text-gray-300">The average popularity of the artists you listen to</span>
+          <span className="text-sm text-gray-300">
+            The average popularity of the artists you listen to, with higher weight given to your top artists.
+            </span>
         </div>
       </div>
     </section>
