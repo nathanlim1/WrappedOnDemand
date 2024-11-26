@@ -1,5 +1,6 @@
 /node_modules
 /.vscode
+.env
 /packages/react-frontend/src/utils/image1.png
 /packages/react-frontend/src/utils/image2.png
 /packages/react-frontend/src/utils/image3.png
