@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const UserDataSchema = new mongoose.Schema({
   spotifyId: { type: String, required: true, unique: true },
@@ -29,4 +29,6 @@ const UserDataSchema = new mongoose.Schema({
   last_updated: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("UserData", UserDataSchema);
+const UserData = mongoose.model("UserData", UserDataSchema);
+
+export default UserData;

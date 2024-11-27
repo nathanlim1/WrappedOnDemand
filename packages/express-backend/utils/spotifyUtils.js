@@ -1,4 +1,9 @@
-const axios = require("axios");
+import axios from "axios";
+import fs from "fs";
+import path from "path";
+
+const allGenresPath = path.resolve("../../genres.json");
+const allGenres = JSON.parse(fs.readFileSync(allGenresPath, "utf-8"));
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -219,28 +224,46 @@ const getTopNAlbums = async (accessToken, maxAlbums, tracks) => {
 };
 
 const getUsersGeneralGenrePercentage = (artists) => {
-  const genreCounts = {};
+  const genres = [
+    "Pop",
+    "Electronic",
+    "Hip-Hop",
+    "R&B",
+    "Latin",
+    "Rock",
+    "Metal",
+    "Country",
+    "Folk",
+    "Classical",
+    "Jazz",
+    "Blues",
+    "Easy-Listening",
+    "New-Age",
+    "World",
+  ];
 
-  artists.forEach((artist) => {
-    artist.genres.forEach((genre) => {
-      genreCounts[genre] = (genreCounts[genre] || 0) + 1;
-    });
-  });
+  const genreCounts = genres.reduce((counts, genre) => {
+    const subgenres = allGenres[genre];
+    counts[genre] = artists.filter((artist) =>
+      artist.genres.some((artistGenre) => subgenres.includes(artistGenre))
+    ).length;
+    return counts;
+  }, {});
 
   const totalGenres = Object.values(genreCounts).reduce((a, b) => a + b, 0);
 
   const genrePercentages = Object.keys(genreCounts).map((genre) => ({
     genre,
-    percentage: ((genreCounts[genre] / totalGenres) * 100).toFixed(2),
+    percentage: ((genreCounts[genre] / totalGenres) * 100).toFixed(1),
   }));
 
-  // sort genres by percentage in descending order
+  // Sort genres by percentage in descending order
   genrePercentages.sort((a, b) => b.percentage - a.percentage);
 
   return genrePercentages;
 };
 
-module.exports = {
+export {
   getTopNArtists,
   getTopNTracks,
   getTopNAlbums,

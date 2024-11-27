@@ -1,19 +1,22 @@
-const express = require("express");
-const axios = require("axios");
-const crypto = require("crypto");
-const cors = require("cors");
-const querystring = require("querystring");
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-const UserData = require("./models/UserData");
-const {
+import express from "express";
+import axios from "axios";
+import crypto from "crypto";
+import cors from "cors";
+import querystring from "querystring";
+import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
+import UserData from "./models/UserData.js";
+import {
   getTopNArtists,
   getTopNTracks,
   getTopNAlbums,
   getUsersGeneralGenrePercentage,
-} = require("./utils/spotifyUtils");
+} from "./utils/spotifyUtils.js";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-require("dotenv").config();
+dotenv.config();
 
 // Developer parameters
 const client_id = process.env.SPOTIFY_CLIENT_ID;
@@ -41,8 +44,11 @@ const stateKey = "spotify_auth_state";
 
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app
-  .use(express.static(__dirname + "/public"))
+  .use(express.static(path.join(__dirname, "public")))
   .use(cors())
   .use(cookieParser());
 
