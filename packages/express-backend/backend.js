@@ -23,6 +23,7 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
+const maxItems = 50; // max items to load from Spotify API calls
 
 mongoose.connect(mongoURI);
 
@@ -142,8 +143,6 @@ app.get("/callback", async (req, res) => {
       );
     } else {
       // user data is either not up to date or does not exist
-      const maxItems = 50; // adjust as needed
-
       const allArtists = {
         short_term: await getTopNArtists(access_token, maxItems, "short_term"),
         medium_term: await getTopNArtists(
