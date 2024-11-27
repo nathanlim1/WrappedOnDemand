@@ -24,10 +24,7 @@ const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
 
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoURI);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
