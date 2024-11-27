@@ -224,6 +224,7 @@ const getTopNAlbums = async (accessToken, maxAlbums, tracks) => {
 };
 
 const getUsersGeneralGenrePercentage = (artists) => {
+  // predefined list of main genres
   const genres = [
     "Pop",
     "Electronic",
@@ -242,23 +243,29 @@ const getUsersGeneralGenrePercentage = (artists) => {
     "World",
   ];
 
-  const genreCounts = genres.reduce((counts, genre) => {
-    const subgenres = allGenres[genre];
-    counts[genre] = artists.filter((artist) =>
+  const genreCounts = genres.map((genre) => {
+    const subgenres = allGenres[genre] || []; // get subgenre for each main genre
+    const count = artists.filter((artist) =>
       artist.genres.some((artistGenre) => subgenres.includes(artistGenre))
     ).length;
-    return counts;
-  }, {});
+    return { genre, count };
+  });
 
-  const totalGenres = Object.values(genreCounts).reduce((a, b) => a + b, 0);
+  const totalGenres = genreCounts.reduce((acc, { count }) => acc + count, 0);
 
-  const genrePercentages = Object.keys(genreCounts).map((genre) => ({
+  // avoid division by 0 if no genres are found
+  if (totalGenres === 0) {
+    return genres.map((genre) => ({
+      genre,
+      percentage: "0.0",
+    }));
+  }
+
+  // get the percentage for each genre
+  const genrePercentages = genreCounts.map(({ genre, count }) => ({
     genre,
-    percentage: ((genreCounts[genre] / totalGenres) * 100).toFixed(1),
+    percentage: ((count / totalGenres) * 100).toFixed(1),
   }));
-
-  // Sort genres by percentage in descending order
-  genrePercentages.sort((a, b) => b.percentage - a.percentage);
 
   return genrePercentages;
 };
