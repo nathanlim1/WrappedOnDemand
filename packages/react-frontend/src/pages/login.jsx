@@ -6,10 +6,10 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleLinkClick = () => {
-    setLoading(true); // on login click, immediately go to loading spinner
     setTimeout(() => {
-      window.location.href = "http://localhost:8000/login";
-    }, 500); // delay for half a second, allow animation to display to user
+      setLoading(true); // Show loading spinner after slight delay to show button animation
+    }, 250);
+    window.location.href = "http://localhost:8000/login";
   };
 
   return (
@@ -22,11 +22,11 @@ function Login() {
           <div className="flex flex-col items-center text-black">
             <div className="flex items-center mb-4">
               <img
-                src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Black.png"
+                src="https://i.imgur.com/4pTNtV4.png"
                 alt="Spotify Logo"
                 className="w-10 h-10 mr-3"
               />
-              <h1 className="text-5xl font-bold">Spotify Stat Tracker</h1>
+              <h1 className="text-5xl font-bold">Wrapped On Demand</h1>
             </div>
             <p className="text-lg mb-8">
               Uncover your music journey: Top artists, favorite tracks, and much

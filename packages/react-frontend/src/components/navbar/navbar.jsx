@@ -10,7 +10,7 @@ const Navbar = ({ loggedIn }) => {
           <div className="navbar-links">
             <Link to="/home" className="navbar-logo-link">
               <img
-                src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Black.png"
+                src="https://i.imgur.com/bgy6nAs.png"
                 alt="Home Logo"
                 className="navbar-logo"
               />
