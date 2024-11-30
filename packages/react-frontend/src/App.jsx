@@ -23,6 +23,7 @@ const App = () => {
 
   const [username, setUsername] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
+  const [spotifyId, setSpotifyId] = useState("");
 
   const [allArtists1M, setAllArtists1M] = useState([]);
   const [allArtists6M, setAllArtists6M] = useState([]);
@@ -50,7 +51,7 @@ const App = () => {
       if (accessToken) {
         setLoggedIn(true);
         try {
-          // get the user's Spotify ID using the access token
+          // Get the user's Spotify ID using the access token
           const userResponse = await axios.get(
             "https://api.spotify.com/v1/me",
             {
@@ -60,7 +61,7 @@ const App = () => {
 
           const spotifyId = userResponse.data.id;
 
-          // fetch user data from backend using the Spotify ID
+          // Now fetch user data from your backend using the Spotify ID
           const response = await axios.get("http://localhost:8000/user_data", {
             params: { spotifyId },
           });
@@ -68,6 +69,7 @@ const App = () => {
           const data = response.data;
 
           // Update state with fetched data
+          setSpotifyId(spotifyId);
           setUsername(data.username);
           setProfilePicture(data.profilePicture);
           setAllArtists1M(data.allArtists.short_term);
@@ -121,29 +123,9 @@ const App = () => {
             element={
               <SharingPage
                 loggedIn={loggedIn}
-                time_range={timeRange}
-                genreCounts={{
-                  "1M": genreCounts1M,
-                  "6M": genreCounts6M,
-                  LT: genreCountsLT,
-                }}
-                allArtists={{
-                  "1M": allArtists1M,
-                  "6M": allArtists6M,
-                  LT: allArtistsLT,
-                }}
-                allTracks={{
-                  "1M": allTracks1M,
-                  "6M": allTracks6M,
-                  LT: allTracksLT,
-                }}
-                allAlbums={{
-                  "1M": allAlbums1M,
-                  "6M": allAlbums6M,
-                  LT: allAlbumsLT,
-                }}
                 username={username}
                 profilePicture={profilePicture}
+                spotifyId={spotifyId}
               />
             }
           />
@@ -222,6 +204,7 @@ const App = () => {
                     />
                   }
                 />
+                {/* Catch-all route for logged-in users */}
                 <Route path="*" element={<Navigate to="/home" replace />} />
               </>
             ) : (
@@ -232,6 +215,7 @@ const App = () => {
             // Not logged in
             <>
               <Route path="/login" element={<Login />} />
+              {/* Catch-all route for not logged-in users */}
               <Route path="*" element={<Navigate to="/login" replace />} />
             </>
           )}

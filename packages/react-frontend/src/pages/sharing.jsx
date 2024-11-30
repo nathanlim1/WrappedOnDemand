@@ -1,38 +1,28 @@
 import "../index.css";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import GenreBarGraph from "../components/visualizations/genreBarGraph";
-import ImageGrid from "../components/visualizations/imageGrid";
-import { getAlbumImages, getArtistImages } from "../utils/getImages";
-import PopularityBar from "../components/popularityBar";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
-function SharingPage({
-  loggedIn,
-  setLoggedIn,
-  time_range,
-  username,
-  profilePicture,
-}) {
+function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [foundUser, setFoundUser] = useState(null);
+  const location = useLocation();
 
   // Handle copy link
   const handleCopyLink = () => {
-    const link = `${window.location.origin}/sharing?user=${username}`;
+    const link = `${window.location.origin}/sharing?user=${spotifyId}`;
     navigator.clipboard.writeText(link);
     alert("Sharing link copied to clipboard!");
   };
 
   // Handle search
-  const handleSearch = async () => {
-    if (searchQuery.trim() === "") return;
-
+  const handleSearch = async (spotifyId) => {
     try {
-      console.log("Search Query:", searchQuery);
-      // Make an API call to fetch user data based on searchQuery
+      console.log("Searching for Spotify ID:", spotifyId);
+
+      // fetch user data based on spotifyId
       const response = await axios.get("http://localhost:8000/user_data", {
-        params: { spotifyId: searchQuery },
+        params: { spotifyId },
       });
 
       const data = response.data;
@@ -49,6 +39,17 @@ function SharingPage({
       alert("User not found or sharing is disabled.");
     }
   };
+
+  // extract 'user' parameter representing spotify ID from URL and fetch data
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const userParam = params.get("user");
+
+    if (userParam) {
+      // automatically search for the user specified in the URL
+      handleSearch(userParam);
+    }
+  }, [location.search]);
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white pb-20 min-h-screen">
@@ -100,7 +101,7 @@ function SharingPage({
             />
             <button
               className="bg-[#1db954] text-white py-2 px-4 rounded-r hover:bg-[#17a44b] transition duration-200"
-              onClick={handleSearch}
+              onClick={() => handleSearch(searchQuery)}
             >
               Search
             </button>
