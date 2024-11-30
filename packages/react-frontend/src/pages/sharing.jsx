@@ -53,6 +53,14 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white pb-20 min-h-screen">
+      <div className="flex items-center mb-4 justify-center pt-5">
+        <img
+          src="https://i.imgur.com/bgy6nAs.png"
+          alt="Wrapped On Demand Logo White"
+          className="w-10 h-10 mr-3"
+        />
+        <h1 className="text-5xl font-bold">Wrapped On Demand</h1>
+      </div>
       {/* User Info Section */}
       {loggedIn && (
         <section className="flex flex-col items-center pt-6 px-8">
@@ -79,6 +87,21 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
           </button>
         </section>
       )}
+
+      {!loggedIn && (
+        <section className="flex flex-col items-center px-8">
+          <h3 className="text-lg pb-3">Want to see your own stats?</h3>
+          <Link
+            to="/login"
+            className="bg-[#1ED760] text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl hover:text-white focus:outline-none"
+            style={{ border: "none", textDecoration: "none" }}
+          >
+            Take Me To Login
+          </Link>
+        </section>
+      )}
+
+      <hr className="w-full mt-5 mx-auto max-w-lg border-t border-gray-600" />
 
       {/* Search Section */}
       <section className="flex justify-center items-center py-10 px-8">

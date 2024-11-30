@@ -23,7 +23,7 @@ function Login() {
             <div className="flex items-center mb-4">
               <img
                 src="https://i.imgur.com/4pTNtV4.png"
-                alt="Spotify Logo"
+                alt="Wrapped On Demand Logo Black"
                 className="w-10 h-10 mr-3"
               />
               <h1 className="text-5xl font-bold">Wrapped On Demand</h1>
