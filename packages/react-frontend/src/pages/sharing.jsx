@@ -29,9 +29,10 @@ function SharingPage({
     if (searchQuery.trim() === "") return;
 
     try {
+      console.log("Search Query:", searchQuery);
       // Make an API call to fetch user data based on searchQuery
-      const response = await axios.get("http://localhost:8000/get_user_stats", {
-        params: { spotify_id: searchQuery },
+      const response = await axios.get("http://localhost:8000/user_data", {
+        params: { spotifyId: searchQuery },
       });
 
       const data = response.data;
@@ -39,9 +40,9 @@ function SharingPage({
       setFoundUser({
         username: data.username,
         profilePicture: data.profilePicture,
-        topArtists: data.allArtists.short_term.slice(0, 5),
-        topTracks: data.allTracks.short_term.slice(0, 5),
-        topAlbums: data.allAlbums.short_term.slice(0, 5),
+        topArtists: data.allArtists.short_term.slice(0, 10),
+        topTracks: data.allTracks.short_term.slice(0, 10),
+        topAlbums: data.allAlbums.short_term.slice(0, 10),
       });
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -53,7 +54,7 @@ function SharingPage({
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white pb-20 min-h-screen">
       {/* User Info Section */}
       {loggedIn && (
-        <section className="flex flex-col items-center py-6 px-8">
+        <section className="flex flex-col items-center pt-6 px-8">
           <button
             className="flex bg-zinc-800 rounded-lg p-4 shadow-lg border border-transparent hover:border-[#00FF7F] transform transition-transform hover:scale-105 hover:shadow-xl focus:outline-none"
             onClick={handleCopyLink}
