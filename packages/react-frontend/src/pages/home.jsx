@@ -1,9 +1,9 @@
 import "../index.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import GenreBarGraph from "../components/visualizations/GenreBarGraph";
+import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import { useSpotifyApi } from "/src/SpotifyContext";
-import ImageGrid from "../components/visualizations/ImageGrid";
+import ImageGrid from "../components/visualizations/imageGrid";
 import { getAlbumImages, getArtistImages } from "../utils/getImages";
 import PopularityBar from "../components/popularityBar";
 
@@ -45,12 +45,15 @@ function Home({
   const genreChartYMax = Math.min(
     Math.ceil(
       (Math.max(
-        ...Object.values(genreCounts).flat().map(gc => gc[1])
-      ) + 1) / 10
+        ...Object.values(genreCounts)
+          .flat()
+          .map((gc) => gc[1])
+      ) +
+        1) /
+        10
     ) * 10,
     100
   );
-
 
   // when this page is first loaded, we get the user parameters from the URL
   useEffect(() => {
@@ -217,7 +220,7 @@ function Home({
       </section>
 
       {/* Popularity Bar */}
-      <PopularityBar artists={topArtistsCur}/>
+      <PopularityBar artists={topArtistsCur} />
 
       {/* Genre Section */}
       <section className="flex justify-center py-6 px-8">

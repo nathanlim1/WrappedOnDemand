@@ -20,13 +20,13 @@ ChartJS.register(
   Legend
 );
 
+// text color to white to better contrast with dark mode background
 ChartJS.defaults.color = "#FFFFFF";
 
 const GenreBarGraph = ({ genreData, yMax }) => {
-  // Prepare data for the chart
-  console.log(genreData);
-  const genreLabels = genreData.map((genre) => genre[0]);
-  const genreCounts = genreData.map((genre) => genre[1]);
+  // extract labels and counts from the array of objects
+  const genreLabels = genreData.map((genre) => genre.genre);
+  const genreCounts = genreData.map((genre) => parseFloat(genre.percentage));
 
   const data = {
     labels: genreLabels,
