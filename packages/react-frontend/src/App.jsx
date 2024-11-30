@@ -10,6 +10,7 @@ import Home from "./pages/home.jsx";
 import ArtistPage from "./pages/artists.jsx";
 import TrackPage from "./pages/tracks.jsx";
 import AlbumPage from "./pages/albums.jsx";
+import SharingPage from "./pages/sharing.jsx";
 import Layout from "./components/layout/layout.jsx";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
 import axios from "axios";
@@ -103,6 +104,38 @@ const App = () => {
         setTimeRange={setTimeRange}
       >
         <Routes>
+          {/* Sharing page accessible regardless of whether they are logged in or not */}
+          <Route
+            path="/sharing"
+            element={
+              <SharingPage
+                loggedIn={loggedIn}
+                time_range={timeRange}
+                genreCounts={{
+                  "1M": genreCounts1M,
+                  "6M": genreCounts6M,
+                  LT: genreCountsLT,
+                }}
+                allArtists={{
+                  "1M": allArtists1M,
+                  "6M": allArtists6M,
+                  LT: allArtistsLT,
+                }}
+                allTracks={{
+                  "1M": allTracks1M,
+                  "6M": allTracks6M,
+                  LT: allTracksLT,
+                }}
+                allAlbums={{
+                  "1M": allAlbums1M,
+                  "6M": allAlbums6M,
+                  LT: allAlbumsLT,
+                }}
+                username={username}
+                profilePicture={profilePicture}
+              />
+            }
+          />
           {loggedIn ? (
             contentIsLoaded ? (
               // Authenticated routes

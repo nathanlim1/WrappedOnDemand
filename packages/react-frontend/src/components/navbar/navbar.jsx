@@ -19,6 +19,7 @@ const Navbar = ({ loggedIn }) => {
             <Link to="/artists">Artists</Link>
             <Link to="/tracks">Tracks</Link>
             <Link to="/albums">Albums</Link>
+            <Link to="/sharing">Sharing</Link>
           </div>
         </nav>
       )}
