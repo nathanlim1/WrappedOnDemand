@@ -50,8 +50,19 @@ const App = () => {
       if (accessToken) {
         setLoggedIn(true);
         try {
+          // get the user's Spotify ID using the access token
+          const userResponse = await axios.get(
+            "https://api.spotify.com/v1/me",
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          );
+
+          const spotifyId = userResponse.data.id;
+
+          // fetch user data from backend using the Spotify ID
           const response = await axios.get("http://localhost:8000/user_data", {
-            params: { access_token: accessToken },
+            params: { spotifyId },
           });
 
           const data = response.data;

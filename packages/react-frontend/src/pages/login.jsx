@@ -29,8 +29,8 @@ function Login() {
               <h1 className="text-5xl font-bold">Wrapped On Demand</h1>
             </div>
             <p className="text-lg mb-8">
-              Uncover your music journey: Top artists, favorite tracks, and much
-              more.
+              Uncover and share your music journey: Top artists, favorite
+              tracks, and much more.
             </p>
             <p className="text-sm mb-2">Link your Spotify account to begin.</p>
 

@@ -285,16 +285,14 @@ app.get("/refresh_token", async (req, res) => {
 });
 
 app.get("/user_data", async (req, res) => {
-  const accessToken = req.query.access_token;
-  console.log("Access token:", accessToken);
+  const spotifyId = req.query.spotifyId;
+  console.log("Spotify ID:", spotifyId);
+
+  if (!spotifyId) {
+    return res.status(400).json({ error: "spotifyId is required" });
+  }
+
   try {
-    // get user profile to identify the user
-    const userResponse = await axios.get("https://api.spotify.com/v1/me", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    const spotifyId = userResponse.data.id;
-
     const userData = await UserData.findOne({ spotifyId });
 
     if (userData) {
