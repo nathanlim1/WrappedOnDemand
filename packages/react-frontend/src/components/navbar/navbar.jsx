@@ -9,11 +9,7 @@ const Navbar = ({ loggedIn }) => {
         <nav className="navbar">
           <div className="navbar-links">
             <Link to="/home" className="navbar-logo-link">
-              <img
-                src="https://i.imgur.com/bgy6nAs.png"
-                alt="Home Logo"
-                className="navbar-logo"
-              />
+              <div className="logo-green w-7 h-7 bg-[#1DB954]"></div>
             </Link>
             <Link to="/home">Home</Link>
             <Link to="/artists">Artists</Link>

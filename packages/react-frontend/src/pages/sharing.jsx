@@ -54,11 +54,8 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white pb-20 min-h-screen">
       <div className="flex items-center mb-4 justify-center pt-5">
-        <img
-          src="https://i.imgur.com/bgy6nAs.png"
-          alt="Wrapped On Demand Logo White"
-          className="w-10 h-10 mr-3"
-        />
+        {/* Logo */}
+        <div className="logo-green w-12 h-12 mr-4 bg-[#1DB954]"></div>
         <h1 className="text-5xl font-bold">Wrapped On Demand</h1>
       </div>
       {/* User Info Section */}
