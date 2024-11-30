@@ -4,6 +4,7 @@ import { useSpotifyApi } from "../SpotifyContext";
 async function generatePlaylist(displayedTracks) {
     const spotifyApi = useSpotifyApi();
     let userId = "";
+    let playlistId = "";
     let playlistName = "New playlist";
 
     spotifyApi.getMe().then(function(data) {
@@ -19,8 +20,16 @@ async function generatePlaylist(displayedTracks) {
         collaborative: false
     });
     console.log(response);
+    playlistId = response.id;
 
-    // use addTracksToPlaylist method to add tracks from
-    // displayedTracks to created playlist
-    // spotifyApi.addTracksToPlaylist();
+    // all tracks we pass into tracks.jsx are tracks objects
+    // index into external_urls and then spotify
+    let trackUrls = []
+    for (let i = 0; i < displayedTracks.length; i++) {
+        trackUrls.push(displayedTracks[i]["external_urls"]["spotify"]);
+    }
+
+    for (let i = 0; i < trackUrls.length; i++) {
+        spotifyApi.addTracksToPlaylist(playlistId, trackUrls[i]);
+    }
 }

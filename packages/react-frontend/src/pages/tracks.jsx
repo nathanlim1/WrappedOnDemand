@@ -44,7 +44,7 @@ function TrackPage({time_range, allTracks}) {
         <button
           className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-36"
           style={{ border: "none" }}
-          onClick={(() => generatePlaylist(currentlyDisplayed.slice(0, maxNumDisplayed)))}  // need to replace with generatePlaylist
+          onClick={(() => generatePlaylist(currentlyDisplayed.slice(0, maxNumDisplayed)))}
         >
           Generate Playlist
         </button>
