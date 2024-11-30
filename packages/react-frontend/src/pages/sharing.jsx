@@ -189,7 +189,7 @@ function SharingPage({
           >
             {/* Found User Info and Download */}
             <button
-              className="flex items-center space-x-4 mb-6 bg-zinc-800 rounded-3xl  transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
+              className="flex items-center space-x-4 mb-6 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
               onClick={handleDownloadImage}
             >
               {foundUser.profilePicture ? (
