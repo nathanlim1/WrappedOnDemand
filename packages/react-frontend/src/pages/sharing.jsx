@@ -30,9 +30,9 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
       setFoundUser({
         username: data.username,
         profilePicture: data.profilePicture,
-        topArtists: data.allArtists.short_term.slice(0, 10),
-        topTracks: data.allTracks.short_term.slice(0, 10),
-        topAlbums: data.allAlbums.short_term.slice(0, 10),
+        topArtists: data.allArtists.long_term.slice(0, 15),
+        topTracks: data.allTracks.long_term.slice(0, 15),
+        topAlbums: data.allAlbums.long_term.slice(0, 15),
       });
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -46,10 +46,13 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
     const userParam = params.get("user");
 
     if (userParam) {
-      // automatically search for the user specified in the URL
+      // Automatically search for the user specified in the URL
       handleSearch(userParam);
+    } else if (loggedIn && spotifyId) {
+      // Display the logged-in user's data
+      handleSearch(spotifyId);
     }
-  }, [location.search]);
+  }, [location.search, loggedIn, spotifyId]);
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white pb-20 min-h-screen">
@@ -140,18 +143,20 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
       {foundUser && (
         <section className="flex flex-col items-center py-10 px-8">
           {/* Found User Info */}
-          <div className="flex items-center space-x-4 mb-6">
+          <div className="flex items-center space-x-4 mb-6 bg-zinc-800 rounded-3xl">
             {foundUser.profilePicture ? (
               <img
                 src={foundUser.profilePicture}
                 alt="Found User Profile"
-                className="w-16 h-16 text-lg rounded-full"
+                className="w-16 h-16 text-lg rounded-full my-2 ml-5"
               />
             ) : (
               <div className="w-16 h-16 bg-gray-600 rounded-full"></div>
             )}
             <div className="text-left">
-              <h3 className="text-lg font-semibold">{foundUser.username}</h3>
+              <h3 className="text-lg font-semibold mr-5">
+                {foundUser.username}
+              </h3>
             </div>
           </div>
 
