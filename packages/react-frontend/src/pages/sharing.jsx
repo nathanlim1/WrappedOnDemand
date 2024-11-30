@@ -30,6 +30,7 @@ function SharingPage({
         // on entry to page, if user is logged in, display the logged-in user's data
         setFoundUser({
           username,
+          uid: userId,
           profilePicture,
           topArtists: allArtists.slice(0, 20),
           topTracks: allTracks.slice(0, 20),
@@ -45,6 +46,7 @@ function SharingPage({
 
         setFoundUser({
           username: data.username,
+          uid: spotifyId,
           profilePicture: data.profilePicture,
           topArtists: data.allArtists.long_term.slice(0, 20),
           topTracks: data.allTracks.long_term.slice(0, 20),
@@ -254,7 +256,7 @@ function SharingPage({
               </div>
             </div>
             <h3 className="text-gray-300 text-sm mt-4">
-              Stats Provided by Wrapped On Demand
+              Stats Provided by Wrapped On Demand | Spotify ID: {foundUser.uid}
             </h3>
           </section>
         </>
