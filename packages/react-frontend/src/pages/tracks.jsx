@@ -1,6 +1,8 @@
 import '../index.css'
 import React, {useState, useEffect} from 'react'
 import { generatePlaylist } from '../utils/generatePlaylist';
+import TrackPreview from "../components/TrackPreview";
+
 
 function TrackPage({time_range, allTracks}) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
@@ -19,11 +21,15 @@ function TrackPage({time_range, allTracks}) {
 
   return (
     <div className='flex flex-col items-center min-h-screen text-white bg-gradient-to-br from-zinc-800 to-zinc-950'>
-      Top Tracks
+      <p className="text-center font-bold mb-4 mt-4 text-4xl">
+        Your Top Tracks
+      </p>
 
-      {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
-          <div>{i + 1}. {t.name}</div>
+      <div className="space-y-4 mb-4">
+        {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
+          <TrackPreview track={t} index={i + 1} />
         ))}
+      </div>
 
         {/* Buttons to see more/all */}
       <div className="flex space-x-4 mb-20">
