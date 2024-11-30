@@ -3,14 +3,22 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
-function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
+function SharingPage({
+  loggedIn,
+  allArtists,
+  allTracks,
+  allAlbums,
+  username,
+  profilePicture,
+  userId,
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [foundUser, setFoundUser] = useState(null);
   const location = useLocation();
 
   // Handle copy link
   const handleCopyLink = () => {
-    const link = `${window.location.origin}/sharing?user=${spotifyId}`;
+    const link = `${window.location.origin}/sharing?user=${userId}`;
     navigator.clipboard.writeText(link);
     alert("Sharing link copied to clipboard!");
   };
@@ -18,22 +26,32 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
   // Handle search
   const handleSearch = async (spotifyId) => {
     try {
-      console.log("Searching for Spotify ID:", spotifyId);
+      if (spotifyId === userId) {
+        // Display the logged-in user's data
+        setFoundUser({
+          username,
+          profilePicture,
+          topArtists: allArtists.slice(0, 15),
+          topTracks: allTracks.slice(0, 15),
+          topAlbums: allAlbums.slice(0, 15),
+        });
+        return;
+      } else {
+        // fetch user data based on spotifyId
+        const response = await axios.get("http://localhost:8000/user_data", {
+          params: { spotifyId },
+        });
 
-      // fetch user data based on spotifyId
-      const response = await axios.get("http://localhost:8000/user_data", {
-        params: { spotifyId },
-      });
+        const data = response.data;
 
-      const data = response.data;
-
-      setFoundUser({
-        username: data.username,
-        profilePicture: data.profilePicture,
-        topArtists: data.allArtists.long_term.slice(0, 15),
-        topTracks: data.allTracks.long_term.slice(0, 15),
-        topAlbums: data.allAlbums.long_term.slice(0, 15),
-      });
+        setFoundUser({
+          username: data.username,
+          profilePicture: data.profilePicture,
+          topArtists: data.allArtists.long_term.slice(0, 15),
+          topTracks: data.allTracks.long_term.slice(0, 15),
+          topAlbums: data.allAlbums.long_term.slice(0, 15),
+        });
+      }
     } catch (error) {
       console.error("Error fetching user data:", error);
       alert("User not found.");
@@ -48,11 +66,11 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
     if (userParam) {
       // Automatically search for the user specified in the URL
       handleSearch(userParam);
-    } else if (loggedIn && spotifyId) {
+    } else if (loggedIn && userId) {
       // Display the logged-in user's data
-      handleSearch(spotifyId);
+      handleSearch(userId);
     }
-  }, [location.search, loggedIn, spotifyId]);
+  }, [location.search, loggedIn, userId]);
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-950 text-white pb-20 min-h-screen">
