@@ -36,7 +36,7 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
       });
     } catch (error) {
       console.error("Error fetching user data:", error);
-      alert("User not found or sharing is disabled.");
+      alert("User not found.");
     }
   };
 
@@ -81,7 +81,7 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
             <div className="text-left mt-2">
               <h3 className="text-lg font-semibold">{username}</h3>
               <p className="text-gray-300 text-sm">
-                Click here to get your sharing link.
+                Click here to get a link to share your stats
               </p>
             </div>
           </button>
@@ -105,9 +105,9 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
 
       {/* Search Section */}
       <section className="flex justify-center items-center py-10 px-8">
-        <div className="flex w-full max-w-4xl bg-zinc-800 rounded-lg shadow-xl">
+        <div className="flex w-full max-w-4xl bg-zinc-800 rounded-3xl shadow-xl">
           {/* Left Side */}
-          <div className="w-1/2 p-6">
+          <div className="w-1/2 p-6 opacity-90">
             <h2 className="text-2xl font-bold mb-2">Search for Friends</h2>
             <p className="text-gray-400">
               Enter their Spotify ID to view their stats
@@ -115,15 +115,22 @@ function SharingPage({ loggedIn, username, profilePicture, spotifyId }) {
           </div>
           {/* Right Side */}
           <div className="w-1/2 p-6 flex items-center">
-            <input
-              type="text"
-              className="w-full p-2 rounded-l bg-zinc-700 text-white focus:outline-none"
-              placeholder="Enter Spotify ID"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            <div className="relative w-full">
+              <input
+                type="text"
+                className="w-full p-4 pl-12 pr-4 rounded-full bg-zinc-700 bg-opacity-70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1db954] transition duration-300"
+                placeholder="Enter Spotify ID"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <img
+                src="https://icones.pro/wp-content/uploads/2021/02/loupe-et-icone-de-recherche-de-couleur-grise.png"
+                alt="Search Icon"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 pointer-events-none"
+              />
+            </div>
             <button
-              className="bg-[#1db954] text-white py-2 px-4 rounded-r hover:bg-[#17a44b] transition duration-200"
+              className="ml-4 bg-gradient-to-r from-[#1db954] to-[#17a44b] text-white font-semibold py-3 px-6 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none"
               onClick={() => handleSearch(searchQuery)}
             >
               Search
