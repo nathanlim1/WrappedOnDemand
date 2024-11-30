@@ -31,9 +31,9 @@ function SharingPage({
         setFoundUser({
           username,
           profilePicture,
-          topArtists: allArtists.slice(0, 15),
-          topTracks: allTracks.slice(0, 15),
-          topAlbums: allAlbums.slice(0, 15),
+          topArtists: allArtists.slice(0, 20),
+          topTracks: allTracks.slice(0, 20),
+          topAlbums: allAlbums.slice(0, 20),
         });
         return;
       } else {
@@ -47,9 +47,9 @@ function SharingPage({
         setFoundUser({
           username: data.username,
           profilePicture: data.profilePicture,
-          topArtists: data.allArtists.long_term.slice(0, 15),
-          topTracks: data.allTracks.long_term.slice(0, 15),
-          topAlbums: data.allAlbums.long_term.slice(0, 15),
+          topArtists: data.allArtists.long_term.slice(0, 20),
+          topTracks: data.allTracks.long_term.slice(0, 20),
+          topAlbums: data.allAlbums.long_term.slice(0, 20),
         });
       }
     } catch (error) {
@@ -125,10 +125,10 @@ function SharingPage({
       <section className="flex justify-center items-center py-10 px-8">
         <div className="flex w-full max-w-4xl bg-zinc-800 rounded-3xl shadow-xl">
           {/* Left Side */}
-          <div className="w-1/2 p-6 opacity-90">
+          <div className="w-1/2 p-6 opacity-95">
             <h2 className="text-2xl font-bold mb-2">Search for Friends</h2>
             <p className="text-gray-400">
-              Enter their Spotify ID to view their stats
+              Enter their Spotify ID to view their lifetime stats
             </p>
           </div>
           {/* Right Side */}
