@@ -286,7 +286,7 @@ app.get("/refresh_token", async (req, res) => {
 
 app.get("/user_data", async (req, res) => {
   const spotifyId = req.query.spotifyId;
-  console.log("Spotify ID:", spotifyId);
+  console.log("Getting stats for Spotify ID:", spotifyId);
 
   if (!spotifyId) {
     return res.status(400).json({ error: "spotifyId is required" });
@@ -305,6 +305,7 @@ app.get("/user_data", async (req, res) => {
         genreCounts: userData.genreCounts,
       });
     } else {
+      console.log("User data not found in database");
       res.status(404).json({ error: "User data not found" });
     }
   } catch (error) {

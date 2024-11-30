@@ -22,6 +22,7 @@
     "axios": "^1.7.8",
     "chart.js": "^4.4.6",
     "dotenv": "^16.4.5",
+    "html2canvas": "^1.4.1",
     "mongodb": "^6.11.0",
     "mongoose": "^8.8.2",
     "react-chartjs-2": "^5.2.0",
