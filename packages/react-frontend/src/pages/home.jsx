@@ -110,10 +110,15 @@ function Home({
       {/* Intro Section */}
       <section className="flex justify-center items-center px-8">
         <div className="flex items-center space-x-8">
-          <div className="ml-28">
-            <h2 className="text-4xl font-bold mb-2">Your Music Insights</h2>
+          <div className="ml-24">
+            <div className="flex items-center justify-center pt-10">
+              {/* Logo */}
+              <div className="logo-green w-12 h-12 mr-4 bg-[#1DB954]"></div>
+              <h1 className="text-5xl font-bold">Wrapped On Demand</h1>
+            </div>
+            <hr className="w-full my-4 mx-auto max-w-md border-t border-gray-600" />
             <p className="text-gray-400">
-              Explore your top artists, tracks, and more.
+              Explore and share your top artists, tracks, and more.
             </p>
           </div>
           <div className="scale-75">

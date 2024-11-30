@@ -10,9 +10,11 @@ import Home from "./pages/home.jsx";
 import ArtistPage from "./pages/artists.jsx";
 import TrackPage from "./pages/tracks.jsx";
 import AlbumPage from "./pages/albums.jsx";
+import SharingPage from "./pages/sharing.jsx";
 import Layout from "./components/layout/layout.jsx";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
 import axios from "axios";
+import all from "all";
 
 const App = () => {
   const [timeRange, setTimeRange] = useState("short_term");
@@ -22,6 +24,7 @@ const App = () => {
 
   const [username, setUsername] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
+  const [spotifyId, setSpotifyId] = useState("");
 
   const [allArtists1M, setAllArtists1M] = useState([]);
   const [allArtists6M, setAllArtists6M] = useState([]);
@@ -49,13 +52,25 @@ const App = () => {
       if (accessToken) {
         setLoggedIn(true);
         try {
+          // Get the user's Spotify ID using the access token
+          const userResponse = await axios.get(
+            "https://api.spotify.com/v1/me",
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          );
+
+          const spotifyId = userResponse.data.id;
+
+          // Now fetch user data from your backend using the Spotify ID
           const response = await axios.get("http://localhost:8000/user_data", {
-            params: { access_token: accessToken },
+            params: { spotifyId },
           });
 
           const data = response.data;
 
           // Update state with fetched data
+          setSpotifyId(spotifyId);
           setUsername(data.username);
           setProfilePicture(data.profilePicture);
           setAllArtists1M(data.allArtists.short_term);
@@ -103,6 +118,21 @@ const App = () => {
         setTimeRange={setTimeRange}
       >
         <Routes>
+          {/* Sharing page accessible regardless of whether they are logged in or not */}
+          <Route
+            path="/sharing"
+            element={
+              <SharingPage
+                loggedIn={loggedIn}
+                username={username}
+                allArtists={allArtistsLT}
+                allTracks={allTracksLT}
+                allAlbums={allAlbumsLT}
+                profilePicture={profilePicture}
+                userId={spotifyId}
+              />
+            }
+          />
           {loggedIn ? (
             contentIsLoaded ? (
               // Authenticated routes
@@ -178,6 +208,7 @@ const App = () => {
                     />
                   }
                 />
+                {/* Catch-all route for logged-in users */}
                 <Route path="*" element={<Navigate to="/home" replace />} />
               </>
             ) : (
@@ -188,6 +219,7 @@ const App = () => {
             // Not logged in
             <>
               <Route path="/login" element={<Login />} />
+              {/* Catch-all route for not logged-in users */}
               <Route path="*" element={<Navigate to="/login" replace />} />
             </>
           )}

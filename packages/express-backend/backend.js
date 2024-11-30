@@ -23,7 +23,7 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
-const maxItems = 50; // max items to load from Spotify API calls
+const maxItems = 200; // max items to load from Spotify API calls
 
 mongoose.connect(mongoURI);
 
@@ -217,7 +217,12 @@ app.get("/callback", async (req, res) => {
         });
       }
 
-      await userData.save();
+      try {
+        await userData.save();
+        console.log("User data saved successfully!");
+      } catch (err) {
+        console.error("Error saving user data:", err);
+      }
 
       console.log("User data has been updated in database");
       console.log(
@@ -285,16 +290,14 @@ app.get("/refresh_token", async (req, res) => {
 });
 
 app.get("/user_data", async (req, res) => {
-  const accessToken = req.query.access_token;
-  console.log("Access token:", accessToken);
+  const spotifyId = req.query.spotifyId;
+  console.log("Getting stats for Spotify ID:", spotifyId);
+
+  if (!spotifyId) {
+    return res.status(400).json({ error: "spotifyId is required" });
+  }
+
   try {
-    // get user profile to identify the user
-    const userResponse = await axios.get("https://api.spotify.com/v1/me", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    const spotifyId = userResponse.data.id;
-
     const userData = await UserData.findOne({ spotifyId });
 
     if (userData) {
@@ -307,6 +310,7 @@ app.get("/user_data", async (req, res) => {
         genreCounts: userData.genreCounts,
       });
     } else {
+      console.log("User data not found in database");
       res.status(404).json({ error: "User data not found" });
     }
   } catch (error) {

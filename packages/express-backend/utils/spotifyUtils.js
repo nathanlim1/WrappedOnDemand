@@ -45,6 +45,7 @@ const fetchWithRetry = async (fetchFunction, retries = 5, attempt = 0) => {
 };
 
 const getTopNArtists = async (accessToken, maxArtists, time_range) => {
+  console.log("Getting top artists...");
   const limit = 50; // maximum allowed by Spotify API per request
   let allArtists = [];
 
@@ -100,7 +101,8 @@ const getTopNArtists = async (accessToken, maxArtists, time_range) => {
 };
 
 const getTopNTracks = async (accessToken, maxTracks, time_range) => {
-  const limit = 50; // maximum allowed by Spotify API per request
+  console.log("Getting top tracks...");
+  const limit = 50; // Maximum allowed by Spotify API per request
   let allTracks = [];
 
   console.log("Getting top tracks...");
@@ -117,7 +119,7 @@ const getTopNTracks = async (accessToken, maxTracks, time_range) => {
     });
   };
 
-  // fetch the first batch to get the total number of available items
+  // Fetch the first batch to get the total number of available items
   const firstResponse = await fetchWithRetry(() => fetchTracks(0));
 
   allTracks = firstResponse.items;
@@ -127,17 +129,20 @@ const getTopNTracks = async (accessToken, maxTracks, time_range) => {
     return allTracks.slice(0, maxTracks);
   }
 
-  // calculate the number of batches needed
+  // Calculate the number of batches needed
   const totalToFetch = Math.min(maxTracks, totalAvailable);
   const batchesNeeded = Math.ceil(totalToFetch / limit);
 
-  // generate an array of offsets for remaining batches
+  // Generate an array of offsets for remaining batches without exceeding the maximum allowed offset
   const offsets = [];
+  const maxOffset = totalAvailable - 1;
   for (let i = 1; i < batchesNeeded; i++) {
-    offsets.push(i * limit);
+    const offsetValue = i * limit;
+    if (offsetValue > maxOffset) break;
+    offsets.push(offsetValue);
   }
 
-  // fetch the remaining batches in parallel
+  // Fetch the remaining batches in parallel
   const fetchPromises = offsets.map((offset) =>
     fetchWithRetry(() => fetchTracks(offset))
   );
@@ -155,6 +160,7 @@ const getTopNTracks = async (accessToken, maxTracks, time_range) => {
 };
 
 const getTopNAlbums = async (accessToken, maxAlbums, tracks) => {
+  console.log("Getting top albums...");
   // get the album IDs from the given tracks
   const albumIds = tracks.map((track) => track.album.id);
 
@@ -224,6 +230,7 @@ const getTopNAlbums = async (accessToken, maxAlbums, tracks) => {
 };
 
 const getUsersGeneralGenrePercentage = (artists) => {
+  console.log("Getting user's general genre percentage...");
   // predefined list of main genres
   const genres = [
     "Pop",

@@ -9,16 +9,13 @@ const Navbar = ({ loggedIn }) => {
         <nav className="navbar">
           <div className="navbar-links">
             <Link to="/home" className="navbar-logo-link">
-              <img
-                src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Black.png"
-                alt="Home Logo"
-                className="navbar-logo"
-              />
+              <div className="logo-green w-7 h-7 bg-[#1DB954]"></div>
             </Link>
             <Link to="/home">Home</Link>
             <Link to="/artists">Artists</Link>
             <Link to="/tracks">Tracks</Link>
             <Link to="/albums">Albums</Link>
+            <Link to="/sharing">Sharing</Link>
           </div>
         </nav>
       )}
