@@ -1,6 +1,6 @@
 import '../index.css'
 import {useState, useEffect} from 'react'
-import TrackPreview from "../components/TrackPreview";
+import TrackPreview from "../components/trackPreview";
 
 function TrackPage({time_range, allTracks}) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
