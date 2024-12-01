@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import { useSpotifyApi } from "/src/SpotifyContext";
-import ImageGrid from "../components/visualizations/imageGrid";
+import ImageGrid from "../components/visualizations/ImageGrid";
 import { getAlbumImages } from "../utils/getImages";
 import PopularityBar from "../components/popularityBar";
 
