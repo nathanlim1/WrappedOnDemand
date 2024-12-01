@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,7 +14,6 @@ import SharingPage from "./pages/sharing.jsx";
 import Layout from "./components/layout/layout.jsx";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
 import axios from "axios";
-import all from "all";
 
 const App = () => {
   const [timeRange, setTimeRange] = useState("short_term");

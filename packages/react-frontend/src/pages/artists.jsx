@@ -1,5 +1,5 @@
 import "../index.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ArtistPreview from "../components/artistPreview";
 
 function ArtistPage({ time_range, allArtists }) {
@@ -26,7 +26,7 @@ function ArtistPage({ time_range, allArtists }) {
       {/* List of Artist Previews */}
       <div className="space-y-4 mb-4">
         {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
-          <ArtistPreview artist={a} index={i + 1} />
+          <ArtistPreview key={i} artist={a} index={i + 1} />
         ))}
       </div>
       {/* Buttons to see more/all */}

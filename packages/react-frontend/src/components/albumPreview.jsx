@@ -1,4 +1,3 @@
-import React from 'react';
 
 function AlbumPreview({album, index}) {
     function formatDate(dateString) {

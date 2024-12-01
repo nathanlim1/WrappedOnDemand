@@ -1,5 +1,5 @@
 import '../index.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import AlbumPreview from '../components/albumPreview';
 
 function AlbumPage({ time_range, allAlbums }) {
@@ -26,7 +26,7 @@ function AlbumPage({ time_range, allAlbums }) {
 
       <div className="space-y-4 mb-4">
         {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
-          <AlbumPreview index={i + 1} album={a}/>
+          <AlbumPreview key={i} index={i + 1} album={a}/>
         ))}
       </div>
       

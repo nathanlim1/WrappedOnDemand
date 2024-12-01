@@ -1,6 +1,6 @@
 import '../index.css'
-import React, {useState, useEffect} from 'react'
-import TrackPreview from "../components/TrackPreview";
+import {useState, useEffect} from 'react'
+import TrackPreview from "../components/trackPreview";
 
 function TrackPage({time_range, allTracks}) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
@@ -25,7 +25,7 @@ function TrackPage({time_range, allTracks}) {
 
       <div className="space-y-4 mb-4">
         {currentlyDisplayed.slice(0, maxNumDisplayed).map((t, i) => (
-          <TrackPreview track={t} index={i + 1} />
+          <TrackPreview key={i} track={t} index={i + 1} />
         ))}
       </div>
 

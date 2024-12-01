@@ -1,10 +1,10 @@
 import "../index.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import { useSpotifyApi } from "/src/SpotifyContext";
-import ImageGrid from "../components/visualizations/imageGrid";
-import { getAlbumImages, getArtistImages } from "../utils/getImages";
+import ImageGrid from "../components/visualizations/ImageGrid";
+import { getAlbumImages } from "../utils/getImages";
 import PopularityBar from "../components/popularityBar";
 
 // When the user logs in their credentials go to the url
@@ -39,7 +39,6 @@ function Home({
 
   // New state variables for image URLs
   const [albumImageUrls, setAlbumImageUrls] = useState([]);
-  const [artistImageUrls, setArtistImageUrls] = useState([]);
 
   // Calculate genreChartYMax based on genreCounts
   const genreChartYMax = Math.min(
@@ -95,7 +94,6 @@ function Home({
 
     // Extract image URLs whenever data updates
     setAlbumImageUrls(getAlbumImages(allAlbums[time_rangeKey(time_range)]));
-    setArtistImageUrls(getArtistImages(allArtists[time_rangeKey(time_range)]));
   };
 
   // Helper function to map time_range to keys

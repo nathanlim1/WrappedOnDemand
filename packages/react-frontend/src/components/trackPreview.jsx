@@ -1,10 +1,5 @@
-import React from 'react';
 
-function TrackPreview({track, index}) {
-    function capitalizeWords(str) {
-        return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-      }
-      
+function TrackPreview({track, index}) {      
     return (
         <div className="w-192 h-128 bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
             {/* Header */}
