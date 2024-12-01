@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import './timeRangeSelector.css';
+import './timerangeSelector.css';
 
 const TimeRangeSelector = ({ currentRange, setRange, loggedIn }) => {
   const indicatorRef = useRef(null);
