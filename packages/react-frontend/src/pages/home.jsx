@@ -122,11 +122,10 @@ function Home({
             </p>
           </div>
           <div className="scale-75">
-            {/* Replace placeholder with image grid */}
             <div className="relative group">
               <ImageGrid
-                imageUrls={albumImageUrls.slice(0, 100)} // match grid size
-                gridSize={10} // for 5x5 grid
+                imageUrls={albumImageUrls.slice(0, 2500)} // match grid size (50x50 = 2500)
+                gridSize={50} // use max grid size of up to 50x50
               />
             </div>
           </div>
