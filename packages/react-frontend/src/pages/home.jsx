@@ -20,8 +20,6 @@ const getTokenFromUrl = () => {
     }, {});
 };
 
-const x = "THIS IS UNUSED AND SHOULD BE CAUGHT"
-
 function Home({
   setLoggedIn,
   time_range,
