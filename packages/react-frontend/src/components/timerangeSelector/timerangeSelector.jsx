@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import './timeRangeSelector.css';
 
 const TimeRangeSelector = ({ currentRange, setRange, loggedIn }) => {
