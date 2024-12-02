@@ -1,8 +1,5 @@
-import { useSpotifyApi } from "../SpotifyContext";
-
-// generate playlist based on currently shown tracks
-async function generatePlaylist(displayedTracks) {
-  const spotifyApi = useSpotifyApi();
+// generate playlist based on given tracks
+async function generatePlaylist(tracks, spotifyApi) {
   let userId = "";
   let playlistId = "";
   let playlistName = "New playlist";
@@ -27,8 +24,8 @@ async function generatePlaylist(displayedTracks) {
   // all tracks we pass into tracks.jsx are tracks objects
   // index into external_urls and then spotify
   let trackUrls = [];
-  for (let i = 0; i < displayedTracks.length; i++) {
-    trackUrls.push(displayedTracks[i]["external_urls"]["spotify"]);
+  for (let i = 0; i < tracks.length; i++) {
+    trackUrls.push(tracks[i]["external_urls"]["spotify"]);
   }
 
   for (let i = 0; i < trackUrls.length; i++) {
