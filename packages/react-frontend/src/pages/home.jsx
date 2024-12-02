@@ -7,21 +7,7 @@ import ImageGrid from "../components/visualizations/imageGrid";
 import { getAlbumImages, getArtistImages } from "../utils/getImages";
 import PopularityBar from "../components/popularityBar";
 
-// When the user logs in their credentials go to the url
-// This gets their credentials
-const getTokenFromUrl = () => {
-  return window.location.hash
-    .substring(1)
-    .split("&")
-    .reduce((initial, item) => {
-      let parts = item.split("=");
-      initial[parts[0]] = decodeURIComponent(parts[1]);
-      return initial;
-    }, {});
-};
-
 function Home({
-  setLoggedIn,
   time_range,
   genreCounts,
   allArtists,
@@ -35,11 +21,9 @@ function Home({
   const [topTracksCur, setTopTracksCur] = useState([]);
   const [topAlbumsCur, setTopAlbumsCur] = useState([]);
   const [genreDataCur, setGenreDataCur] = useState([]);
-  const spotifyApi = useSpotifyApi();
 
   // New state variables for image URLs
   const [albumImageUrls, setAlbumImageUrls] = useState([]);
-  const [artistImageUrls, setArtistImageUrls] = useState([]);
 
   // Calculate genreChartYMax based on genreCounts
   const genreChartYMax = Math.min(
@@ -54,21 +38,6 @@ function Home({
     ) * 10,
     100
   );
-
-  // when this page is first loaded, we get the user parameters from the URL
-  useEffect(() => {
-    const spotifyToken = getTokenFromUrl().access_token;
-    // This removes the users credentials from the URL, making it cleaner
-    window.location.hash = "";
-
-    // Checks if login went okay
-    if (spotifyToken) {
-      // Give the token to the api
-      spotifyApi.setAccessToken(spotifyToken);
-      setLoggedIn(true);
-      console.log("Current Access Token:", spotifyApi.getAccessToken());
-    }
-  }, [spotifyApi, setLoggedIn]);
 
   // Update current data based on time_range
   useEffect(() => {
@@ -95,7 +64,6 @@ function Home({
 
     // Extract image URLs whenever data updates
     setAlbumImageUrls(getAlbumImages(allAlbums[time_rangeKey(time_range)]));
-    setArtistImageUrls(getArtistImages(allArtists[time_rangeKey(time_range)]));
   };
 
   // Helper function to map time_range to keys

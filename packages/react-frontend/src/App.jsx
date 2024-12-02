@@ -142,7 +142,6 @@ const App = () => {
                   path="/home"
                   element={
                     <Home
-                      setLoggedIn={setLoggedIn}
                       time_range={timeRange}
                       genreCounts={{
                         "1M": genreCounts1M,
