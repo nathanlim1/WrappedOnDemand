@@ -38,7 +38,7 @@ function SharingPage({
         });
       } else {
         // search is not the logged in user; fetch user data based on spotifyId
-        const response = await axios.get("http://localhost:8000/user_data", {
+        const response = await axios.get("https://wrappedondemand.azurewebsites.net/user_data", {
           params: { spotifyId },
         });
 

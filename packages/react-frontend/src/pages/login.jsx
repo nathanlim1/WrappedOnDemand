@@ -9,7 +9,7 @@ function Login() {
     setTimeout(() => {
       setLoading(true); // Show loading spinner after slight delay to show button animation
     }, 250);
-    window.location.href = "http://localhost:8000/login";
+    window.location.href = "https://wrappedondemand.azurewebsites.net/login";
   };
 
   return (
