@@ -52,7 +52,8 @@ function TrackPage({ time_range, allTracks, spotifyApi }) {
           onClick={() =>
             generatePlaylist(
               currentlyDisplayed.slice(0, maxNumDisplayed),
-              spotifyApi
+              spotifyApi,
+              "Top Tracks Playlist"
             )
           }
         >

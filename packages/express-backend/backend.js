@@ -57,7 +57,7 @@ app.get("/login", (req, res) => {
 
   // scope for apps api calls
   const scope =
-    "user-read-private user-read-email user-library-read user-top-read user-library-modify";
+    "user-read-private user-read-email user-library-read user-top-read user-library-modify playlist-modify-public playlist-modify-private";
 
   const queryParams = querystring.stringify({
     response_type: "code",

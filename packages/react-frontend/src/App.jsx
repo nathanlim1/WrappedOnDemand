@@ -54,6 +54,7 @@ const App = () => {
       if (accessToken) {
         setLoggedIn(true);
         spotifyApi.setAccessToken(accessToken);
+        console.log("Set spotifyApi access token to:", accessToken);
         try {
           // Get the user's Spotify ID using the access token
           const userResponse = await axios.get(

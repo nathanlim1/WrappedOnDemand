@@ -1,35 +1,33 @@
-// generate playlist based on given tracks
-async function generatePlaylist(tracks, spotifyApi) {
-  let userId = "";
-  let playlistId = "";
-  let playlistName = "New playlist";
+async function generatePlaylist(tracks, spotifyApi, playlistName) {
+  try {
+    // user info: userId is needed to generate playlist
+    const userData = await spotifyApi.getMe();
+    const userId = userData.id;
+    console.log("Generating playlist for user ID:", userId);
 
-  spotifyApi
-    .getMe()
-    .then(function (data) {
-      userId = data.body.id;
-    })
-    .catch(function (error) {
-      console.error("Error getting user ID:", error);
+    // create playlist
+    const playlistResponse = await spotifyApi.createPlaylist(userId, {
+      name: playlistName,
+      public: true,
+      collaborative: false,
     });
 
-  const response = await spotifyApi.createPlaylist(String(userId), {
-    name: playlistName,
-    public: true,
-    collaborative: false,
-  });
-  console.log(response);
-  playlistId = response.id;
+    const playlistId = playlistResponse.id;
+    console.log("Created playlist with ID:", playlistId);
 
-  // all tracks we pass into tracks.jsx are tracks objects
-  // index into external_urls and then spotify
-  let trackUrls = [];
-  for (let i = 0; i < tracks.length; i++) {
-    trackUrls.push(tracks[i]["external_urls"]["spotify"]);
-  }
+    // get track uris
+    const trackUris = tracks.map((track) => track.uri);
 
-  for (let i = 0; i < trackUrls.length; i++) {
-    spotifyApi.addTracksToPlaylist(playlistId, trackUrls[i]);
+    // add tracks to the playlist in chunks (API has hard limit of 100 tracks per req)
+    const chunkSize = 100;
+    for (let i = 0; i < trackUris.length; i += chunkSize) {
+      const chunk = trackUris.slice(i, i + chunkSize);
+      await spotifyApi.addTracksToPlaylist(playlistId, chunk);
+    }
+
+    console.log("Tracks added to playlist successfully!");
+  } catch (error) {
+    console.error("Error generating playlist:", error);
   }
 }
 
