@@ -67,7 +67,7 @@ const App = () => {
           const spotifyId = userResponse.data.id;
 
           // Now fetch user data from your backend using the Spotify ID
-          const response = await axios.get("http://localhost:8000/user_data", {
+          const response = await axios.get("https://wrappedondemand.azurewebsites.net/user_data", {
             params: { spotifyId },
           });
 
