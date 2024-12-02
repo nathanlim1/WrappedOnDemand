@@ -14,6 +14,7 @@ import SharingPage from "./pages/sharing.jsx";
 import Layout from "./components/layout/layout.jsx";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
 import axios from "axios";
+import { useSpotifyApi } from "./SpotifyContext.jsx";
 
 const App = () => {
   const [timeRange, setTimeRange] = useState("short_term");
@@ -41,6 +42,8 @@ const App = () => {
   const [genreCounts6M, setGenreCounts6M] = useState([]);
   const [genreCountsLT, setGenreCountsLT] = useState([]);
 
+  const spotifyApi = useSpotifyApi();
+
   useEffect(() => {
     const fetchData = async () => {
       const params = new URLSearchParams(window.location.hash.substring(1));
@@ -50,6 +53,8 @@ const App = () => {
 
       if (accessToken) {
         setLoggedIn(true);
+        spotifyApi.setAccessToken(accessToken);
+        console.log("Set spotifyApi access token to:", accessToken);
         try {
           // Get the user's Spotify ID using the access token
           const userResponse = await axios.get(
@@ -102,7 +107,7 @@ const App = () => {
     };
 
     fetchData();
-  }, []);
+  }, [spotifyApi]);
 
   if (!authChecked) {
     // Still checking auth state, show a loading indicator
@@ -141,7 +146,6 @@ const App = () => {
                   path="/home"
                   element={
                     <Home
-                      setLoggedIn={setLoggedIn}
                       time_range={timeRange}
                       genreCounts={{
                         "1M": genreCounts1M,
@@ -191,6 +195,7 @@ const App = () => {
                         "6M": allTracks6M,
                         LT: allTracksLT,
                       }}
+                      spotifyApi={spotifyApi}
                     />
                   }
                 />

@@ -23,7 +23,7 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
-const maxItems = 200; // max items to load from Spotify API calls
+const maxItems = 100; // max items to load from Spotify API calls
 
 mongoose.connect(mongoURI);
 
@@ -57,7 +57,7 @@ app.get("/login", (req, res) => {
 
   // scope for apps api calls
   const scope =
-    "user-read-private user-read-email user-library-read user-top-read user-library-modify";
+    "user-read-private user-read-email user-library-read user-top-read user-library-modify playlist-modify-public playlist-modify-private";
 
   const queryParams = querystring.stringify({
     response_type: "code",
