@@ -136,7 +136,7 @@ app.get("/callback", async (req, res) => {
         refresh_token
       );
       res.redirect(
-        `http://localhost:5173/home/#${querystring.stringify({
+        `https://wrappedondemand.azurewebsites.net/home/#${querystring.stringify({
           access_token: access_token,
           refresh_token: refresh_token,
         })}`
@@ -233,7 +233,7 @@ app.get("/callback", async (req, res) => {
 
       // redirect to frontend with tokens
       res.redirect(
-        `http://localhost:5173/home/#${querystring.stringify({
+        `https://wrappedondemand.azurewebsites.net/home/#${querystring.stringify({
           access_token: access_token,
           refresh_token: refresh_token,
         })}`
@@ -245,7 +245,7 @@ app.get("/callback", async (req, res) => {
       error.response?.data || error.message
     );
     res.redirect(
-      "http://localhost:5173/home/#" +
+      "https://wrappedondemand.azurewebsites.net/home/#" +
         querystring.stringify({
           error: "invalid_token",
         })
