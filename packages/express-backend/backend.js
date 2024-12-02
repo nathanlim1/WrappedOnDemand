@@ -23,6 +23,8 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
+const appFeUrl = process.env.DEV_URL;
+const appBeUrl = process.env.DEV_URL;
 const maxItems = 100; // max items to load from Spotify API calls
 
 mongoose.connect(mongoURI);
@@ -136,7 +138,7 @@ app.get("/callback", async (req, res) => {
         refresh_token
       );
       res.redirect(
-        `https://wrappedondemand.azurewebsites.net/home/#${querystring.stringify({
+        `${appFeUrl}/home/#${querystring.stringify({
           access_token: access_token,
           refresh_token: refresh_token,
         })}`
@@ -233,7 +235,7 @@ app.get("/callback", async (req, res) => {
 
       // redirect to frontend with tokens
       res.redirect(
-        `https://wrappedondemand.azurewebsites.net/home/#${querystring.stringify({
+        `${appFeUrl}/home/#${querystring.stringify({
           access_token: access_token,
           refresh_token: refresh_token,
         })}`
@@ -245,7 +247,8 @@ app.get("/callback", async (req, res) => {
       error.response?.data || error.message
     );
     res.redirect(
-      "https://wrappedondemand.azurewebsites.net/home/#" +
+      appFeUrl +
+        "/home/#${" +
         querystring.stringify({
           error: "invalid_token",
         })

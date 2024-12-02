@@ -16,7 +16,13 @@ import LoadingSpinner from "./components/loadingSpinner.jsx";
 import axios from "axios";
 import { useSpotifyApi } from "./SpotifyContext.jsx";
 
+const DEV_URL = "http://localhost:8000";
+// const PROD_FE_URL = "https://wrappedondemand.azurewebsites.net";
+// const PROD_BE_URL = "https://wrappedondemand.azurewebsites.net";
+
 const App = () => {
+  const feUrl = DEV_URL;
+  const beUrl = DEV_URL;
   const [timeRange, setTimeRange] = useState("short_term");
   const [loggedIn, setLoggedIn] = useState(false);
   const [contentIsLoaded, setContentIsLoaded] = useState(false);
@@ -67,7 +73,7 @@ const App = () => {
           const spotifyId = userResponse.data.id;
 
           // Now fetch user data from your backend using the Spotify ID
-          const response = await axios.get("https://wrappedondemand.azurewebsites.net/user_data", {
+          const response = await axios.get(`${beUrl}/user_data`, {
             params: { spotifyId },
           });
 
@@ -134,6 +140,7 @@ const App = () => {
                 allAlbums={allAlbumsLT}
                 profilePicture={profilePicture}
                 userId={spotifyId}
+                appUrl={beUrl}
               />
             }
           />
@@ -222,7 +229,7 @@ const App = () => {
           ) : (
             // Not logged in
             <>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login appUrl={feUrl} />} />
               {/* Catch-all route for not logged-in users */}
               <Route path="*" element={<Navigate to="/login" replace />} />
             </>

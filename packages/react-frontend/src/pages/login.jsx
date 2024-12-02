@@ -2,14 +2,14 @@ import { useState } from "react";
 import "../index.css";
 import LoadingSpinner from "../components/loadingSpinner";
 
-function Login() {
+function Login({ appUrl }) {
   const [loading, setLoading] = useState(false);
 
   const handleLinkClick = () => {
     setTimeout(() => {
       setLoading(true); // Show loading spinner after slight delay to show button animation
     }, 250);
-    window.location.href = "https://wrappedondemand.azurewebsites.net/login";
+    window.location.href = `${appUrl}/login`;
   };
 
   return (
