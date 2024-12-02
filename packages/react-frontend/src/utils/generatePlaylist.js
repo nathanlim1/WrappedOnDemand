@@ -26,8 +26,10 @@ async function generatePlaylist(tracks, spotifyApi, playlistName) {
     }
 
     console.log("Tracks added to playlist successfully!");
+    return { success: true, playlistId };
   } catch (error) {
     console.error("Error generating playlist:", error);
+    return { success: false, error };
   }
 }
 
