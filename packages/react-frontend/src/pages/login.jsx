@@ -9,7 +9,7 @@ function Login() {
     setTimeout(() => {
       setLoading(true); // Show loading spinner after slight delay to show button animation
     }, 250);
-    window.location.href = "https://wrappedondemand.azurewebsites.net/login";
+    window.location.href = "https://ashy-rock-030ba391e.4.azurestaticapps.net/login";
   };
 
   return (
