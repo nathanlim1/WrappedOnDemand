@@ -2,12 +2,10 @@ import "../index.css";
 import React, { useState, useEffect } from "react";
 import { generatePlaylist } from "../utils/generatePlaylist";
 import TrackPreview from "../components/TrackPreview";
-import { useSpotifyApi } from "../SpotifyContext";
 
-function TrackPage({ time_range, allTracks }) {
+function TrackPage({ time_range, allTracks, spotifyApi }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
   const [maxNumDisplayed, setMaxNumDisplayed] = useState(25);
-  const spotifyApi = useSpotifyApi();
 
   // When timerange changes, update the currently displayed list
   useEffect(() => {
