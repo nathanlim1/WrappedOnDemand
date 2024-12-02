@@ -16,13 +16,13 @@ import LoadingSpinner from "./components/loadingSpinner.jsx";
 import axios from "axios";
 import { useSpotifyApi } from "./SpotifyContext.jsx";
 
-const DEV_URL = "http://localhost:8000";
-// const PROD_FE_URL = "https://wrappedondemand.azurewebsites.net";
-// const PROD_BE_URL = "https://wrappedondemand.azurewebsites.net";
+// const DEV_URL = "http://localhost:8000";
+const PROD_FE_URL = "https://ashy-rock-030ba391e.4.azurestaticapps.net";
+const PROD_BE_URL = "https://wrappedondemand.azurewebsites.net";
 
 const App = () => {
-  const feUrl = DEV_URL;
-  const beUrl = DEV_URL;
+  const feUrl = PROD_FE_URL;
+  const beUrl = PROD_BE_URL;
   const [timeRange, setTimeRange] = useState("short_term");
   const [loggedIn, setLoggedIn] = useState(false);
   const [contentIsLoaded, setContentIsLoaded] = useState(false);
