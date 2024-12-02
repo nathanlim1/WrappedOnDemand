@@ -1,5 +1,5 @@
 import "../index.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { generatePlaylist } from "../utils/generatePlaylist";
 import TrackPreview from "../components/TrackPreview";
 

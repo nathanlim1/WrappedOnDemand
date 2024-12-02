@@ -1,5 +1,5 @@
 import "../index.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import AlbumPreview from "../components/albumPreview";
 
 function AlbumPage({ time_range, allAlbums }) {
