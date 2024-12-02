@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 // This is the top level spotify api object

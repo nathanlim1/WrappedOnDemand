@@ -1,5 +1,5 @@
 import "../index.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ArtistPreview from "../components/artistPreview";
 
 function ArtistPage({ time_range, allArtists }) {

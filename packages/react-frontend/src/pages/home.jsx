@@ -1,10 +1,10 @@
 import "../index.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import { useSpotifyApi } from "/src/SpotifyContext";
-import ImageGrid from "../components/visualizations/imageGrid";
-import { getAlbumImages, getArtistImages } from "../utils/getImages";
+import ImageGrid from "../components/visualizations/ImageGrid";
+import { getAlbumImages } from "../utils/getImages";
 import PopularityBar from "../components/popularityBar";
 
 function Home({
@@ -90,11 +90,10 @@ function Home({
             </p>
           </div>
           <div className="scale-75">
-            {/* Replace placeholder with image grid */}
             <div className="relative group">
               <ImageGrid
-                imageUrls={albumImageUrls.slice(0, 100)} // match grid size
-                gridSize={10} // for 5x5 grid
+                imageUrls={albumImageUrls.slice(0, 2500)} // match grid size (50x50 = 2500)
+                gridSize={50} // use max grid size of up to 50x50
               />
             </div>
           </div>
