@@ -17,6 +17,6 @@ COPY . .
 EXPOSE 8080
 
 # 7. Define the command to run your app
-CMD ["npm", "start"]
+CMD ["node", "backend.js"]
 
 ENV NODE_ENV=production
