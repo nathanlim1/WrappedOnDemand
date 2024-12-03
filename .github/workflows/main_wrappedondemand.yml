@@ -54,7 +54,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip -d packages/express-backend
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -69,4 +69,4 @@ jobs:
         with:
           app-name: "wrappedondemand"
           slot-name: "Production"
-          package: packages/express-backend
+          package: .
