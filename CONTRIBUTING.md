@@ -1,3 +1,5 @@
+## Contributing
+
 4-space tab width
 
 Trailing commas
