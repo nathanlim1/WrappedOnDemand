@@ -23,8 +23,8 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
-const appFeUrl = process.env.DEV_URL;
-const appBeUrl = process.env.DEV_URL;
+const appFeUrl = process.env.PROD_FE_URL;
+const appBeUrl = process.env.PROD_BE_URL;
 const maxItems = 100; // max items to load from Spotify API calls
 
 mongoose.connect(mongoURI);
