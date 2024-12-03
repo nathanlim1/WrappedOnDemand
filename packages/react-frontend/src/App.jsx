@@ -114,7 +114,7 @@ const App = () => {
     };
 
     fetchData();
-  }, [spotifyApi]);
+  }, [beUrl, spotifyApi]);
 
   if (!authChecked) {
     // Still checking auth state, show a loading indicator
