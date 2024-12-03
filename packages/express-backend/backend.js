@@ -23,8 +23,8 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
-const appFeUrl = process.env.PROD_FE_URL;
-const appBeUrl = process.env.PROD_BE_URL;
+const appFeUrl = process.env.DEV_URL;
+const appBeUrl = process.env.DEV_URL;
 const maxItems = 100; // max items to load from Spotify API calls
 
 mongoose.connect(mongoURI);
@@ -328,8 +328,8 @@ app.use((req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, '0.0.0.0', () => {
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server Configuration Diagnostics:`);
   console.log(`Listening on PORT: ${PORT}`);
   console.log(`Listening on IP: 0.0.0.0`);
@@ -338,12 +338,17 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 
 // Global error handlers
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('CRITICAL: Unhandled Rejection at:', promise, 'reason:', reason);
+process.on("unhandledRejection", (reason, promise) => {
+  console.error(
+    "CRITICAL: Unhandled Rejection at:",
+    promise,
+    "reason:",
+    reason
+  );
   process.exit(1);
 });
 
-process.on('uncaughtException', (error) => {
-  console.error('CRITICAL: Uncaught Exception:', error);
+process.on("uncaughtException", (error) => {
+  console.error("CRITICAL: Uncaught Exception:", error);
   process.exit(1);
 });
