@@ -329,10 +329,9 @@ app.use((req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
   console.log(`Server Configuration Diagnostics:`);
   console.log(`Listening on PORT: ${PORT}`);
-  console.log(`Listening on IP: 0.0.0.0`);
   console.log(`Full Environment Details:`);
   console.log(JSON.stringify(process.env, null, 2));
 });
