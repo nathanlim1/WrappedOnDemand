@@ -9,7 +9,7 @@ function Login({ appUrl }) {
     setTimeout(() => {
       setLoading(true); // Show loading spinner after slight delay to show button animation
     }, 250);
-    window.location.href = `${appUrl}/login`;
+    // window.location.href = `${appUrl}/login`;
   };
 
   return (
