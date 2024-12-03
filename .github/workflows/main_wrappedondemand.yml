@@ -55,7 +55,6 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-        working-directory: packages/express-backend
 
       - name: Login to Azure
         uses: azure/login@v2
