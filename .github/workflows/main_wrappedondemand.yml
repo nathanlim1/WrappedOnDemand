@@ -1,6 +1,18 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Node.js app to Azure Web App - wrappedondemand
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -9,20 +21,15 @@ jobs:
         with:
           node-version: "20.x"
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: packages/express-backend
-
-      - name: Build the app
-        run: npm run build --if-present
-        working-directory: packages/express-backend
-
-      - name: Prepare artifact for deployment
+      - name: npm install, build, and test
         run: |
-          cp package.json build/
-          cp -r node_modules build/
-          cp -r public build/
-          zip -r release.zip build
+          npm install --workspaces=false
+          npm run -w express-backend build --if-present
+          npm run -w express-backend test --if-present
+        working-directory: packages/express-backend
+
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
         working-directory: packages/express-backend
 
       - name: Upload artifact for deployment job
@@ -36,6 +43,10 @@ jobs:
     needs: build
     environment:
       name: "Production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -43,21 +54,19 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: |
-          unzip release.zip -d app
-          mv app/build/* .
-        working-directory: packages/express-backend
+        run: unzip release.zip
 
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_591AB7AC1E574EDF9B56027A44488F2B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_04599016720B4E4D91F4BF1F2D9716D0 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1F4311AF17784679BF42F428CE2C4BCB }}
 
-      - name: Deploy to Azure Web App
+      - name: "Deploy to Azure Web App"
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: "wrappedondemand"
           slot-name: "Production"
-          package: packages/express-backend
+          package: .
