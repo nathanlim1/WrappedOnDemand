@@ -30,7 +30,7 @@ function Home({
       (Math.max(
         ...Object.values(genreCounts)
           .flat()
-          .map((gc) => gc[1])
+          .map((gc) => gc.percentage)
       ) +
         1) /
         10

@@ -17,13 +17,13 @@ import axios from "axios";
 import { useSpotifyApi } from "./SpotifyContext.jsx";
 
 // const DEV_FE_URL = "http://localhost:5173";
-const DEV_BE_URL = "http://localhost:8080";
+// const DEV_BE_URL = "http://localhost:8080";
 // const PROD_FE_URL = "https://ashy-rock-030ba391e.4.azurestaticapps.net";
-// const PROD_BE_URL = "https://wrappedondemand.azurewebsites.net";
+const PROD_BE_URL = "https://wrappedondemand.azurewebsites.net";
 
 const App = () => {
-  // const feUrl = DEV_FE_URL;
-  const beUrl = DEV_BE_URL;
+  // const feUrl = PROD_FE_URL;
+  const beUrl = PROD_BE_URL;
   const [timeRange, setTimeRange] = useState("short_term");
   const [loggedIn, setLoggedIn] = useState(false);
   const [contentIsLoaded, setContentIsLoaded] = useState(false);
