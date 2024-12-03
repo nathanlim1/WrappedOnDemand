@@ -49,7 +49,7 @@ const __dirname = path.dirname(__filename);
 
 app
   .use(express.static(path.join(__dirname, "public")))
-  .use(cors())
+  .use(cors({ origin: appFeUrl, credentials: true }))
   .use(cookieParser());
 
 // Login route
@@ -323,7 +323,7 @@ app.get("/user_data", async (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
