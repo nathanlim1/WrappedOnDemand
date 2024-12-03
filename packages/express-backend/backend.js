@@ -323,7 +323,7 @@ app.get("/user_data", async (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
