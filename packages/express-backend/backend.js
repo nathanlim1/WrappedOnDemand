@@ -331,8 +331,8 @@ app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
-// Start server using default of 8181
-const PORT = process.env.PORT || 8181;
+// Start server using default of 8080
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server Configuration Diagnostics:`);
   console.log(`Listening on PORT: ${PORT}`);
