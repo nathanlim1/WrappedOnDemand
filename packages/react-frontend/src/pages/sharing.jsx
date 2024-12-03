@@ -12,6 +12,7 @@ function SharingPage({
   username,
   profilePicture,
   userId,
+  appUrl,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [foundUser, setFoundUser] = useState(null);
@@ -38,7 +39,7 @@ function SharingPage({
         });
       } else {
         // search is not the logged in user; fetch user data based on spotifyId
-        const response = await axios.get("https://wrappedondemand.azurewebsites.net/user_data", {
+        const response = await axios.get(`${appUrl}/user_data`, {
           params: { spotifyId },
         });
 
