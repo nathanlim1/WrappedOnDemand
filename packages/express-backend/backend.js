@@ -324,6 +324,21 @@ app.get("/user_data", async (req, res) => {
 
 // Start server
 const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server Configuration Diagnostics:`);
+  console.log(`Listening on PORT: ${PORT}`);
+  console.log(`Listening on IP: 0.0.0.0`);
+  console.log(`Full Environment Details:`);
+  console.log(JSON.stringify(process.env, null, 2));
+});
+
+// Global error handlers
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('CRITICAL: Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('CRITICAL: Uncaught Exception:', error);
+  process.exit(1);
 });
