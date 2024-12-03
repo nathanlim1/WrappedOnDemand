@@ -4,7 +4,8 @@ function TrackPreview({track, index}) {
         <div className="w-192 h-128 bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
             {/* Header */}
             <div className="w-full h-16 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg px-4">
-                <h2 className="text-3xl font-semibold text-center">{index}. {track.name}</h2>
+                {/* Changed: Added 'px-4', 'break-words', and 'line-clamp-2' to h2 */}
+                <h2 className="text-3xl font-semibold text-center px-4 break-words line-clamp-2">{index}. {track.name}</h2>
             </div>
 
             {/* Body for track cover and play button */}
