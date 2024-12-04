@@ -120,7 +120,6 @@ const App = () => {
   return (
     <Router>
       <Layout
-        loggedIn={loggedIn}
         timeRange={timeRange}
         setTimeRange={setTimeRange}
       >
