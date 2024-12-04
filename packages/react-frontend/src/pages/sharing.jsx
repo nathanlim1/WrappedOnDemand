@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import html2canvas from "html2canvas";
+import ListItem from "../components/listItem";
 
 function SharingPage({
   loggedIn,
@@ -186,79 +187,64 @@ function SharingPage({
       {/* Found User Stats */}
       {foundUser && (
         <>
-          <section
-            className="flex flex-col items-center py-10 px-8 bg-zinc-900"
-            ref={statsRef}
-          >
-            {/* Found User Info and Download */}
-            <button
-              className="flex items-center space-x-4 mb-6 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
-              onClick={handleDownloadImage}
-            >
-              {foundUser.profilePicture ? (
-                <img
-                  src={foundUser.profilePicture}
-                  alt="Found User Profile"
-                  className="w-16 h-16 text-lg rounded-full my-2"
-                />
-              ) : (
-                <div className="w-16 h-16 bg-gray-600 rounded-full"></div>
-              )}
-              <div className="text-left">
-                <h3 className="text-lg font-semibold">{foundUser.username}</h3>
-                <p className="text-gray-300 text-sm">Download stats as .png</p>
+          {/* Top Artists, Tracks, and Albums Section */}
+          <section className="py-10 px-8">
+            <h2 className="text-3xl font-bold text-center mb-4">
+              Top Artists, Tracks, and Albums
+            </h2>
+            <hr className="mx-auto w-full max-w-3xl border-t border-gray-600 mb-8" />
+            <div className="grid grid-cols-3 gap-8">
+              {/* Top Artists */}
+              <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
+                <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
+                  <h3 className="text-xl font-semibold">Top Artists</h3>
+                </div>
+                <div className="space-y-2 text-gray-300 mb-4 px-4">
+                  {foundUser.topArtists.slice(0, 20).map((artist, index) => (
+                    <ListItem
+                      key={index}
+                      index={index + 1}
+                      image={artist.images[0].url}
+                      name={artist.name}
+                    />
+                  ))}
+                </div>
               </div>
-            </button>
 
-            {/* Found User Stats */}
-            <div className="w-full max-w-4xl">
-              <div className="flex justify-around">
-                {/* Top Artists */}
-                <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/3 mx-4 pb-4">
-                  <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
-                    <h3 className="text-xl font-semibold">Top Artists</h3>
-                  </div>
-                  <ol className="space-y-2 text-gray-300 mb-4 px-2">
-                    {foundUser.topArtists.map((artist, index) => (
-                      <li key={artist.id}>
-                        {index + 1}. {artist.name}
-                      </li>
-                    ))}
-                  </ol>
+              {/* Top Tracks */}
+              <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
+                <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
+                  <h3 className="text-xl font-semibold">Top Tracks</h3>
                 </div>
-
-                {/* Top Tracks */}
-                <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/3 mx-4 pb-4">
-                  <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
-                    <h3 className="text-xl font-semibold">Top Tracks</h3>
-                  </div>
-                  <ol className="space-y-2 text-gray-300 mb-4 px-2">
-                    {foundUser.topTracks.map((track, index) => (
-                      <li key={track.id}>
-                        {index + 1}. {track.name}
-                      </li>
-                    ))}
-                  </ol>
+                <div className="space-y-2 text-gray-300 mb-4 px-4">
+                  {foundUser.topTracks.slice(0, 20).map((track, index) => (
+                    <ListItem
+                      key={index}
+                      index={index + 1}
+                      image={track.album.images[0].url}
+                      name={track.name}
+                    />
+                  ))}
                 </div>
+              </div>
 
-                {/* Top Albums */}
-                <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/3 mx-4 pb-4">
-                  <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
-                    <h3 className="text-xl font-semibold">Top Albums</h3>
-                  </div>
-                  <ol className="space-y-2 text-gray-300 mb-4 px-2">
-                    {foundUser.topAlbums.map((album, index) => (
-                      <li key={album.id}>
-                        {index + 1}. {album.name}
-                      </li>
-                    ))}
-                  </ol>
+              {/* Top Albums */}
+              <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
+                <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
+                  <h3 className="text-xl font-semibold">Top Albums</h3>
+                </div>
+                <div className="space-y-2 text-gray-300 mb-4 px-4">
+                  {foundUser.topAlbums.slice(0, 20).map((album, index) => (
+                    <ListItem
+                      key={index}
+                      index={index + 1}
+                      image={album.images[0].url}
+                      name={album.name}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
-            <h3 className="text-gray-300 text-sm mt-4">
-              Stats Provided by Wrapped On Demand | Spotify ID: {foundUser.uid}
-            </h3>
           </section>
         </>
       )}
