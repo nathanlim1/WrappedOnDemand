@@ -17,8 +17,7 @@ import axios from "axios";
 import { useSpotifyApi } from "./SpotifyContext.jsx";
 
 const App = () => {
-  const beUrl =
-    "https://wrappedondemand307-hpfpenhqcrbje4cq.westus-01.azurewebsites.net";
+  const beUrl = "http://localhost:8000";
 
   const [timeRange, setTimeRange] = useState("short_term");
   const [loggedIn, setLoggedIn] = useState(false);
