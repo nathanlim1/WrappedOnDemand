@@ -25,8 +25,7 @@ const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
 const maxItems = 100; // max items to load from Spotify API calls
 
-// const appFeUrl = process.env.PROD_FE_URL;
-const appFeUrl = process.env.DEV_URL;
+const appFeUrl = process.env.PROD_FE_URL;
 
 
 mongoose.connect(mongoURI);
@@ -333,8 +332,8 @@ app.use((req, res) => {
   res.status(404).json({ error: "Endpoint not found" });
 });
 
-// Start server using default of 8000
-const PORT = process.env.PORT || 8000;
+// Start server using default of 8080
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server Configuration Diagnostics:`);
   console.log(`Listening on PORT: ${PORT}`);
