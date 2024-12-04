@@ -187,6 +187,10 @@ function SharingPage({
       {/* Found User Stats */}
       {foundUser && (
         <>
+          <section
+            className="flex flex-col items-center py-10 px-8 bg-zinc-900"
+            ref={statsRef}
+          >
           {/* Found User Info and Download */}
           <div className="flex justify-center">
             <button
@@ -266,6 +270,7 @@ function SharingPage({
             <h3 className="text-gray-300 text-sm mt-4">
               Stats Provided by Wrapped On Demand | Spotify ID: {foundUser.uid}
             </h3>
+          </section>
           </section>
         </>
       )}
