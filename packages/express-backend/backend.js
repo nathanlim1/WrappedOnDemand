@@ -333,8 +333,8 @@ app.use((req, res) => {
   res.status(404).json({ error: "Endpoint not found" });
 });
 
-// Start server using default of 8080
-const PORT = process.env.PORT || 8080;
+// Start server using default of 8000
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server Configuration Diagnostics:`);
   console.log(`Listening on PORT: ${PORT}`);
