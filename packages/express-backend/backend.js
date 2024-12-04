@@ -324,13 +324,6 @@ app.get("/user_data", async (req, res) => {
   }
 });
 
-// Explicity warmup route for azure
-app.get("/warmup", (req, res) => {
-  console.log("Warmup endpoint hit!");
-  res.status(200).send("Warmup complete");
-});
-
-
 app.get("/", (req, res) => {
   res.send("Backend is running");
 }); 
