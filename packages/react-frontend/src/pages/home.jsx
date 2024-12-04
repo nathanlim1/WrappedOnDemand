@@ -5,6 +5,7 @@ import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import ImageGrid from "../components/visualizations/imageGrid";
 import { getAlbumImages } from "../utils/getImages";
 import PopularityBar from "../components/popularityBar";
+import ListItem from "../components/listItem";
 
 function Home({
   time_range,
@@ -127,19 +128,22 @@ function Home({
           Top Artists, Tracks, and Albums
         </h2>
         <hr className="mx-auto w-full max-w-3xl border-t border-gray-600 mb-8" />
-        <div className="flex justify-around">
-          {/* Top Artists List */}
-          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
+        <div className="grid grid-cols-3 gap-8">
+          {/* Top Artists */}
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
               <h3 className="text-xl font-semibold">Top Artists</h3>
             </div>
-            <ol className="space-y-2 text-gray-300 mb-4 px-2">
+            <div className="space-y-2 text-gray-300 mb-4 px-4">
               {topArtistsCur.slice(0, 5).map((artist, index) => (
-                <li key={artist.id}>
-                  {index + 1}. {artist.name}
-                </li>
+                <ListItem
+                  key={index}
+                  index={index + 1}
+                  image={artist.images[0].url}
+                  name={artist.name}
+                />
               ))}
-            </ol>
+            </div>
             <Link
               to="/artists"
               className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
@@ -148,18 +152,21 @@ function Home({
             </Link>
           </div>
 
-          {/* Top Tracks List */}
-          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
+          {/* Top Tracks */}
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
               <h3 className="text-xl font-semibold">Top Tracks</h3>
             </div>
-            <ol className="space-y-2 text-gray-300 mb-4 px-2">
+            <div className="space-y-2 text-gray-300 mb-4 px-4">
               {topTracksCur.slice(0, 5).map((track, index) => (
-                <li key={track.id}>
-                  {index + 1}. {track.name}
-                </li>
+                <ListItem
+                  key={index}
+                  index={index + 1}
+                  image={track.album.images[0].url}
+                  name={track.name}
+                />
               ))}
-            </ol>
+            </div>
             <Link
               to="/tracks"
               className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
@@ -168,18 +175,21 @@ function Home({
             </Link>
           </div>
 
-          {/* Top Albums List */}
-          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md w-1/2 mx-10 pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
+          {/* Top Albums */}
+          <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
             <div className="w-full mb-4 h-12 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg">
               <h3 className="text-xl font-semibold">Top Albums</h3>
             </div>
-            <ol className="space-y-2 text-gray-300 mb-4 px-2">
+            <div className="space-y-2 text-gray-300 mb-4 px-4">
               {topAlbumsCur.slice(0, 5).map((album, index) => (
-                <li key={album.id}>
-                  {index + 1}. {album.name}
-                </li>
+                <ListItem
+                  key={index}
+                  index={index + 1}
+                  image={album.images[0].url}
+                  name={album.name}
+                />
               ))}
-            </ol>
+            </div>
             <Link
               to="/albums"
               className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
