@@ -187,6 +187,26 @@ function SharingPage({
       {/* Found User Stats */}
       {foundUser && (
         <>
+          {/* Found User Info and Download */}
+          <button
+            className="flex items-center space-x-4 mb-6 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
+            onClick={handleDownloadImage}
+          >
+            {foundUser.profilePicture ? (
+              <img
+                src={foundUser.profilePicture}
+                alt="Found User Profile"
+                className="w-16 h-16 text-lg rounded-full my-2"
+              />
+            ) : (
+              <div className="w-16 h-16 bg-gray-600 rounded-full"></div>
+            )}
+            <div className="text-left">
+              <h3 className="text-lg font-semibold">{foundUser.username}</h3>
+              <p className="text-gray-300 text-sm">Download stats as .png</p>
+            </div>
+          </button>
+
           {/* Top Artists, Tracks, and Albums Section */}
           <section className="py-10 px-8">
             
