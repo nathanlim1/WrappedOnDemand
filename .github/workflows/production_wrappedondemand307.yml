@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - wrappedondemand
+name: Build and deploy Node.js app to Azure Web App - wrappedOnDemand307
 
 on:
   push:
     branches:
-      - main
+      - PRODUCTION
   workflow_dispatch:
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         working-directory: packages/express-backend
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: node-app
           path: packages/express-backend/release.zip
@@ -49,24 +49,18 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: node-app
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_591AB7AC1E574EDF9B56027A44488F2B }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_04599016720B4E4D91F4BF1F2D9716D0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1F4311AF17784679BF42F428CE2C4BCB }}
-
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: "wrappedondemand"
+          app-name: "wrappedOnDemand307"
           slot-name: "Production"
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_89560E939C974E27B002502A7B4A9FAA }}
           package: .
