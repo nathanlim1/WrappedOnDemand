@@ -189,10 +189,7 @@ function SharingPage({
         <>
           {/* Top Artists, Tracks, and Albums Section */}
           <section className="py-10 px-8">
-            <h2 className="text-3xl font-bold text-center mb-4">
-              Top Artists, Tracks, and Albums
-            </h2>
-            <hr className="mx-auto w-full max-w-3xl border-t border-gray-600 mb-8" />
+            
             <div className="grid grid-cols-3 gap-8">
               {/* Top Artists */}
               <div className="bg-zinc-800 bg-opacity-50 rounded-lg shadow-md pb-4 transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
