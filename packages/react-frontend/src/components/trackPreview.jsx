@@ -1,7 +1,7 @@
 
 function TrackPreview({track, index}) {      
     return (
-        <div className="w-192 h-128 bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
+        <div className="w-[660px] h-[440px] bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
             {/* Header */}
             <div className="w-full h-16 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg px-4">
                 <h2 className="text-3xl font-semibold text-center">{index}. {track.name}</h2>
@@ -22,8 +22,8 @@ function TrackPreview({track, index}) {
                         />
                     </div> 
                     {/* By: ARTIST */}
-                    <div className="text-center text-2xl">
-                        <p>By: {track.artists[0].name} </p>
+                    <div className="w-full text-center text-2xl">
+                        <p className="truncate w-full">By: {track.artists[0].name} </p>
                     </div>
                 </div>
 
