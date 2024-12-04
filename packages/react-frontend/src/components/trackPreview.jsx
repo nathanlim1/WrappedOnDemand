@@ -27,13 +27,15 @@ function TrackPreview({track, index}) {
                 <div className="flex flex-col items-center">
                     {/* First grey box */}
                     <div className="w-72 h-36 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
+                        {/* Flex container for centering */}
                         <div className="flex flex-col items-center justify-center h-full">
                             {/* Artist Title */}
                             <p className="text-center font-semibold text-3xl">
                                 {track.artists.length === 1 ? "Artist" : "Artists"}
                             </p>
-                            {/* Artist Name */}
-                            <div className="flex-1 overflow-y-auto max-h-24">
+
+                            {/* Artist Name List (scrollable if too many artists) */}
+                            <div className="overflow-y-auto max-h-24 w-full">
                                 {track.artists.map((artist, index) => (
                                     <p key={index} className="text-center text-2xl truncate w-full">{artist.name}</p>
                                 ))}
