@@ -13,9 +13,9 @@ function ArtistPreview({index, artist}) {
             </div>
 
             {/* Body with left and right */}
-            <div className="flex-1 flex space-x-4"> {/* Adjusted the space between sections */}
+            <div className="flex-1 flex space-x-4"> 
                 {/* Left Section */}
-                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
+                <div className="w-1/2 p-4 flex flex-col items-center justify-between">
                     <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4">
                         {/* Artist Photo */}
                         <img 
@@ -31,7 +31,7 @@ function ArtistPreview({index, artist}) {
                 </div>
 
                 {/* Right Section */}
-                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
+                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> 
                     {/* Genres */}
                     <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
                         {/* Genres Title */}
