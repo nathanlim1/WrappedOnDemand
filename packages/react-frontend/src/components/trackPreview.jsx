@@ -4,16 +4,16 @@ function TrackPreview({track, index}) {
         <div className="w-[660px] h-[440px] bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
             {/* Header */}
             <div className="w-full h-16 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg px-4">
-                <h2 className="text-3xl font-semibold text-center">{index}. {track.name}</h2>
+                <h2 className="text-3xl font-semibold text-center truncate w-full">{index}. {track.name}</h2>
             </div>
-
+            
             {/* Body for track cover and play button */}
-            <div className="flex-1 flex items-center justify-center"> {/* Center content */}
+            <div className="flex-1 flex items-center justify-center"> 
 
-                {/* Track Cover on the Left */}
-                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Center content */}
+                {/* Left side */}
+                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> 
 
-                    <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4">
+                    <div className="w-76 h-76 bg-gray-600 rounded-lg mb-4">
                         {/* Track Image */}
                         <img 
                             src={track.album.images[0].url} 
@@ -21,32 +21,37 @@ function TrackPreview({track, index}) {
                             className="w-full h-full object-cover rounded-lg" 
                         />
                     </div> 
-                    {/* By: ARTIST */}
-                    <div className="w-full text-center text-2xl">
-                        <p className="truncate w-full">By: {track.artists[0].name} </p>
-                    </div>
                 </div>
 
-                {/* Play Button and Play Header */}
+                {/* Right Side */}
                 <div className="flex flex-col items-center">
-                    <button
-                        onClick={() => console.log(`Playing ${track.name}`)}
-                        className="w-[300px] h-[300px] bg-[#1db954] rounded-full flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-64 w-64 text-black"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path d="M9 5c0.5-0.5 1-0.5 1.5 0l9 7c0.5 0.5 0.5 1 0 1.5l-9 7c-0.5 0.5-1 0.5-1.5 0v-16z" />
-                        </svg>
-                    </button>
-                    <div className="text-center text-2xl mt-4">
-                        <p>Play Track</p>
+                    {/* First grey box */}
+                    <div className="w-72 h-36 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
+                        <div className="flex flex-col items-center justify-center h-full">
+                            {/* Artist Title */}
+                            <p className="text-center font-semibold text-3xl">
+                                {track.artists.length === 1 ? "Artist" : "Artists"}
+                            </p>
+                            {/* Artist Name */}
+                            <div className="flex-1 overflow-y-auto max-h-24">
+                                {track.artists.map((artist, index) => (
+                                    <p key={index} className="text-center text-2xl truncate w-full">{artist.name}</p>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Second grey box */}
+                    <div className="w-72 h-36 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
+                        <div className="flex flex-col items-center justify-center h-full">
+                            {/* Album Title */}
+                            <p className="text-center font-semibold text-3xl">Album</p>
+                            {/* Album Name */}
+                            <p className="text-center text-2xl truncate w-full">{track.album.name}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     )
 
