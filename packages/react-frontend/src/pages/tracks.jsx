@@ -63,29 +63,29 @@ function TrackPage({ time_range, allTracks, spotifyApi }) {
       </div>
 
       {/* Buttons to see more/all */}
-      <div className="flex space-x-4 mb-20">
-        <button
-          className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-36"
-          style={{ border: "none" }}
-          onClick={() => setMaxNumDisplayed(maxNumDisplayed + 25)}
-        >
-          See More
-        </button>
-        <button
-          className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-36"
-          style={{ border: "none" }}
-          onClick={() => setMaxNumDisplayed(10000)}
-        >
-          See All
-        </button>
-        <button
-          className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-36"
-          style={{ border: "none" }}
-          onClick={() => handleGeneratePlaylist()}
-        >
-          Generate Playlist
-        </button>
-      </div>
+      <div className="flex space-x-8 mb-20"> {/* Increased space between buttons */}
+      <button
+        className="bg-zinc-800 text-white font-semibold py-3 px-12 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-auto"
+        style={{ border: "none" }}
+        onClick={() => setMaxNumDisplayed(maxNumDisplayed + 25)}
+      >
+        See More
+      </button>
+      <button
+        className="bg-zinc-800 text-white font-semibold py-3 px-12 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-auto"
+        style={{ border: "none" }}
+        onClick={() => setMaxNumDisplayed(10000)}
+      >
+        See All
+      </button>
+      <button
+        className="bg-zinc-800 text-white font-semibold py-3 px-12 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-auto"
+        style={{ border: "none" }}
+        onClick={() => handleGeneratePlaylist()}
+      >
+        Create Playlist
+      </button>
+    </div>
     </div>
   );
 }

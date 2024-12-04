@@ -26,7 +26,6 @@ const mongoURI = process.env.MONGODB_URI;
 const maxItems = 100; // max items to load from Spotify API calls
 
 const appFeUrl = process.env.PROD_FE_URL;
-// const appFeUrl = process.env.DEV_URL;
 
 
 mongoose.connect(mongoURI);

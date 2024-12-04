@@ -6,16 +6,16 @@ function ArtistPreview({index, artist}) {
       }
       
     return (
-        <div className="w-192 h-128 bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
+        <div className="w-[660px] h-[440px] bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
             {/* Header */}
             <div className="w-full h-16 bg-[#1db954] text-white flex items-center justify-center rounded-t-lg px-4">
-                <h2 className="text-3xl font-semibold">{index}. {artist.name}</h2>
+                <h2 className="text-3xl font-semibold truncate w-full">{index}. {artist.name}</h2>
             </div>
 
             {/* Body with left and right */}
-            <div className="flex-1 flex space-x-4"> {/* Adjusted the space between sections */}
+            <div className="flex-1 flex space-x-4"> 
                 {/* Left Section */}
-                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
+                <div className="w-1/2 p-4 flex flex-col items-center justify-between">
                     <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4">
                         {/* Artist Photo */}
                         <img 
@@ -31,7 +31,7 @@ function ArtistPreview({index, artist}) {
                 </div>
 
                 {/* Right Section */}
-                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
+                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> 
                     {/* Genres */}
                     <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
                         {/* Genres Title */}
