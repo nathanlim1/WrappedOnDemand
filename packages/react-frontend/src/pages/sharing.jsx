@@ -267,7 +267,7 @@ function SharingPage({
                   </div>
                 </div>
               </div>
-              <h3 className="text-gray-300 text-sm mt-4">
+              <h3 className="text-gray-300 text-sm mt-8">
                 Stats Provided by Wrapped On Demand | Spotify ID: {foundUser.uid}
               </h3>
             </section>
