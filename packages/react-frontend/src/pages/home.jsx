@@ -147,6 +147,7 @@ function Home({
             <Link
               to="/artists"
               className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
+              onClick={() => window.scrollTo(0, 0)}
             >
               View Details
             </Link>
@@ -170,6 +171,7 @@ function Home({
             <Link
               to="/tracks"
               className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
+              onClick={() => window.scrollTo(0, 0)}
             >
               View Details
             </Link>
@@ -193,6 +195,7 @@ function Home({
             <Link
               to="/albums"
               className="bg-zinc-900 text-white py-2 px-4 rounded border-2 border-zinc-800 hover:border-[#1db954] hover:bg-[#1db954] hover:text-white transition duration-200"
+              onClick={() => window.scrollTo(0, 0)}
             >
               View Details
             </Link>
