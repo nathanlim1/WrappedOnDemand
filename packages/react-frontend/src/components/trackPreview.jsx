@@ -1,5 +1,5 @@
-
-function TrackPreview({track, index}) {      
+function TrackPreview({track, index}) {
+    
     return (
         <div className="w-192 h-128 bg-zinc-800 flex flex-col rounded-lg shadow-lg text-white">
             {/* Header */}
@@ -23,33 +23,32 @@ function TrackPreview({track, index}) {
                     </div> 
                     {/* By: ARTIST */}
                     <div className="text-center text-2xl">
-                        <p>By: {track.artists[0].name} </p>
+                        <p>Album: {track.album.name} </p>
                     </div>
                 </div>
 
-                {/* Play Button and Play Header */}
-                <div className="flex flex-col items-center">
-                    <button
-                        onClick={() => console.log(`Playing ${track.name}`)}
-                        className="w-[300px] h-[300px] bg-[#1db954] rounded-full flex items-center justify-center shadow-lg hover:bg-green-700 transition duration-300"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-64 w-64 text-black"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path d="M9 5c0.5-0.5 1-0.5 1.5 0l9 7c0.5 0.5 0.5 1 0 1.5l-9 7c-0.5 0.5-1 0.5-1.5 0v-16z" />
-                        </svg>
-                    </button>
-                    <div className="text-center text-2xl mt-4">
-                        <p>Play Track</p>
+                {/* Right Grey Text Box */}
+                <div className="w-1/2 p-4 flex flex-col items-center justify-between"> {/* Reduced padding */}
+                    {/* Grey Box */}
+                    <div className="w-72 h-72 bg-gray-600 rounded-lg mb-4 p-4 flex flex-col">
+                        {/* Title */}
+                        <p className="text-center font-semibold text-2xl mb-4">Info</p>
+
+                        {/* Scrollable List */}
+                        <ul className="flex-1 overflow-y-auto text-xl">
+                            <p>By: {(track.artists[0].name).toLocaleString()}</p>
+                            <p>Track Number: {(track.track_number).toLocaleString()}</p>
+                            <p>Popularity Score: {(track.popularity).toLocaleString()}</p>
+                        </ul>
+                    </div>
+
+                    <div className="text-center text-2xl">
+                        <p>Release Date: {(track.album.release_date).toLocaleString()}</p>
                     </div>
                 </div>
             </div>
         </div>
     )
+}
 
-};
-
-export default TrackPreview;
+export default TrackPreview
