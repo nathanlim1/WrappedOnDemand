@@ -16,12 +16,9 @@ import LoadingSpinner from "./components/loadingSpinner.jsx";
 import axios from "axios";
 import { useSpotifyApi } from "./SpotifyContext.jsx";
 
-const DEV_BE_URL = "http://localhost:8080";
-// const PROD_BE_URL = "https://wrappedondemand.azurewebsites.net";
-
 const App = () => {
-  // const beUrl = PROD_BE_URL;
-  const beUrl = DEV_BE_URL;
+  // const beUrl = "https://wrappedondemand.azurewebsites.net";
+  const beUrl = "http://localhost:8080";
 
   const [timeRange, setTimeRange] = useState("short_term");
   const [loggedIn, setLoggedIn] = useState(false);

@@ -324,14 +324,15 @@ app.get("/user_data", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+}); 
+
 // Catch-all for unimplemented routes
 app.use((req, res) => {
   res.status(404).json({ error: "Endpoint not found" });
 });
 
-app.get("/", (req, res) => {
-  res.send("Backend is running");
-});
 
 // Start server using default of 8080
 const PORT = process.env.PORT || 8080;
