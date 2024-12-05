@@ -7,24 +7,30 @@ const UserDataSchema = new mongoose.Schema({
   username: String,
   profilePicture: String,
   allArtists: {
-    short_term: Array,
-    medium_term: Array,
-    long_term: Array,
+    short_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserArtists" },
+    medium_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserArtists" },
+    long_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserArtists" },
   },
   allTracks: {
-    short_term: Array,
-    medium_term: Array,
-    long_term: Array,
+    short_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserTracks" },
+    medium_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserTracks" },
+    long_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserTracks" },
   },
   allAlbums: {
-    short_term: Array,
-    medium_term: Array,
-    long_term: Array,
+    short_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserAlbums" },
+    medium_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserAlbums" },
+    long_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserAlbums" },
   },
   genreCounts: {
-    short_term: Array,
-    medium_term: Array,
-    long_term: Array,
+    short_term: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserGenreCounts",
+    },
+    medium_term: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserGenreCounts",
+    },
+    long_term: { type: mongoose.Schema.Types.ObjectId, ref: "UserGenreCounts" },
   },
   last_updated: { type: Date, default: Date.now },
 });

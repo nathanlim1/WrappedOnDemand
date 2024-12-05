@@ -3,37 +3,26 @@ import Navbar from "../navbar/navbar";
 import TimeRangeSelector from "../timerangeSelector/timerangeSelector";
 import "./layout.css";
 
-function Layout({ children, loggedIn, timeRange, setTimeRange }) {
+function Layout({ children, timeRange, setTimeRange }) {
   const location = useLocation();
 
-  // Define routes where the time range selector should not be shown
-  const noTimeSelectorRoutes = ["/sharing"];
-
-  // Determine whether to show the Navbar
-  const showNavbar = loggedIn;
-
   // Determine whether to show the TimeRangeSelector
-  const showTimeRangeSelector = !noTimeSelectorRoutes.includes(
-    location.pathname
-  );
+  const showNavbarAndTimerangeselector = location.pathname != "/login" && location.pathname != "/"
 
   // Add a conditional class based on whether the Navbar is shown (make space for navbar)
-  const containerClass = showNavbar
+  const containerClass = showNavbarAndTimerangeselector
     ? "page-container with-navbar"
     : "page-container";
 
   return (
     <>
-      {showNavbar && (
+      {showNavbarAndTimerangeselector && (
         <>
-          <Navbar loggedIn={loggedIn} />
-          {showTimeRangeSelector && (
+          <Navbar/>
             <TimeRangeSelector
               currentRange={timeRange}
               setRange={setTimeRange}
-              loggedIn={loggedIn}
             />
-          )}
         </>
       )}
       <div className={containerClass}>{children}</div>

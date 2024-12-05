@@ -120,7 +120,6 @@ const App = () => {
   return (
     <Router>
       <Layout
-        loggedIn={loggedIn}
         timeRange={timeRange}
         setTimeRange={setTimeRange}
       >
@@ -132,12 +131,25 @@ const App = () => {
               <SharingPage
                 loggedIn={loggedIn}
                 username={username}
-                allArtists={allArtistsLT}
-                allTracks={allTracksLT}
-                allAlbums={allAlbumsLT}
+                allArtists={{
+                  "1M": allArtists1M,
+                  "6M": allArtists6M,
+                  LT: allArtistsLT,
+                }}
+                allTracks={{
+                  "1M": allTracks1M,
+                  "6M": allTracks6M,
+                  LT: allTracksLT,
+                }}
+                allAlbums={{
+                  "1M": allAlbums1M,
+                  "6M": allAlbums6M,
+                  LT: allAlbumsLT,
+                }}
                 profilePicture={profilePicture}
                 userId={spotifyId}
                 appUrl={beUrl}
+                time_range={timeRange}
               />
             }
           />

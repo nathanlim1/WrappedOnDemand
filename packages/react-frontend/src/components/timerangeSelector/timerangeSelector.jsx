@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import './timerangeSelector.css';
 
-const TimeRangeSelector = ({ currentRange, setRange, loggedIn }) => {
+const TimeRangeSelector = ({ currentRange, setRange }) => {
   const indicatorRef = useRef(null);
 
   useEffect(() => {
@@ -25,31 +25,27 @@ const TimeRangeSelector = ({ currentRange, setRange, loggedIn }) => {
   };
 
   return (
-    <>
-      {loggedIn && (
-        <div className="notch-selector">
-          <div className="indicator" ref={indicatorRef}></div>
-          <button
-            className={`selector-button ${currentRange === "short_term" ? "short_term active" : "short_term"}`}
-            onClick={() => handleButtonClick("short_term")}
-          >
-            1 Month
-          </button>
-          <button
-            className={`selector-button ${currentRange === "medium_term" ? "medium_term active" : "medium_term"}`}
-            onClick={() => handleButtonClick("medium_term")}
-          >
-            6 Months
-          </button>
-          <button
-            className={`selector-button ${currentRange === "long_term" ? "long_term active" : "long_term"}`}
-            onClick={() => handleButtonClick("long_term")}
-          >
-            Lifetime
-          </button>
-        </div>
-      )}
-    </>
+    <div className="notch-selector">
+      <div className="indicator" ref={indicatorRef}></div>
+      <button
+        className={`selector-button ${currentRange === "short_term" ? "short_term active" : "short_term"}`}
+        onClick={() => handleButtonClick("short_term")}
+      >
+        1 Month
+      </button>
+      <button
+        className={`selector-button ${currentRange === "medium_term" ? "medium_term active" : "medium_term"}`}
+        onClick={() => handleButtonClick("medium_term")}
+      >
+        6 Months
+      </button>
+      <button
+        className={`selector-button ${currentRange === "long_term" ? "long_term active" : "long_term"}`}
+        onClick={() => handleButtonClick("long_term")}
+      >
+        Lifetime
+      </button>
+    </div>
   );
 };
 

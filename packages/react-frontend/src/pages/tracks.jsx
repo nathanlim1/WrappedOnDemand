@@ -1,7 +1,7 @@
 import "../index.css";
 import { useState, useEffect } from "react";
 import { generatePlaylist } from "../utils/generatePlaylist";
-import TrackPreview from "../components/trackPreview";
+import TrackPreview from "../components/previews/trackPreview";
 
 function TrackPage({ time_range, allTracks, spotifyApi }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);

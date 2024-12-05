@@ -1,6 +1,6 @@
 import "../index.css";
 import { useState, useEffect } from "react";
-import ArtistPreview from "../components/artistPreview";
+import ArtistPreview from "../components/previews/artistPreview";
 
 function ArtistPage({ time_range, allArtists }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
