@@ -6,6 +6,16 @@ import querystring from "querystring";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import UserData from "./models/UserData.js";
+import UserArtists from "./models/UserArtists.js";
+import UserTracks from "./models/UserTracks.js";
+import UserAlbums from "./models/UserAlbums.js";
+import UserGenreCounts from "./models/UserGenreCounts.js";
+import {
+  createOrUpdateUserArtists,
+  createOrUpdateUserTracks,
+  createOrUpdateUserAlbums,
+  createOrUpdateUserGenreCounts,
+} from "./mongoUtils.js";
 import {
   getTopNArtists,
   getTopNTracks,
@@ -26,7 +36,6 @@ const mongoURI = process.env.MONGODB_URI;
 const maxItems = 100; // max items to load from Spotify API calls
 
 const appFeUrl = process.env.DEV_URL;
-
 
 mongoose.connect(mongoURI);
 
@@ -208,16 +217,18 @@ app.get("/callback", async (req, res) => {
           accessToken: access_token,
           refreshToken: refresh_token,
           username: userProfile.display_name,
-          profilePicture:
-            userProfile.images && userProfile.images.length > 0
-              ? userProfile.images[0].url
-              : null,
-          allArtists,
-          allTracks,
-          allAlbums,
-          genreCounts,
+          profilePicture: userProfile.images?.[0]?.url || null,
           last_updated: Date.now(),
         });
+      }
+
+      const terms = ["short_term", "medium_term", "long_term"];
+
+      for (let term of terms) {
+        await createOrUpdateUserArtists(userData, term, allArtists[term]);
+        await createOrUpdateUserTracks(userData, term, allTracks[term]);
+        await createOrUpdateUserAlbums(userData, term, allAlbums[term]);
+        await createOrUpdateUserGenreCounts(userData, term, genreCounts[term]);
       }
 
       try {
@@ -302,16 +313,44 @@ app.get("/user_data", async (req, res) => {
   }
 
   try {
-    const userData = await UserData.findOne({ spotifyId });
+    const userData = await UserData.findOne({ spotifyId })
+      .populate(
+        "allArtists.short_term allArtists.medium_term allArtists.long_term"
+      )
+      .populate(
+        "allTracks.short_term allTracks.medium_term allTracks.long_term"
+      )
+      .populate(
+        "allAlbums.short_term allAlbums.medium_term allAlbums.long_term"
+      )
+      .populate(
+        "genreCounts.short_term genreCounts.medium_term genreCounts.long_term"
+      );
 
     if (userData) {
       res.json({
         username: userData.username,
         profilePicture: userData.profilePicture,
-        allArtists: userData.allArtists,
-        allTracks: userData.allTracks,
-        allAlbums: userData.allAlbums,
-        genreCounts: userData.genreCounts,
+        allArtists: {
+          short_term: userData.allArtists.short_term?.data,
+          medium_term: userData.allArtists.medium_term?.data,
+          long_term: userData.allArtists.long_term?.data,
+        },
+        allTracks: {
+          short_term: userData.allTracks.short_term?.data,
+          medium_term: userData.allTracks.medium_term?.data,
+          long_term: userData.allTracks.long_term?.data,
+        },
+        allAlbums: {
+          short_term: userData.allAlbums.short_term?.data,
+          medium_term: userData.allAlbums.medium_term?.data,
+          long_term: userData.allAlbums.long_term?.data,
+        },
+        genreCounts: {
+          short_term: userData.genreCounts.short_term?.data,
+          medium_term: userData.genreCounts.medium_term?.data,
+          long_term: userData.genreCounts.long_term?.data,
+        },
       });
     } else {
       console.log("User data not found in database");
@@ -325,7 +364,7 @@ app.get("/user_data", async (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Backend is running");
-}); 
+});
 
 // Catch-all for unimplemented routes
 app.use((req, res) => {
