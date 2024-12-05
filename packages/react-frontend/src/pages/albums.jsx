@@ -1,6 +1,6 @@
 import "../index.css";
 import { useState, useEffect } from "react";
-import AlbumPreview from "../components/albumPreview";
+import AlbumPreview from "../components/previews/albumPreview";
 
 function AlbumPage({ time_range, allAlbums }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);

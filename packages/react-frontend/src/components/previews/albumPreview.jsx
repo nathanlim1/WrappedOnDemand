@@ -5,7 +5,7 @@ function AlbumPreview({album, index}) {
     
         // Check if any part of the date is undefined
         if (!year || !month || !day) {
-            return "unknown";
+            return "Unknown";
         }
     
         return `${month}/${day}/${year}`;
