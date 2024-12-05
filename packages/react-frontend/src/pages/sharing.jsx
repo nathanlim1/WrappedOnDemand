@@ -326,7 +326,7 @@ function SharingPage({
               )}
               <div className="text-left">
                 <h3 className="text-lg font-semibold">{foundUser.username}</h3>
-                <p className="text-gray-300 text-sm">Download this user's stats as a .png!</p>
+                <p className="text-gray-300 text-sm">{`Download this user's stats as a .png!`}</p>
               </div>
             </button>
 
