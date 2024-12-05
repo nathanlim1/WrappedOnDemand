@@ -7,6 +7,8 @@ function TrackPage({ time_range, allTracks, spotifyApi }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState([]);
   const [maxNumDisplayed, setMaxNumDisplayed] = useState(25);
   const [alertMessage, setAlertMessage] = useState("");
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
 
   // Function to handle playlist generation
   const handleGeneratePlaylist = async () => {
@@ -43,11 +45,75 @@ function TrackPage({ time_range, allTracks, spotifyApi }) {
     }
   }, [time_range, allTracks]);
 
+  // Effect to handle screen resizing
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const pixelsToCenter = screenWidth / 2;
+  const adjustedPosition = (pixelsToCenter - 330) / 2;
+
   return (
     <div className="flex flex-col items-center min-h-screen text-white bg-gradient-to-br from-zinc-800 to-zinc-950">
       <p className="text-center font-bold mb-4 mt-4 text-4xl">
         Your Top Tracks
       </p>
+
+    {/* Generate playlist form */}
+    <form
+      className="fixed top-1/2 transform -translate-y-1/2 bg-zinc-800 text-white font-semibold py-6 px-8 rounded-md shadow-xl w-80"
+      style={{
+        border: "none",
+        left: `${adjustedPosition - 160}px`, // Center the form based on the adjusted position
+      }}
+    >
+      <div className="w-full h-16 bg-[#1db954] text-white flex items-center justify-center rounded-lg px-4">
+        <h2 className="text-xl font-bold text-center w-full">
+          Create a Playlist
+        </h2>
+      </div>
+
+      <div className="flex flex-col space-y-4">
+        {/* Playlist Name */}
+        <input
+          type="text"
+          placeholder="Playlist Name"
+          className="bg-transparent border-b-2 border-white text-white placeholder-gray-400 focus:outline-none focus:border-[#00FF7F] py-2 px-3"
+        />
+        
+        {/* Number 1 and Number 2 next to each other */}
+        <div className="flex space-x-4">
+          <input
+            type="number"
+            placeholder="From"
+            className="bg-transparent border-b-2 border-white text-white placeholder-gray-400 focus:outline-none focus:border-[#00FF7F] py-2 px-3 w-1/2"
+          />
+          <input
+            type="number"
+            placeholder="To"
+            className="bg-transparent border-b-2 border-white text-white placeholder-gray-400 focus:outline-none focus:border-[#00FF7F] py-2 px-3 w-1/2"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button
+          className="bg-zinc-700 text-white py-2 px-4 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-auto"
+          type="submit"
+        >
+          Create Playlist
+        </button>
+      </div>
+    </form>
 
       {/* Alert Message */}
       {alertMessage && (
