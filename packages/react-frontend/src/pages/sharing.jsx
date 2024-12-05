@@ -14,11 +14,20 @@ function SharingPage({
   profilePicture,
   userId,
   appUrl,
+  time_range
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [foundUser, setFoundUser] = useState(null);
   const location = useLocation();
   const statsRef = useRef(null);
+
+  // Current selections based on time_range
+  const [topArtistsCur, setTopArtistsCur] = useState([]);
+  const [topTracksCur, setTopTracksCur] = useState([]);
+  const [topAlbumsCur, setTopAlbumsCur] = useState([]);
+  const [titleText, setTitleText] = useState("")
+  const [displayedUsername, setDisplayedUsername] = useState("")
+  const [showingMe, setShowingMe] = useState(true)
 
   const handleCopyLink = () => {
     const link = `${window.location.origin}/sharing?user=${userId}`;
@@ -34,10 +43,12 @@ function SharingPage({
           username,
           uid: userId,
           profilePicture,
-          topArtists: allArtists.slice(0, 20),
-          topTracks: allTracks.slice(0, 20),
-          topAlbums: allAlbums.slice(0, 20),
+          topArtists: allArtists,
+          topTracks: allTracks,
+          topAlbums: allAlbums,
         });
+        setShowingMe(true);
+        setDisplayedUsername(username);
       } else {
         // search is not the logged in user; fetch user data based on spotifyId
         const response = await axios.get(`${appUrl}/user_data`, {
@@ -45,16 +56,21 @@ function SharingPage({
         });
 
         const data = response.data;
+        console.log(data)
+        console.log(data.username)
 
         setFoundUser({
           username: data.username,
           uid: spotifyId,
           profilePicture: data.profilePicture,
-          topArtists: data.allArtists.long_term.slice(0, 20),
-          topTracks: data.allTracks.long_term.slice(0, 20),
-          topAlbums: data.allAlbums.long_term.slice(0, 20),
+          topArtists: data.allArtists,
+          topTracks: data.allTracks,
+          topAlbums: data.allAlbums,
         });
+        setShowingMe(false);
+        setDisplayedUsername(data.username);
       }
+      
     } catch (error) {
       console.error("Error fetching user data:", error);
       alert(
@@ -75,6 +91,51 @@ function SharingPage({
       handleSearch(userId);
     }
   }, [location.search, loggedIn, userId]);
+
+  // Update page when the time range changes
+  useEffect(() => {
+    if (foundUser) {
+      if (showingMe) {
+        if (time_range === "short_term") {
+          setTitleText("1 Month")
+          setTopArtistsCur(foundUser.topArtists["1M"])
+          setTopTracksCur(foundUser.topTracks["1M"])
+          setTopAlbumsCur(foundUser.topAlbums["1M"])
+        }
+        else if (time_range === "medium_term") {
+          setTitleText("6 Month")
+          setTopArtistsCur(foundUser.topArtists["6M"])
+          setTopTracksCur(foundUser.topTracks["6M"])
+          setTopAlbumsCur(foundUser.topAlbums["6M"])
+        }
+        else if (time_range === "long_term") {
+          setTitleText("Lifetime")
+          setTopArtistsCur(foundUser.topArtists["LT"])
+          setTopTracksCur(foundUser.topTracks["LT"])
+          setTopAlbumsCur(foundUser.topAlbums["LT"])
+        }
+      } else {
+        if (time_range === "short_term") {
+          setTitleText("1 Month")
+          setTopArtistsCur(foundUser.topArtists.short_term)
+          setTopTracksCur(foundUser.topTracks.short_term)
+          setTopAlbumsCur(foundUser.topAlbums.short_term)
+        }
+        else if (time_range === "medium_term") {
+          setTitleText("6 Month")
+          setTopArtistsCur(foundUser.topArtists.medium_term)
+          setTopTracksCur(foundUser.topTracks.medium_term)
+          setTopAlbumsCur(foundUser.topAlbums.medium_term)
+        }
+        else if (time_range === "long_term") {
+          setTitleText("Lifetime")
+          setTopArtistsCur(foundUser.topArtists.long_term)
+          setTopTracksCur(foundUser.topTracks.long_term)
+          setTopAlbumsCur(foundUser.topAlbums.long_term)
+        }
+      }
+    }
+  }, [time_range, foundUser])
 
   const handleDownloadImage = async () => {
     // download stats as image
@@ -191,26 +252,21 @@ function SharingPage({
             className="flex flex-col items-center py-10 px-8 bg-zinc-900"
             ref={statsRef}
           >
-            {/* Found User Info and Download */}
-            <div className="flex justify-center">
-              <button
-                className="flex items-center space-x-4 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
-                onClick={handleDownloadImage}
-              >
-                {foundUser.profilePicture ? (
-                  <img
-                    src={foundUser.profilePicture}
-                    alt="Found User Profile"
-                    className="w-16 h-16 text-lg rounded-full my-2"
-                  />
-                ) : (
-                  <div className="w-16 h-16 bg-gray-600 rounded-full"></div>
-                )}
-                <div className="text-left">
-                  <h3 className="text-lg font-semibold">{foundUser.username}</h3>
-                  <p className="text-gray-300 text-sm">Download stats as .png</p>
-                </div>
-              </button>
+            {/* Title */}
+            <div className="flex items-center justify-center gap-4">
+              {foundUser.profilePicture ? (
+                <img
+                  src={foundUser.profilePicture}
+                  alt="Found User Profile"
+                  className="w-16 h-16 text-lg rounded-full my-2"
+                />
+              ) : (
+                <div className="w-16 h-16 bg-gray-600 rounded-full"></div>
+              )}
+
+              <p className="font-bold text-4xl">
+                {`${displayedUsername.trim()}'s ${titleText} Summary`}
+              </p>
             </div>
 
             {/* Top Artists, Tracks, and Albums Section */}
@@ -222,7 +278,7 @@ function SharingPage({
                     <h3 className="text-xl font-semibold">Top Artists</h3>
                   </div>
                   <div className="space-y-2 text-gray-300 mb-4 px-4">
-                    {foundUser.topArtists.slice(0, 20).map((artist, index) => (
+                    {topArtistsCur.slice(0, 20).map((artist, index) => (
                       <ListItem
                         key={index}
                         index={index + 1}
@@ -239,7 +295,7 @@ function SharingPage({
                     <h3 className="text-xl font-semibold">Top Tracks</h3>
                   </div>
                   <div className="space-y-2 text-gray-300 mb-4 px-4">
-                    {foundUser.topTracks.slice(0, 20).map((track, index) => (
+                    {topTracksCur.slice(0, 20).map((track, index) => (
                       <ListItem
                         key={index}
                         index={index + 1}
@@ -256,7 +312,7 @@ function SharingPage({
                     <h3 className="text-xl font-semibold">Top Albums</h3>
                   </div>
                   <div className="space-y-2 text-gray-300 mb-4 px-4">
-                    {foundUser.topAlbums.slice(0, 20).map((album, index) => (
+                    {topAlbumsCur.slice(0, 20).map((album, index) => (
                       <ListItem
                         key={index}
                         index={index + 1}
@@ -267,11 +323,34 @@ function SharingPage({
                   </div>
                 </div>
               </div>
+
               <h3 className="text-gray-300 text-sm mt-8">
                 Stats Provided by Wrapped On Demand | Spotify ID: {foundUser.uid}
               </h3>
             </section>
           </section>
+
+          {/* Found User Info and Download */}
+          <div className="flex justify-center">
+                <button
+                  className="flex items-center space-x-4 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
+                  onClick={handleDownloadImage}
+                >
+                  {foundUser.profilePicture ? (
+                    <img
+                      src={foundUser.profilePicture}
+                      alt="Found User Profile"
+                      className="w-16 h-16 text-lg rounded-full my-2"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 bg-gray-600 rounded-full"></div>
+                  )}
+                  <div className="text-left">
+                    <h3 className="text-lg font-semibold">{foundUser.username}</h3>
+                    <p className="text-gray-300 text-sm">Download stats as .png</p>
+                  </div>
+                </button>
+              </div>
         </>
       )}
     </div>
