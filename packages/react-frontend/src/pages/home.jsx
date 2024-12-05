@@ -92,8 +92,8 @@ function Home({
           <div className="scale-75">
             <div className="relative group">
               <ImageGrid
-                imageUrls={albumImageUrls.slice(0, 2500)} // match grid size (50x50 = 2500)
-                gridSize={50} // use max grid size of up to 50x50
+                imageUrls={albumImageUrls.slice(0, 625)} // match grid size (25x25 = 625)
+                gridSize={25} // use max grid size of up to 25x25
               />
             </div>
           </div>
