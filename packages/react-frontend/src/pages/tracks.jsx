@@ -23,8 +23,8 @@ function TrackPage({ time_range, allTracks, spotifyApi }) {
     );
 
     setPlaylistTitle("");
-    setFromNum();
-    setToNum();
+    setFromNum("");
+    setToNum("");
 
     window.scrollTo({
       top: 0,
