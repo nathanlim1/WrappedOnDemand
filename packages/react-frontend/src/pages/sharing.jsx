@@ -165,32 +165,6 @@ function SharingPage({
         <div className="logo-green w-12 h-12 mr-4 bg-[#1DB954]"></div>
         <h1 className="text-5xl font-bold pr-2">Wrapped On Demand</h1>
       </div>
-      {/* User Info Section */}
-      {loggedIn && (
-        <section className="flex flex-col items-center pt-6 px-8">
-          <button
-            className="flex bg-gradient-to-br from-zinc-700 to-zinc-900 rounded-xl p-4 shadow-lg border border-transparent hover:border-[#00FF7F] transform transition-transform hover:scale-105 hover:shadow-xl focus:outline-none"
-            onClick={handleCopyLink}
-          >
-            {profilePicture ? (
-              <img
-                src={profilePicture}
-                alt="User Profile"
-                className="w-16 h-16 text-lg rounded-full mr-4"
-              />
-            ) : (
-              // Placeholder if profile picture could not be retrieved
-              <div className="w-16 h-16 bg-gray-600 rounded-full mr-4"></div>
-            )}
-            <div className="text-left mt-2">
-              <h3 className="text-lg font-semibold">{username}</h3>
-              <p className="text-gray-300 text-sm">
-                Click here to get a link to share your stats
-              </p>
-            </div>
-          </button>
-        </section>
-      )}
 
       {!loggedIn && (
         <section className="flex flex-col items-center px-8">
@@ -330,27 +304,52 @@ function SharingPage({
             </section>
           </section>
 
-          {/* Found User Info and Download */}
-          <div className="flex justify-center">
-                <button
-                  className="flex items-center space-x-4 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
-                  onClick={handleDownloadImage}
-                >
-                  {foundUser.profilePicture ? (
-                    <img
-                      src={foundUser.profilePicture}
-                      alt="Found User Profile"
-                      className="w-16 h-16 text-lg rounded-full my-2"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 bg-gray-600 rounded-full"></div>
-                  )}
-                  <div className="text-left">
-                    <h3 className="text-lg font-semibold">{foundUser.username}</h3>
-                    <p className="text-gray-300 text-sm">Download stats as .png</p>
-                  </div>
-                </button>
+          {/* User Info and Download Section */}
+          <div className="flex justify-center space-x-4">
+            {/* Found User Download Button */}
+            <button
+              className="flex items-center space-x-4 w-72 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none"
+              onClick={handleDownloadImage}
+            >
+              {foundUser.profilePicture ? (
+                <img
+                  src={foundUser.profilePicture}
+                  alt="Found User Profile"
+                  className="w-16 h-16 text-lg rounded-full my-2 ml-2"
+                />
+              ) : (
+                <div className="w-16 h-16 bg-gray-600 rounded-full ml-2 flex-shrink-0"></div>
+              )}
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">{foundUser.username}</h3>
+                <p className="text-gray-300 text-sm">Download this users stats as a .png!</p>
               </div>
+            </button>
+
+            {/* Logged In User Share Button */}
+            {loggedIn && (
+              <button
+                className="flex items-center space-x-4 w-72 bg-zinc-800 rounded-3xl border border-transparent hover:border-[#00FF7F] transform transition-transform hover:scale-105 hover:shadow-xl focus:outline-none"
+                onClick={handleCopyLink}
+              >
+                {profilePicture ? (
+                  <img
+                    src={profilePicture}
+                    alt="User Profile"
+                    className="w-16 h-16 text-lg rounded-full ml-2"
+                  />
+                ) : (
+                  <div className="w-16 h-16 bg-gray-600 rounded-full ml-2"></div>
+                )}
+                <div className="text-left">
+                  <h3 className="text-lg font-semibold">{username}</h3>
+                  <p className="text-gray-300 text-sm">
+                    Share your stats with friends using this link!
+                  </p>
+                </div>
+              </button>
+            )}
+          </div>
         </>
       )}
     </div>
