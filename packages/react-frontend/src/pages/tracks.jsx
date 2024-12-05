@@ -22,6 +22,10 @@ function TrackPage({ time_range, allTracks, spotifyApi }) {
       playlistTitle
     );
 
+    setPlaylistTitle("");
+    setFromNum();
+    setToNum();
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",
