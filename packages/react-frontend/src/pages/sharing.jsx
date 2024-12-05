@@ -148,7 +148,7 @@ function SharingPage({
         const dataURL = canvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.href = dataURL;
-        link.download = `${foundUser.username}.png`;
+        link.download = `${displayedUsername.trim()}'s ${titleText} Summary.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
