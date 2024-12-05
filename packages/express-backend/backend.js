@@ -6,16 +6,12 @@ import querystring from "querystring";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import UserData from "./models/UserData.js";
-import UserArtists from "./models/UserArtists.js";
-import UserTracks from "./models/UserTracks.js";
-import UserAlbums from "./models/UserAlbums.js";
-import UserGenreCounts from "./models/UserGenreCounts.js";
 import {
   createOrUpdateUserArtists,
   createOrUpdateUserTracks,
   createOrUpdateUserAlbums,
   createOrUpdateUserGenreCounts,
-} from "./mongoUtils.js";
+} from "./utils/mongoUtils.js";
 import {
   getTopNArtists,
   getTopNTracks,
@@ -33,7 +29,7 @@ const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const mongoURI = process.env.MONGODB_URI;
-const maxItems = 100; // max items to load from Spotify API calls
+const maxItems = 750; // max items to load from Spotify API calls
 
 const appFeUrl = process.env.DEV_URL;
 
