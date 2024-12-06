@@ -2,10 +2,12 @@
   "name": "express-backend",
   "version": "1.0.0",
   "main": "backend.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No tests defined\"",
     "dev": "npx nodemon backend.js",
-    "start": "node backend.js"
+    "start": "node backend.js",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -16,12 +18,18 @@
     "crypto": "^1.0.1",
     "express": "^4.21.1",
     "querystring": "^0.2.1",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "axios": "^1.7.8",
+    "dotenv": "^16.4.5",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.8.2",
+    "spotify-web-api-node": "^5.0.2"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.13.0",
-    "eslint": "^9.13.0"
+    "eslint": "^9.16.0",
+    "resolve-from": "^5.0.0"
   }
 }

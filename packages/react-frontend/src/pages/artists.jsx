@@ -1,5 +1,5 @@
 import "../index.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ArtistPreview from "../components/artistPreview";
 
 function ArtistPage({ time_range, allArtists }) {
@@ -26,7 +26,7 @@ function ArtistPage({ time_range, allArtists }) {
       {/* List of Artist Previews */}
       <div className="space-y-4 mb-4">
         {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
-          <ArtistPreview artist={a} index={i + 1} />
+          <ArtistPreview key={a.id} artist={a} index={i + 1} />
         ))}
       </div>
       {/* Buttons to see more/all */}
@@ -34,14 +34,14 @@ function ArtistPage({ time_range, allArtists }) {
         <button
           className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-36"
           style={{ border: "none" }}
-          onClick={(() => setMaxNumDisplayed(maxNumDisplayed + 25))}
+          onClick={() => setMaxNumDisplayed(maxNumDisplayed + 25)}
         >
           See More
         </button>
         <button
           className="bg-zinc-800 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-transform hover:scale-105 active:scale-95 hover:shadow-xl focus:outline-none hover:text-[#00FF7F] w-36"
           style={{ border: "none" }}
-          onClick={(() => setMaxNumDisplayed(10000))}
+          onClick={() => setMaxNumDisplayed(10000)}
         >
           See All
         </button>

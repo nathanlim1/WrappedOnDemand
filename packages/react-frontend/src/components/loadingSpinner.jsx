@@ -24,7 +24,7 @@ function LoadingSpinner() {
                 </svg>
 
                 {/* Details Text Below Spinner */}
-                <p className="text-white mt-4">This typically takes 20-30 seconds. Thank you for you patience!</p>
+                <p className="text-white mt-4">This might take a moment. Thank you for you patience!</p>
 
                 {/* Screen Reader Loading Text */}
                 <span className="sr-only">Loading...</span>

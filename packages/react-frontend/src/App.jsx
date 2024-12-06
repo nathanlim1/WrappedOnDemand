@@ -1,34 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './pages/login.jsx';
-import Home from './pages/home.jsx'; 
+import { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Login from "./pages/login.jsx";
+import Home from "./pages/home.jsx";
 import ArtistPage from "./pages/artists.jsx";
 import TrackPage from "./pages/tracks.jsx";
 import AlbumPage from "./pages/albums.jsx";
+import SharingPage from "./pages/sharing.jsx";
 import Layout from "./components/layout/layout.jsx";
-import { useSpotifyApi } from "/src/SpotifyContext";
-import {
-  getTopNArtists,
-  getTopNTracks,
-  getTopNAlbums,
-} from "./utils/getTopUtils.js";
 import LoadingSpinner from "./components/loadingSpinner.jsx";
+import axios from "axios";
+import { useSpotifyApi } from "./SpotifyContext.jsx";
 
 const App = () => {
-  /*
-  Here are the load times of some different options for this value
-  50: 5 seconds
-  250: 11 seconds
-  500: 17 seconds
-  750: 21 seconds (first number to get 100+ albums for each time frame)
-  1000: 26 seconds 
-  */
-  const MAX_NUMBER_TO_BE_LOADED = 750;
+  const beUrl = "https://wrappedondemand.azurewebsites.net";
+  // const beUrl = "http://localhost:8080";
 
-  const spotifyApi = useSpotifyApi();
-  const [timeRange, setTimeRange] = useState("short_term")
+  const [timeRange, setTimeRange] = useState("short_term");
   const [loggedIn, setLoggedIn] = useState(false);
   const [contentIsLoaded, setContentIsLoaded] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  const [username, setUsername] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [spotifyId, setSpotifyId] = useState("");
 
   const [allArtists1M, setAllArtists1M] = useState([]);
   const [allArtists6M, setAllArtists6M] = useState([]);
@@ -42,71 +41,196 @@ const App = () => {
   const [allAlbums6M, setAllAlbums6M] = useState([]);
   const [allAlbumsLT, setAllAlbumsLT] = useState([]);
 
-  useEffect(() => {
-    const fetchAllData = async () => {
-      if (loggedIn) {
-        // Fetch all artists
-        console.log("Loading all Artists");
-        setAllArtists1M(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term"));
-        setAllArtists6M(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "medium_term"));
-        setAllArtistsLT(await getTopNArtists(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term"));
-        
-        // Fetch all tracks
-        console.log("Loading all Tracks");
-        setAllTracks1M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "short_term"));
-        setAllTracks6M(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "medium_term"));
-        setAllTracksLT(await getTopNTracks(spotifyApi, MAX_NUMBER_TO_BE_LOADED, "long_term"));
-      }
-    }
+  const [genreCounts1M, setGenreCounts1M] = useState([]);
+  const [genreCounts6M, setGenreCounts6M] = useState([]);
+  const [genreCountsLT, setGenreCountsLT] = useState([]);
 
-    fetchAllData();
-  }, [loggedIn]);
+  const spotifyApi = useSpotifyApi();
 
   useEffect(() => {
-    const fetchAlbums = async () => {
-      if (loggedIn && allTracks1M.length > 0 && allTracks6M.length > 0 && allTracksLT.length > 0) {
-        // Fetch all albums after the 
-        console.log("Loading all Albums");
-        setAllAlbums1M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks1M));
-        setAllAlbums6M(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracks6M));
-        setAllAlbumsLT(await getTopNAlbums(spotifyApi, MAX_NUMBER_TO_BE_LOADED, allTracksLT));
-        setContentIsLoaded(true);
+    const fetchData = async () => {
+      const params = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = params.get("access_token");
+
+      console.log("Access token:", accessToken);
+
+      if (accessToken) {
+        setLoggedIn(true);
+        spotifyApi.setAccessToken(accessToken);
+        console.log("Set spotifyApi access token to:", accessToken);
+        try {
+          // Get the user's Spotify ID using the access token
+          const userResponse = await axios.get(
+            "https://api.spotify.com/v1/me",
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          );
+
+          const spotifyId = userResponse.data.id;
+
+          // Now fetch user data from your backend using the Spotify ID
+          const response = await axios.get(`${beUrl}/user_data`, {
+            params: { spotifyId },
+          });
+
+          const data = response.data;
+
+          // Update state with fetched data
+          setSpotifyId(spotifyId);
+          setUsername(data.username);
+          setProfilePicture(data.profilePicture);
+          setAllArtists1M(data.allArtists.short_term);
+          setAllArtists6M(data.allArtists.medium_term);
+          setAllArtistsLT(data.allArtists.long_term);
+          setAllTracks1M(data.allTracks.short_term);
+          setAllTracks6M(data.allTracks.medium_term);
+          setAllTracksLT(data.allTracks.long_term);
+          setAllAlbums1M(data.allAlbums.short_term);
+          setAllAlbums6M(data.allAlbums.medium_term);
+          setAllAlbumsLT(data.allAlbums.long_term);
+          setGenreCounts1M(data.genreCounts.short_term);
+          setGenreCounts6M(data.genreCounts.medium_term);
+          setGenreCountsLT(data.genreCounts.long_term);
+
+          setContentIsLoaded(true);
+
+          // Clear the URL hash
+          window.location.hash = "";
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          setLoggedIn(false);
+        }
+      } else {
+        setLoggedIn(false);
       }
-    }
 
-    fetchAlbums();
-  }, [loggedIn, allTracks1M, allTracks6M, allTracksLT]);
-  
+      // Indicate that authentication check is complete
+      setAuthChecked(true);
+    };
 
-  if (loggedIn && !contentIsLoaded) {
-    return (<LoadingSpinner/>)
+    fetchData();
+  }, [beUrl, spotifyApi]);
+
+  if (!authChecked) {
+    // Still checking auth state, show a loading indicator
+    return <LoadingSpinner />;
   }
 
   return (
     <Router>
-      <Layout loggedIn={loggedIn} timeRange={timeRange} setTimeRange={setTimeRange}>
+      <Layout
+        loggedIn={loggedIn}
+        timeRange={timeRange}
+        setTimeRange={setTimeRange}
+      >
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home setLoggedIn={setLoggedIn} time_range={timeRange}/>} />
-          <Route path="/artists" element={
-            <ArtistPage 
-              time_range={timeRange} 
-              allArtists={{"1M": allArtists1M, "6M": allArtists6M, "LT": allArtistsLT}}
-            />}
+          {/* Sharing page accessible regardless of whether they are logged in or not */}
+          <Route
+            path="/sharing"
+            element={
+              <SharingPage
+                loggedIn={loggedIn}
+                username={username}
+                allArtists={allArtistsLT}
+                allTracks={allTracksLT}
+                allAlbums={allAlbumsLT}
+                profilePicture={profilePicture}
+                userId={spotifyId}
+                appUrl={beUrl}
+              />
+            }
           />
-          <Route path="/tracks" element={
-              <TrackPage 
-                time_range={timeRange}
-                allTracks={{"1M": allTracks1M, "6M": allTracks6M, "LT": allTracksLT}}
-              />}
-            />
-          <Route path="/albums" element={
-            <AlbumPage 
-              time_range={timeRange}
-              allAlbums={{"1M": allAlbums1M, "6M": allAlbums6M, "LT": allAlbumsLT}}
-            />}
-          />
+          {loggedIn ? (
+            contentIsLoaded ? (
+              // Authenticated routes
+              <>
+                <Route path="/" element={<Navigate to="/home" replace />} />
+                <Route
+                  path="/home"
+                  element={
+                    <Home
+                      time_range={timeRange}
+                      genreCounts={{
+                        "1M": genreCounts1M,
+                        "6M": genreCounts6M,
+                        LT: genreCountsLT,
+                      }}
+                      allArtists={{
+                        "1M": allArtists1M,
+                        "6M": allArtists6M,
+                        LT: allArtistsLT,
+                      }}
+                      allTracks={{
+                        "1M": allTracks1M,
+                        "6M": allTracks6M,
+                        LT: allTracksLT,
+                      }}
+                      allAlbums={{
+                        "1M": allAlbums1M,
+                        "6M": allAlbums6M,
+                        LT: allAlbumsLT,
+                      }}
+                      username={username}
+                      profilePicture={profilePicture}
+                    />
+                  }
+                />
+                <Route
+                  path="/artists"
+                  element={
+                    <ArtistPage
+                      time_range={timeRange}
+                      allArtists={{
+                        "1M": allArtists1M,
+                        "6M": allArtists6M,
+                        LT: allArtistsLT,
+                      }}
+                    />
+                  }
+                />
+                <Route
+                  path="/tracks"
+                  element={
+                    <TrackPage
+                      time_range={timeRange}
+                      allTracks={{
+                        "1M": allTracks1M,
+                        "6M": allTracks6M,
+                        LT: allTracksLT,
+                      }}
+                      spotifyApi={spotifyApi}
+                    />
+                  }
+                />
+                <Route
+                  path="/albums"
+                  element={
+                    <AlbumPage
+                      time_range={timeRange}
+                      allAlbums={{
+                        "1M": allAlbums1M,
+                        "6M": allAlbums6M,
+                        LT: allAlbumsLT,
+                      }}
+                    />
+                  }
+                />
+                {/* Catch-all route for logged-in users */}
+                <Route path="*" element={<Navigate to="/home" replace />} />
+              </>
+            ) : (
+              // Content is loading
+              <Route path="*" element={<LoadingSpinner />} />
+            )
+          ) : (
+            // Not logged in
+            <>
+              <Route path="/login" element={<Login appUrl={beUrl} />} />
+              {/* Catch-all route for not logged-in users */}
+              <Route path="*" element={<Navigate to="/login" replace />} />
+            </>
+          )}
         </Routes>
       </Layout>
     </Router>
@@ -114,4 +238,3 @@ const App = () => {
 };
 
 export default App;
-

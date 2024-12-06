@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,18 +19,19 @@ ChartJS.register(
   Legend
 );
 
+// text color to white to better contrast with dark mode background
 ChartJS.defaults.color = "#FFFFFF";
 
-const GenreBarGraph = ({ genreData }) => {
-  // Prepare data for the chart
-  const genreLabels = genreData.map((genre) => genre[0]);
-  const genreCounts = genreData.map((genre) => genre[1]);
+const GenreBarGraph = ({ genreData, yMax }) => {
+  // extract labels and counts from the array of objects
+  const genreLabels = genreData.map((genre) => genre.genre);
+  const genreCounts = genreData.map((genre) => parseFloat(genre.percentage));
 
   const data = {
     labels: genreLabels,
     datasets: [
       {
-        label: "Genre Frequency of Artists Listened To",
+        label: "Genres Listened to By %",
         data: genreCounts,
         backgroundColor: "rgba(29, 185, 84, 0.6)", // Spotify green color with opacity
         borderColor: "rgba(29, 185, 84, 1)", // Spotify green color
@@ -44,6 +44,8 @@ const GenreBarGraph = ({ genreData }) => {
     scales: {
       y: {
         beginAtZero: true,
+        min: 0,
+        max: yMax,
       },
     },
   };

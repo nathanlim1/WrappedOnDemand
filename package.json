@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm --prefix packages/react-frontend run dev\" \"npm --prefix packages/express-backend run dev\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\"",
+    "lint": "npx eslint . && npx prettier --check ."
   },
   "author": "",
   "license": "ISC",
@@ -14,12 +15,18 @@
   ],
   "devDependencies": {
     "concurrently": "^9.1.0",
+    "eslint": "^9.16.0",
     "nodemon": "^3.1.7",
     "prettier": "3.3.3"
   },
   "dependencies": {
     "all": "^0.0.0",
+    "axios": "^1.7.8",
     "chart.js": "^4.4.6",
+    "dotenv": "^16.4.5",
+    "html2canvas": "^1.4.1",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.8.2",
     "react-chartjs-2": "^5.2.0",
     "react-router-dom": "^6.27.0",
     "spotify-web-api-js": "^1.5.2",
