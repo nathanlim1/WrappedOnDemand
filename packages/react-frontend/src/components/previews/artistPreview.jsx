@@ -48,9 +48,6 @@ function ArtistPreview({ index, artist }) {
                 </li>
               ))}
             </ul>
-
-            {/* Fade effect for scrolling genres */}
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-zinc-800 to-transparent pointer-events-none"></div>
           </div>
 
 
