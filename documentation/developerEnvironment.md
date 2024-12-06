@@ -9,7 +9,7 @@
 
 You will also need to create a .env file referencing correct credentials from Spotify and MongoDB.
 
-We do not provide real credentials on this page. Please ask a current developer for accurate credentials or provide your own if you would like to contribute.
+**We do not provide real credentials on this page. Please ask a current developer for accurate credentials or provide your own if you would like to contribute.**
 
 Example .env file:
 
