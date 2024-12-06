@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GenreBarGraph from "../components/visualizations/genreBarGraph";
 import ImageGrid from "../components/visualizations/imageGrid";
-import { getAlbumImages } from "../utils/getImages";
+import { getImages } from "../utils/getImages";
 import PopularityBar from "../components/popularityBar";
 import ListItem from "../components/listItem";
 
@@ -63,7 +63,7 @@ function Home({
     }
 
     // Extract image URLs whenever data updates
-    setAlbumImageUrls(getAlbumImages(allAlbums[time_rangeKey(time_range)]));
+    setAlbumImageUrls(getImages(allAlbums[time_rangeKey(time_range)]));
   };
 
   // Helper function to map time_range to keys
