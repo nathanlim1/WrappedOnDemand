@@ -36,19 +36,23 @@ function ArtistPreview({ index, artist }) {
         {/* Right Section */}
         <div className="w-1/2 p-4 flex flex-col items-center justify-between">
           {/* Genres */}
-          <div className="w-72 h-72 bg-gradient-to-br from-zinc-700 to-zinc-800 rounded-lg mb-4 p-4 flex flex-col">
+          <div className="w-72 h-72 bg-gradient-to-br from-zinc-700 to-zinc-800 rounded-lg mb-4 p-4 flex flex-col relative overflow-hidden">
             {/* Genres Title */}
-            <p className="text-center font-semibold text-4xl mb-4">Genres</p>
+            <p className="text-center font-semibold text-4xl mb-2">Genres</p>
 
             {/* Scrollable Genres List */}
-            <ul className="text-center text-2xl w-full">
+            <ul className="flex-1 overflow-y-auto text-center text-2xl list-none pr-4">
               {artist.genres.map((g, index) => (
-                <li key={index} className="">
+                <li key={index} className="truncate">
                   {capitalizeWords(g)}
                 </li>
               ))}
             </ul>
+
+            {/* Fade effect for scrolling genres */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-zinc-800 to-transparent pointer-events-none"></div>
           </div>
+
 
           <div className="text-center text-2xl font-bold">
             <p>Followers: {artist.followers.total.toLocaleString()}</p>
