@@ -1,8 +1,12 @@
 import axios from "axios";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
-const allGenresPath = path.resolve("../../genres.json");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const allGenresPath = path.resolve(__dirname, "../genres.json");
 const allGenres = JSON.parse(fs.readFileSync(allGenresPath, "utf-8"));
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -1,11 +1,13 @@
-## Contributing
+# Contributing
 
-4-space tab width
+## Tasklist
+Interested in contributing? Check out our tasklist here: ADD LINK TO GITHUB PROJECT
 
-Trailing commas
+## Code Style
+- 4-space tab width
+- Trailing commas
+- Semicolons after each statement
+- Using double quotes for strings
+- Line width: 80
 
-Semicolons after each statement
 
-Using double quotes for strings
-
-Line width: 80
