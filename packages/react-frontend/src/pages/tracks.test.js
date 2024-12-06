@@ -1,5 +1,5 @@
 import React from "react";
-import Tracks from "./packages/react-frontend/src/pages/tracks";
+import Tracks from "./tracks";
 import { render, fireEvent, cleanup } from "@testing-library/react";
 
 afterEach(cleanup);
