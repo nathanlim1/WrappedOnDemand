@@ -24,7 +24,7 @@ function TrackPreview({ track, index }) {
         {/* Right Section: Artist and Album Info */}
         <div className="w-1/2 p-4 flex flex-col items-center space-y-4">
           {/* Artist Info */}
-          <div className="w-72 h-36 bg-gradient-to-br from-zinc-700 to-zinc-800 rounded-lg p-4 flex flex-col">
+          <div className="w-72 h-36 bg-gradient-to-br from-zinc-700 to-zinc-800 rounded-lg p-4 flex flex-col relative overflow-hidden">
             <div className="flex flex-col items-center justify-center h-full">
               <p className="text-center font-semibold text-3xl mb-1">
                 {track.artists.length === 1 ? "Artist" : "Artists"}
@@ -37,6 +37,9 @@ function TrackPreview({ track, index }) {
                 ))}
               </div>
             </div>
+
+            {/* Fade effect for scrolling artists */}
+            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-zinc-800 to-transparent pointer-events-none"></div>
           </div>
 
           {/* Album Info */}
