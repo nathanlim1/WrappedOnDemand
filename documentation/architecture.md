@@ -10,6 +10,7 @@ Pages strictly contains react components that make up each page on the navbar. T
 
 
 ### Express Backend
+Our express-backend directory, at the top level, contains the base backend.js file and a genres.json file. Genres.json contains keys of all the main genres on Spotify along with an array of all of the subgenres that fall under that main genre's category. This JSON file is used to calculate genre proportions for the user. The backend.js file is the main essence of the backend with our routes and setup. In the top level directory, there are two sub directories: models and utils. Models stores the MongoDB collection models, including UserAlbums, UserArtists, UserData, UserGenreCounts, and UserTracks. Utils stores utility functions for the main backend, including mongoUtils.js which contain utility functions for interacting with the MongoDB database and spotifyUtils.js which contain utility functions for interacting with the Spotify Developer API.
 
 ## Database Architecture
 
