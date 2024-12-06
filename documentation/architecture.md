@@ -12,3 +12,11 @@ Pages strictly contains react components that make up each page on the navbar. T
 ### Express Backend
 
 ## Database Architecture
+
+A main UserData collection holds the primary information of a user, including their Spotify ID, which is used to link a user to their data when they log in.
+
+Albums, Artists, and Tracks are all directly retrieved from the Spotify API.
+
+The following UML represents our database structure:
+
+![307UML](https://github.com/user-attachments/assets/b73467ae-4ffc-4f58-985d-2635abaa1940)
