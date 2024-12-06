@@ -20,9 +20,10 @@ function ArtistPage({ time_range, allArtists }) {
   return (
     <div className="flex flex-col items-center min-h-screen text-white bg-gradient-to-br from-zinc-800 to-zinc-950">
       {/* Title */}
-      <p className="text-center font-bold mb-4 mt-4 text-4xl">
+      <p className="text-center font-bold mt-6 mb-4 text-5xl">
         Your Top Artists
       </p>
+      <hr className="w-full mb-8 mx-auto max-w-md border-t border-gray-600" />
       {/* List of Artist Previews */}
       <div className="space-y-4 mb-4">
         {currentlyDisplayed.slice(0, maxNumDisplayed).map((a, i) => (
