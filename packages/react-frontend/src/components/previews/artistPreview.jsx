@@ -41,9 +41,9 @@ function ArtistPreview({ index, artist }) {
             <p className="text-center font-semibold text-4xl mb-4">Genres</p>
 
             {/* Scrollable Genres List */}
-            <ul className="text-center text-xl w-full">
+            <ul className="text-center text-2xl w-full">
               {artist.genres.map((g, index) => (
-                <li key={index} className="list-disc list-inside">
+                <li key={index} className="">
                   {capitalizeWords(g)}
                 </li>
               ))}
