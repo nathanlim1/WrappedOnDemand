@@ -1,7 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import "./navbar.css";
 
 const Navbar = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to the top whenever the location changes
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <nav className="navbar">
       <div className="navbar-links">
