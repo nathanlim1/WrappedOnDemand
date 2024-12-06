@@ -14,7 +14,7 @@ Our express-backend directory, at the top level, contains the base backend.js fi
 
 ## Database Architecture
 
-A main UserData collection holds the primary information of a user, including their Spotify ID, which is used to link a user to their data when they log in.
+A main UserData collection holds the primary information of a user, including their Spotify ID, which is used to link a user to their data when they log in. Each document in this collection also holds a last_updated field, which holds the date and time at which the database was last updated with new Spotify API calls for that user. Upon login, the app references this date to determine whether or not to use the current data in the database or to make new calls using the Spotify API and update the database with the newly retrieved data.
 
 Albums, Artists, and Tracks are all directly retrieved from the Spotify API.
 
