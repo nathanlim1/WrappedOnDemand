@@ -372,8 +372,6 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server Configuration Diagnostics:`);
   console.log(`Listening on PORT: ${PORT}`);
-  console.log(`Full Environment Details:`);
-  console.log(JSON.stringify(process.env, null, 2));
 });
 
 // Global error handlers

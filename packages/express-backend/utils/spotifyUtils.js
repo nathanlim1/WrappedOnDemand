@@ -160,7 +160,8 @@ const getTopNTracks = async (accessToken, maxTracks, time_range) => {
     }
   }
 
-  return allTracks.slice(0, maxTracks);
+  // Return only the desired number of tracks, and only the desired fields
+  return allTracks.slice(0, maxTracks).map(filterTrackFields);
 };
 
 const getTopNAlbums = async (accessToken, maxAlbums, tracks) => {
@@ -230,7 +231,7 @@ const getTopNAlbums = async (accessToken, maxAlbums, tracks) => {
     (album) => album && album.total_tracks > 2
   );
 
-  return filteredAlbums;
+  return filteredAlbums.map(filterAlbumFields);
 };
 
 const getUsersGeneralGenrePercentage = (artists) => {
@@ -280,6 +281,63 @@ const getUsersGeneralGenrePercentage = (artists) => {
 
   return genrePercentages;
 };
+
+function filterTrackFields(track) {
+  return {
+    album: {
+      name: track.album.name,
+      release_date: track.album.release_date,
+      images: track.album.images
+        .map((image) => ({
+          url: image.url,
+        }))
+        .slice(0, 1), // only take the first image
+      id: track.album.id,
+    },
+    artists: track.artists.map((artist) => ({
+      name: artist.name,
+      id: artist.id,
+    })),
+    external_urls: {
+      spotify: track.external_urls.spotify,
+    },
+    id: track.id,
+    name: track.name,
+    popularity: track.popularity,
+    track_number: track.track_number,
+  };
+}
+
+function filterAlbumFields(album) {
+  // Safely extract track items array
+  const trackItems = album.tracks?.items ?? [];
+
+  return {
+    total_tracks: album.total_tracks,
+    external_urls: {
+      spotify: album.external_urls.spotify,
+    },
+    id: album.id,
+    images: album.images
+      .map((image) => ({
+        url: image.url,
+      }))
+      .slice(0, 1), // only take the first image
+    name: album.name,
+    release_date: album.release_date,
+    artists: album.artists.map((artist) => ({
+      name: artist.name,
+      id: artist.id,
+    })),
+    // Keep only the name of each track in the album
+    tracks: {
+      items: trackItems.map((track) => ({
+        name: track.name,
+      })),
+    },
+    popularity: album.popularity,
+  };
+}
 
 export {
   getTopNArtists,
